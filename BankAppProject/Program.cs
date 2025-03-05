@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using BankAppProject.Data;
 using DataAccessLayer.Models;
 
 namespace BankAppProject;
