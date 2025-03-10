@@ -1,10 +1,56 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Välkommen till BankApp";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Hero Section -->
+<header class="bg-primary text-white text-center py-5">
+    <div class="container">
+        <h1 class="display-4 font-weight-bold">Välkommen till BankApp</h1>
+        <p class="lead">En säker och pålitlig banklösning för alla dina behov.</p>
+        <a href="/Login" class="btn btn-light btn-lg mt-3">Logga in</a>
+    </div>
+</header>
+
+<!-- Länder - 4 kort -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title">🇸🇪 Sverige</h5>
+                    <p class="card-text">Se kundinformation och transaktioner i Sverige.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Visa</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title">🇳🇴 Norge</h5>
+                    <p class="card-text">Se kundinformation och transaktioner i Norge.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Visa</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title">🇫🇮 Finland</h5>
+                    <p class="card-text">Se kundinformation och transaktioner i Finland.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Visa</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title">🇩🇰 Danmark</h5>
+                    <p class="card-text">Se kundinformation och transaktioner i Danmark.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Visa</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
