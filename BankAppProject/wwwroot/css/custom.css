@@ -4,6 +4,11 @@
     --secondary: #9fc2d6; /* Ljusblå */
     --info: #9fc2d6; /* Ljusblå */
 }
+.btn {
+    font-weight: bold !important; /* Tvinga fetstil på alla Bootstrap-knappar */
+    border-radius: 20px !important; /* Runda kanter på alla Bootstrap-knappar */
+    margin-bottom: 10px !important; /* Lägg till lite extra mellanrum mellan knappar */
+}
 
 /* Ändra alla primära knappar */
 .btn-primary {
@@ -12,6 +17,16 @@
 }
 
     .btn-primary:hover {
+        background-color: #3a3155 !important; /* Lite mörkare nyans vid hover */
+    }
+.btn-info {
+    background-color: var(--info) !important;
+    border-color: var(--info) !important;
+    color: var(--primary) !important;
+    margin-bottom: 5px !important; /* Lägg till lite extra mellanrum mellan knappar */
+}
+
+    .btn-info:hover {
         background-color: #3a3155 !important; /* Lite mörkare nyans vid hover */
     }
 
@@ -32,3 +47,16 @@ body, p, a, .btn {
 h1, h2 {
     font-family: "Rokkitt", serif !important;
 }
+.nav-pills {
+/*    background-color: var(--primary) !important;*/
+    border-radius: 20px !important;
+}
+
+    .nav-pills .nav-link {
+        color: black !important;
+    }
+
+        .nav-pills .nav-link.active {
+            background-color: var(--secondary) !important;
+            color: black !important;
+        }
