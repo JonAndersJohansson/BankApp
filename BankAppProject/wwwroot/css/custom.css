@@ -4,6 +4,10 @@
     --secondary: #9fc2d6; /* Ljusblå */
     --info: #9fc2d6; /* Ljusblå */
 }
+.bg-offwhite {
+    background-color: #f8f8f8 !important; /*Offwhite*/
+}
+
 .btn {
     font-weight: bold !important; /* Tvinga fetstil på alla Bootstrap-knappar */
     border-radius: 20px !important; /* Runda kanter på alla Bootstrap-knappar */
@@ -31,13 +35,21 @@
     }
 
 /* Ändra navbar-länkar */
-.navbar-light .navbar-nav .nav-link {
+/*.navbar-light .navbar-nav .nav-link {
     color: var(--primary) !important;
 }
 
     .navbar-light .navbar-nav .nav-link:hover {
         color: var(--secondary) !important;
-    }
+    }*/
+.nav-link {
+    color: var(--primary) !important;
+    letter-spacing: 1px !important; 
+}
+
+/*.nav-link:hover {
+    color: red !important;
+}*/
 
 /* Ändra fonter */
 body, p, a, .btn {
