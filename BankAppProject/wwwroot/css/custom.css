@@ -80,12 +80,14 @@ h1, h2 {
 
 .hero-text {
     position: absolute;
-    top: 50%;
+    top: 65%;
     left: 30%;
     transform: translate(-50%, -50%);
-    color: white;
+    font-weight: bold;
+    color: var(--primary);
+/*    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);*/
     text-align: center;
-    background: rgba(0, 0, 0, 0.5);
+    /*    background: rgba(0, 0, 0, 0.5);*/
     padding: 20px;
     border-radius: 10px;
 }
@@ -103,7 +105,16 @@ h1, h2 {
             background-color: #117a8b;
             transform: scale(1.05);
         }*/
+.logo {
+    max-width: 143px;
+    margin-bottom: 9px;
+    padding-left: 10px;
+}
 
+.navbar {
+    padding: 0;
+    padding-top: 2px;
+}
 .nav-pills {
 /*    background-color: var(--primary) !important;*/
     border-radius: 20px !important;
