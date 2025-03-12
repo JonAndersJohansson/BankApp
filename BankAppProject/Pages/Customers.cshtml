@@ -1,0 +1,128 @@
+﻿@page
+@model BankAppProject.Pages.CustomersModel
+@{
+}
+<h1>All Customers</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col"> Id</th>
+            <th scope="col">
+                Id
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="Id"
+                   asp-route-sortOrder="asc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-up"></i>
+
+                </a>
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="Id"
+                   asp-route-sortOrder="desc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-down"></i>
+                </a>
+            </th>
+            <th scope="col">
+                National Id
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="National Id"
+                   asp-route-sortOrder="asc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-up"></i>
+
+                </a>
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="National Id"
+                   asp-route-sortOrder="desc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-down"></i>
+                </a>
+            </th>
+            <th scope="col">
+                Name
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="Name"
+                   asp-route-sortOrder="asc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-up"></i>
+
+                </a>
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="Name"
+                   asp-route-sortOrder="desc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-down"></i>
+                </a>
+            </th>
+            <th scope="col">
+                Address
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="Address"
+                   asp-route-sortOrder="asc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-up"></i>
+
+                </a>
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="Address"
+                   asp-route-sortOrder="desc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-down"></i>
+                </a>
+            </th>
+            <th scope="col">
+                City
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="City"
+                   asp-route-sortOrder="asc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-up"></i>
+
+                </a>
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="City"
+                   asp-route-sortOrder="desc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-down"></i>
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var customer in Model.Customers)
+        {
+            <tr>
+                <td>@customer.Id</td>
+                <td>@customer.NationalId</td>
+                <td>@customer.Name</td>
+                <td>@customer.Address</td>
+                <td>@customer.City</td>
+                <td><a asp-page="/Customers" asp-route-id="@customer.Id" class="btn btn-primary">View</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="pagination">
+    @if (Model.PageNumber > 1)
+    {
+        <a asp-page="/Customers"
+           asp-route-sortColumn="@Request.Query["sortColumn"]"
+           asp-route-sortOrder="@Request.Query["sortOrder"]"
+           asp-route-pageNumber="@(Model.PageNumber - 1)"
+           class="btn btn-secondary">Previous</a>
+    }
+
+    @if ((Model.PageNumber * Model.PageSize) < Model.TotalCustomers)
+    {
+        <a asp-page="/Customers"
+           asp-route-sortColumn="@Request.Query["sortColumn"]"
+           asp-route-sortOrder="@Request.Query["sortOrder"]"
+           asp-route-pageNumber="@(Model.PageNumber + 1)"
+           class="btn btn-secondary">Next</a>
+    }
+</div>
+
