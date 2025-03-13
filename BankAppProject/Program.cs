@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.Models;
 using Services.Customer;
+using DataAccessLayer.Repositories;
+using AutoMapper;
+using BankAppProject.Profiles;
+using Services.Statistics;
 
 namespace BankAppProject;
 
@@ -24,9 +28,22 @@ public class Program
 
         builder.Services.AddTransient<DataInitializer>();
 
-        // Lägg till min CustomerService
+        // Lägger till CustomerRepository och CustomerService
+        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         builder.Services.AddTransient<ICustomerService, CustomerService>();
 
+
+        // Lägger till StatisticsRepository och StatisticsService
+        builder.Services.AddScoped<IStatisticsRepository, StatisticsRepository>();
+        builder.Services.AddScoped<IStatisticsService, StatisticsService>();
+
+
+        builder.Services.AddSingleton<IMapper>(new MapperConfiguration(cfg =>
+        {
+            cfg.AddProfile<CustomerProfile>();  // Lägg till din profil här
+        }).CreateMapper());
+
+        //builder.Services.AddAutoMapper(typeof(CustomerProfile));
 
 
         var app = builder.Build();

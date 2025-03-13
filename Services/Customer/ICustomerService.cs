@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Services.Customer
 {
     public interface ICustomerService
     {
-        List<CustomersViewModel> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, out int totalCustomers);
+        List<CustomersDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, out int totalCustomers);
     }
 }
 

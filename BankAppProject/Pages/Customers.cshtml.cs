@@ -1,3 +1,5 @@
+using AutoMapper;
+using BankAppProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Customer;
@@ -7,10 +9,12 @@ namespace BankAppProject.Pages
     public class CustomersModel : PageModel
     {
         private readonly ICustomerService _customerService;
+        private readonly IMapper _mapper;
 
-        public CustomersModel(ICustomerService customerService)
+        public CustomersModel(ICustomerService customerService, IMapper mapper)
         {
             _customerService = customerService;
+            _mapper = mapper;
         }
 
         public List<CustomersViewModel> Customers { get; set; }
@@ -21,8 +25,10 @@ namespace BankAppProject.Pages
         public void OnGet(string sortColumn = "Id", string sortOrder = "asc", int pageNumber = 1)
         {
             PageNumber = pageNumber;
-            Customers = _customerService.GetCustomers(sortColumn, sortOrder, PageNumber, PageSize, out int totalCustomers);
+            var customersDto = _customerService.GetCustomers(sortColumn, sortOrder, PageNumber, PageSize, out int totalCustomers);
             TotalCustomers = totalCustomers;
+
+            Customers = _mapper.Map<List<CustomersViewModel>>(customersDto);
         }
     }
 }

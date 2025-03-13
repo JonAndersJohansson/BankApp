@@ -1,4 +1,6 @@
 ﻿using DataAccessLayer.Models;
+using DataAccessLayer.Repositories;
+using Services.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,63 +11,48 @@ namespace Services.Customer
 {
     public class CustomerService : ICustomerService
     {
-        private readonly BankAppDataContext _dbContext;
 
-        public CustomerService(BankAppDataContext dbContext)
+        private readonly ICustomerRepository _customerRepository;
+
+        public CustomerService(ICustomerRepository customerRepository)
         {
-            _dbContext = dbContext;
+            _customerRepository = customerRepository;
         }
 
-        public List<CustomersViewModel> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, out int totalCustomers)
+        public List<CustomersDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, out int totalCustomers)
         {
-            var query = _dbContext.Customers.AsQueryable();
+            var query = _customerRepository.GetAllCustomers();
 
-            if (sortColumn == "Id")
-                if (sortOrder == "asc")
-                    query = query.OrderBy(c => c.CustomerId);
-                else if (sortOrder == "desc")
-                    query = query.OrderByDescending(c => c.CustomerId);
-
-            if (sortColumn == "NationalId")
-                if (sortOrder == "asc")
-                    query = query.OrderBy(c => c.NationalId);
-                else if (sortOrder == "desc")
-                    query = query.OrderByDescending(c => c.NationalId);
-
-            if (sortColumn == "Name")
-                if (sortOrder == "asc")
-                    query = query.OrderBy(c => c.Surname);
-                else if (sortOrder == "desc")
-                    query = query.OrderByDescending(c => c.Surname);
-
-            if (sortColumn == "Address")
-                if (sortOrder == "asc")
-                    query = query.OrderBy(c => c.Streetaddress);
-                else if (sortOrder == "desc")
-                    query = query.OrderByDescending(c => c.Streetaddress);
-
-            if (sortColumn == "City")
-                if (sortOrder == "asc")
-                    query = query.OrderBy(c => c.City);
-                else if (sortOrder == "desc")
-                    query = query.OrderByDescending(c => c.City);
+            // Sortering beroende på valda kolumner
+            query = sortColumn switch
+            {
+                "Id" => sortOrder == "asc" ? query.OrderBy(c => c.CustomerId) : query.OrderByDescending(c => c.CustomerId),
+                "NationalId" => sortOrder == "asc" ? query.OrderBy(c => c.NationalId) : query.OrderByDescending(c => c.NationalId),
+                "Name" => sortOrder == "asc" ? query.OrderBy(c => c.Surname) : query.OrderByDescending(c => c.Surname),
+                "Address" => sortOrder == "asc" ? query.OrderBy(c => c.Streetaddress) : query.OrderByDescending(c => c.Streetaddress),
+                "City" => sortOrder == "asc" ? query.OrderBy(c => c.City) : query.OrderByDescending(c => c.City),
+                _ => query.OrderBy(c => c.CustomerId)  // Standard-sortering om inget annat anges
+            };
 
             // Antal kunder totalt för pagination
             totalCustomers = query.Count();
 
+            // Paginering
             var customers = query
-                .Skip((pageNumber - 1) * pageSize)  // Hoppa över tidigare sidor
-                .Take(pageSize)  // Ta endast de kunder vi behöver
-                .Select(c => new CustomersViewModel
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(c => new CustomersDto
                 {
                     Id = c.CustomerId,
                     NationalId = c.NationalId,
-                    Name = c.Givenname + " " + c.Surname,
+                    Givenname = c.Givenname,
+                    Surname = c.Surname,
                     Address = c.Streetaddress,
                     City = c.City
                 }).ToList();
 
             return customers;
         }
+
     }
 }
