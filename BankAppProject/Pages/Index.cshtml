@@ -16,6 +16,29 @@
 <!-- Länder - 4 kort -->
 <div class="container mt-5">
     <div class="row">
+        @foreach (var country in Model.CountryStatistics)
+        {
+            <div class="col-md-3">
+                <div class="card text-center shadow-lg">
+                    <img src="~/images/flags/@(country.CountryCode.ToLower()).png" class="card-img-top" alt="Flag">
+                    <div class="card-body">
+                        <h5 class="card-title">@country.CountryCode</h5>
+
+                        <p><i class="bi bi-person-arms-up"></i> Clients</p>
+                        <h3>@country.TotalClients</h3>
+
+                        <p><i class="fas fa-credit-card"></i> Accounts</p>
+                        <h3>@country.TotalAccounts</h3>
+
+                        <p><i class="fas fa-coins"></i> Capital</p>
+                        <h3>@country.TotalCapital.ToString("C")</h3>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+@*     <div class="row">
         <div class="col-md-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body text-center">
@@ -55,5 +78,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> *@
 </div>
