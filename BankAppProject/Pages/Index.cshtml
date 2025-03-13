@@ -19,64 +19,39 @@
         @foreach (var country in Model.CountryStatistics)
         {
             <div class="col-md-3">
-                <div class="card text-center shadow-lg">
-                    <img src="~/images/flags/@(country.CountryCode.ToLower()).png" class="card-img-top" alt="Flag">
+                <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
-                        <h5 class="card-title">@country.CountryCode</h5>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Clients
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@country.TotalClients</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-user fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+@*             <div class="col-md-3">
+                <img src="~/img/flags/@(country.CountryCode.ToLower()).png" class="card-img-top" alt="Flag">
+                <div class="card text-center shadow-lg">
+                    <div class="card-body">
 
-                        <p><i class="bi bi-person-arms-up"></i> Clients</p>
+                        <p><i class="fa-solid fa-users"></i> Clients</p>
                         <h3>@country.TotalClients</h3>
 
                         <p><i class="fas fa-credit-card"></i> Accounts</p>
                         <h3>@country.TotalAccounts</h3>
 
-                        <p><i class="fas fa-coins"></i> Capital</p>
-                        <h3>@country.TotalCapital.ToString("C")</h3>
+                        <p><i class="fa-solid fa-piggy-bank"></i> Capital</p>
+                        <h3>@country.TotalCapital.ToString("C", new System.Globalization.CultureInfo("de-DE"))</h3>
                     </div>
                 </div>
-            </div>
+            </div> *@
         }
     </div>
 
-@*     <div class="row">
-        <div class="col-md-3">
-            <div class="card shadow-sm border-0">
-                <div class="card-body text-center">
-                    <h5 class="card-title">🇸🇪 Sverige</h5>
-                    <p class="card-text">Se kundinformation och transaktioner i Sverige.</p>
-                    <a href="#" class="btn btn-outline-primary btn-sm">Visa</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm border-0">
-                <div class="card-body text-center">
-                    <h5 class="card-title">🇳🇴 Norge</h5>
-                    <p class="card-text">Se kundinformation och transaktioner i Norge.</p>
-                    <a href="#" class="btn btn-outline-primary btn-sm">Visa</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm border-0">
-                <div class="card-body text-center">
-                    <h5 class="card-title">🇫🇮 Finland</h5>
-                    <p class="card-text">Se kundinformation och transaktioner i Finland.</p>
-                    <a href="#" class="btn btn-outline-primary btn-sm">Visa</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm border-0">
-                <div class="card-body text-center">
-                    <img src="~/img/denmark.png" /> <!-- Lägg till en bild här -->
-                    <!-- Logic för fontawsome icon "person-arms-up" -->
-                    <!--Total clients from denmark logic-->
-                    <p>Clients</p>
-                    <p class="card-text">Se kundinformation och transaktioner i Danmark.</p>
-                    <a href="#" class="btn btn-outline-primary btn-sm">Visa</a>
-                </div>
-            </div>
-        </div>
-    </div> *@
 </div>

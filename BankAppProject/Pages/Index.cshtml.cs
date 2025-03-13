@@ -24,8 +24,35 @@ public class IndexModel : PageModel
     private readonly IStatisticsService _statisticsService;
     public List<CountryStatisticsDto> CountryStatistics { get; set; }
 
-    public void OnGet()
+    //public void OnGet()
+    //{
+    //    CountryStatistics = _statisticsService.GetCountryStatistics();
+    //}
+    //public void OnGet()
+    //{
+    //    try
+    //    {
+    //        CountryStatistics = _statisticsService.GetCountryStatistics();
+
+    //        if (CountryStatistics == null || !CountryStatistics.Any())
+    //        {
+    //            Console.WriteLine(" Ingen statistik hämtad – GetCountryStatistics() returnerade null eller en tom lista.");
+    //        }
+    //        else
+    //        {
+    //            Console.WriteLine($" Statistik hämtad: {CountryStatistics.Count} länder.");
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Console.WriteLine($" Fel vid hämtning av statistik: {ex.Message}");
+    //        Console.WriteLine($"StackTrace: {ex.StackTrace}");
+    //    }
+    //}
+    public async Task OnGetAsync()
     {
-        CountryStatistics = _statisticsService.GetCountryStatistics();
+        CountryStatistics = await _statisticsService.GetCountryStatisticsAsync();
     }
+
+
 }

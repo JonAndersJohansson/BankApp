@@ -10,7 +10,8 @@ namespace Services.Statistics
 {
     public interface IStatisticsService
     {
-        List<CountryStatisticsDto> GetCountryStatistics();
+        Task<List<CountryStatisticsDto>> GetCountryStatisticsAsync();
     }
+
 
 }

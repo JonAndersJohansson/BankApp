@@ -43,6 +43,13 @@ public class Program
             cfg.AddProfile<CustomerProfile>();  // Lägg till din profil här
         }).CreateMapper());
 
+        //SQL LOGGING
+        builder.Services.AddLogging(logging =>
+        {
+            logging.AddConsole();
+            logging.AddDebug();
+        });
+
         //builder.Services.AddAutoMapper(typeof(CustomerProfile));
 
 
