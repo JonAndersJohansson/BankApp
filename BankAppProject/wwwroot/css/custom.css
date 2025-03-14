@@ -44,14 +44,7 @@ html, body {
     .navbar-light .navbar-nav .nav-link:hover {
         color: var(--secondary) !important;
     }*/
-.nav-link {
-    color: var(--primary) !important;
-    letter-spacing: 1px !important; 
-}
 
-/*.nav-link:hover {
-    color: red !important;
-}*/
 
 /* Ändra fonter */
 body, p, a, .btn {
@@ -61,6 +54,7 @@ body, p, a, .btn {
 h1, h2 {
     font-family: "Rokkitt", serif !important;
 }
+/*Hero below */
 
 .hero-section {
     height: 300px; 
@@ -85,26 +79,11 @@ h1, h2 {
     transform: translate(-50%, -50%);
     font-weight: bold;
     color: var(--primary);
-/*    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);*/
     text-align: center;
-    /*    background: rgba(0, 0, 0, 0.5);*/
     padding: 20px;
     border-radius: 10px;
 }
-/*    .hero-text .btn {
-        margin-top: 15px;
-        background-color: var(--info);
-        color: white;
-        font-weight: bold;
-        padding: 10px 20px;
-        border-radius: 5px;
-        transition: all 0.3s ease-in-out;
-    }*/
 
-/*        .hero-text .btn:hover {
-            background-color: #117a8b;
-            transform: scale(1.05);
-        }*/
 .logo {
     max-width: 143px;
     margin-bottom: 9px;
@@ -146,3 +125,24 @@ body .border-left-primary {
 .text-aurora-primary {
     color: var(--primary) !important;
 }
+/* Navbar below */
+.navbar-login-aurora {
+    margin-bottom: -10px;
+}
+#navbar-aurora-logged-in {
+    background-color: lightgray;
+    border-radius: 15px;
+    margin-bottom:12px;
+}
+#navbar-aurora-logged-in:hover {
+    background-color:darkgrey;
+
+}
+.nav-link {
+    color: var(--primary) !important;
+    letter-spacing: 1px !important;
+}
+
+    .nav-link:hover {
+        color: #554f70 !important;
+    }
