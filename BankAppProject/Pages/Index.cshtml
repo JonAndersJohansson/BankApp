@@ -21,6 +21,7 @@
             <div class="col-md-3">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
+                        <!--Flag & countrycode below-->
                         <div class="row no-gutters align-items-center pb-2">
                             <div class="col mr-2">
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@country.CountryCode.ToUpper()</div>
@@ -29,15 +30,41 @@
                                 <img src="~/img/flags/@(country.CountryCode.ToLower()).png" class="stat-flag pb-2" alt="Flag">
                             </div>
                         </div>
+                        <!--Users stat below-->
                         <div class="row no-gutters align-items-center pb-2">
                             <div class="col mr-2">
                                 <i class="fas fa-user stat-icon"></i>
                             </div>
                             <div class="col-auto">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <div class="text-xs font-weight-bold text-aurora-primary text-uppercase mb-1 text-right">
                                     Clients
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">@country.TotalClients</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800 text-right">@country.TotalClients</div>
+                            </div>
+                        </div>
+                        <!--Account stat below-->
+                        <div class="row no-gutters align-items-center pb-2">
+                            <div class="col mr-2">
+                                <i class="fas fa-credit-card stat-icon"></i>
+                            </div>
+                            <div class="col-auto">
+                                <div class="text-xs font-weight-bold text-aurora-primary text-uppercase mb-1 text-right">
+                                    Accounts
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800 text-right">@country.TotalAccounts</div>
+                            </div>
+                        </div>
+                        <!--Capital stat below-->
+                        <div class="row no-gutters align-items-center pb-2">
+                            <div class="col mr-2">
+                                <i class="fa-solid fa-euro-sign stat-icon"></i>
+                            </div>
+                            <div class="col-auto">
+                                <div class="text-xs font-weight-bold text-aurora-primary text-uppercase mb-1 text-right">
+                                    Capital
+                                </div>
+                                <div class="h6 mb-0 font-weight-bold text-gray-800 text-right">@country.TotalCapital.ToString("N0", System.Globalization.CultureInfo.GetCultureInfo("sv-SE"))</div>
+
                             </div>
                         </div>
                     </div>

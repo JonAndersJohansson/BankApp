@@ -128,14 +128,21 @@ h1, h2 {
             background-color: var(--secondary) !important;
             color: black !important;
         }
+
+
+/* Statistics below */
 .stat-flag {
-    width: clamp(32px, 2vw, 48px);
+    /*width: clamp(32px, 2vw, 48px);*/
+    width: 48px;
     height: auto;
 }
 .stat-icon {
-    font-size: clamp(32px, 2vw, 48px);
+    font-size: 28px;
     color: var(--primary);
 }
 body .border-left-primary {
     border-left: 0.25rem solid #443c65 !important;
+}
+.text-aurora-primary {
+    color: var(--primary) !important;
 }
