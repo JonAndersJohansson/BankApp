@@ -21,37 +21,28 @@
             <div class="col-md-3">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
-                        <div class="row no-gutters align-items-center">
+                        <div class="row no-gutters align-items-center pb-2">
                             <div class="col mr-2">
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@country.CountryCode.ToUpper()</div>
+                            </div>
+                            <div class="col-auto">
+                                <img src="~/img/flags/@(country.CountryCode.ToLower()).png" class="stat-flag pb-2" alt="Flag">
+                            </div>
+                        </div>
+                        <div class="row no-gutters align-items-center pb-2">
+                            <div class="col mr-2">
+                                <i class="fas fa-user stat-icon"></i>
+                            </div>
+                            <div class="col-auto">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                     Clients
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@country.TotalClients</div>
                             </div>
-                            <div class="col-auto">
-                                <i class="fas fa-user fa-2x text-gray-300"></i>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-@*             <div class="col-md-3">
-                <img src="~/img/flags/@(country.CountryCode.ToLower()).png" class="card-img-top" alt="Flag">
-                <div class="card text-center shadow-lg">
-                    <div class="card-body">
-
-                        <p><i class="fa-solid fa-users"></i> Clients</p>
-                        <h3>@country.TotalClients</h3>
-
-                        <p><i class="fas fa-credit-card"></i> Accounts</p>
-                        <h3>@country.TotalAccounts</h3>
-
-                        <p><i class="fa-solid fa-piggy-bank"></i> Capital</p>
-                        <h3>@country.TotalCapital.ToString("C", new System.Globalization.CultureInfo("de-DE"))</h3>
-                    </div>
-                </div>
-            </div> *@
         }
     </div>
-
 </div>
