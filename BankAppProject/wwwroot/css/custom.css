@@ -146,3 +146,39 @@ body .border-left-primary {
     .nav-link:hover {
         color: #554f70 !important;
     }
+
+/* Customer page below */
+
+#customer-tabledata-view-btn {
+    vertical-align: middle; /* Centrerar innehållet i cellen lodrätt */
+    text-align: center; /* Centrerar innehållet vågrätt */
+}
+#customer-view-btn {
+    font-size: 0.8rem;
+    background-color: var(--secondary) !important;
+    color: var(--primary) !important;
+    padding: 0.2rem 0.8rem;
+    display: block;
+    text-align: center;
+    margin: 0 auto !important; /* Gör att den centreras horisontellt */
+}
+.fa-angle-up, .fa-angle-down {
+    color: var(--primary);
+}
+.btn-secondary { /* Next & Previous buttons */
+    background-color: var(--primary) !important;
+}
+
+    .btn-secondary:hover {
+        background-color: #554f70 !important;
+    }
+#previous-btn {
+    margin-right: auto;
+}
+thead {
+    font-size: 0.9rem;
+}
+tbody {
+    font-size: 0.7rem;
+}
+
