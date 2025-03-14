@@ -77,25 +77,19 @@ h1, h2 {
     top: 65%;
     left: 30%;
     transform: translate(-50%, -50%);
-    font-weight: bold;
+    font-weight: bolder;
     color: var(--primary);
     text-align: center;
     padding: 20px;
     border-radius: 10px;
 }
-
-.logo {
-    max-width: 143px;
-    margin-bottom: 9px;
-    padding-left: 10px;
+#hero-btn {
+    border: none;
 }
 
-.navbar {
-    padding: 0;
-    padding-top: 2px;
-}
+
 .nav-pills {
-/*    background-color: var(--primary) !important;*/
+    /*    background-color: var(--primary) !important;*/
     border-radius: 20px !important;
 }
 
@@ -125,15 +119,33 @@ body .border-left-primary {
 .text-aurora-primary {
     color: var(--primary) !important;
 }
+
+
 /* Navbar below */
+.logo {
+    max-width: 143px;
+    margin-bottom: 9px;
+    padding-left: 10px;
+}
+
+.navbar {
+    padding: 0;
+    padding-top: 2px;
+}
 .navbar-login-aurora {
-    margin-bottom: -10px;
+    height: 41px;
 }
 #navbar-aurora-logged-in {
-    background-color: lightgray;
-    border-radius: 15px;
-    margin-bottom:12px;
+
+    display: flex;
+    align-items: center; /* Centrera lodrätt */
 }
+    #navbar-aurora-logged-in a {
+        font-size: 0.5rem;
+        background-color: #e4edf2;
+        border-radius: 15px;
+        padding: 5px !important;
+    }
 #navbar-aurora-logged-in:hover {
     background-color:darkgrey;
 
