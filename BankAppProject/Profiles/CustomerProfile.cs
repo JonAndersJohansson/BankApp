@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BankAppProject.ViewModels;
-using Services.DTO;
+using DataAccessLayer.DTO;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BankAppProject.Profiles

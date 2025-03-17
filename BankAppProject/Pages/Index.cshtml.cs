@@ -1,7 +1,7 @@
+using DataAccessLayer.DTO;
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Services.DTO;
 using Services.Statistics;
 
 namespace BankAppProject.Pages;
