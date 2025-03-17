@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccessLayer.Models;
+namespace DataAccessLayer.Data;
 
 public partial class BankAppDataContext : IdentityDbContext
 {
