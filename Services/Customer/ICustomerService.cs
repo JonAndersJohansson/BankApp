@@ -4,7 +4,7 @@ namespace Services.Customer
 {
     public interface ICustomerService
     {
-        List<CustomersDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, out int totalCustomers);
+        List<CustomersDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers);
     }
 }
 

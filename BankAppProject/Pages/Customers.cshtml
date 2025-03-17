@@ -5,6 +5,15 @@
 <h1>Customers</h1>
 <p>Page @Model.PageNumber</p>
 
+@*Search*@
+<form method="get">
+    <input type="text" name="q" value="@Model.Q" placeholder="Sök efter namn eller stad..." />
+    <input type="hidden" name="sortColumn" value="@Request.Query["sortColumn"]" />
+    <input type="hidden" name="sortOrder" value="@Request.Query["sortOrder"]" />
+    <input type="hidden" name="pageNumber" value="1" /> <!-- Starta från första sidan vid ny sökning -->
+    <button type="submit">Sök</button>
+</form>
+
 <table class="table table-bordered table-striped">
 
     <thead>
@@ -14,6 +23,8 @@
                 <a asp-page="/Customers"
                    asp-route-sortColumn="Id"
                    asp-route-sortOrder="asc"
+                   asp-route-q="@Model.Q"
+                   asp-route-pageNumber="1"
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-up"></i>
 
@@ -21,6 +32,8 @@
                 <a asp-page="/Customers"
                    asp-route-sortColumn="Id"
                    asp-route-sortOrder="desc"
+                   asp-route-q="@Model.Q"
+                   asp-route-pageNumber="1"
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
@@ -30,6 +43,8 @@
                 <a asp-page="/Customers"
                    asp-route-sortColumn="National Id"
                    asp-route-sortOrder="asc"
+                   asp-route-q="@Model.Q"
+                   asp-route-pageNumber="1"
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-up"></i>
 
@@ -37,6 +52,8 @@
                 <a asp-page="/Customers"
                    asp-route-sortColumn="National Id"
                    asp-route-sortOrder="desc"
+                   asp-route-q="@Model.Q"
+                   asp-route-pageNumber="1"
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
@@ -46,6 +63,8 @@
                 <a asp-page="/Customers"
                    asp-route-sortColumn="Name"
                    asp-route-sortOrder="asc"
+                   asp-route-q="@Model.Q"
+                   asp-route-pageNumber="1"
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-up"></i>
 
@@ -53,6 +72,8 @@
                 <a asp-page="/Customers"
                    asp-route-sortColumn="Name"
                    asp-route-sortOrder="desc"
+                   asp-route-q="@Model.Q"
+                   asp-route-pageNumber="1"
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
@@ -62,6 +83,8 @@
                 <a asp-page="/Customers"
                    asp-route-sortColumn="Address"
                    asp-route-sortOrder="asc"
+                   asp-route-q="@Model.Q"
+                   asp-route-pageNumber="1"
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-up"></i>
 
@@ -69,6 +92,8 @@
                 <a asp-page="/Customers"
                    asp-route-sortColumn="Address"
                    asp-route-sortOrder="desc"
+                   asp-route-q="@Model.Q"
+                   asp-route-pageNumber="1"
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
@@ -78,6 +103,8 @@
                 <a asp-page="/Customers"
                    asp-route-sortColumn="City"
                    asp-route-sortOrder="asc"
+                   asp-route-q="@Model.Q"
+                   asp-route-pageNumber="1"
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-up"></i>
 
@@ -85,6 +112,8 @@
                 <a asp-page="/Customers"
                    asp-route-sortColumn="City"
                    asp-route-sortOrder="desc"
+                   asp-route-q="@Model.Q"
+                   asp-route-pageNumber="1"
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
@@ -113,6 +142,7 @@
         <a asp-page="/Customers"
            asp-route-sortColumn="@Request.Query["sortColumn"]"
            asp-route-sortOrder="@Request.Query["sortOrder"]"
+           asp-route-q="@Model.Q"
            asp-route-pageNumber="@(Model.PageNumber - 1)"
            class="btn btn-secondary" id="previous-btn"><i class="fa-solid fa-arrow-left"></i>Previous</a>
     }
@@ -122,6 +152,7 @@
         <a asp-page="/Customers"
            asp-route-sortColumn="@Request.Query["sortColumn"]"
            asp-route-sortOrder="@Request.Query["sortOrder"]"
+           asp-route-q="@Model.Q"
            asp-route-pageNumber="@(Model.PageNumber + 1)"
            class="btn btn-secondary">Next<i class="fa-solid fa-arrow-right"></i></a>
     }

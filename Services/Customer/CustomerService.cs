@@ -13,9 +13,21 @@ namespace Services.Customer
             _customerRepository = customerRepository;
         }
 
-        public List<CustomersDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, out int totalCustomers)
+        public List<CustomersDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers)
         {
             var query = _customerRepository.GetAllCustomers();
+
+            // Search
+            if (!string.IsNullOrWhiteSpace(q))
+            {
+                string searchQuery = q.Trim().ToLower();
+
+                query = query.Where(c =>
+                    c.Givenname.ToLower().Contains(searchQuery) ||
+                    c.Surname.ToLower().Contains(searchQuery) ||
+                    c.City.ToLower().Contains(searchQuery));
+            }
+
 
             // Sortering beroende på valda kolumner
             query = sortColumn switch
