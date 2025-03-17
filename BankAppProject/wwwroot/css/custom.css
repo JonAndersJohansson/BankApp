@@ -159,7 +159,7 @@ body .border-left-primary {
         color: #554f70 !important;
     }
 
-/* Customer page below */
+/* Customers page below */
 
 #customer-tabledata-view-btn {
     vertical-align: middle; /* Centrerar innehållet i cellen lodrätt */
@@ -184,13 +184,19 @@ body .border-left-primary {
     .btn-secondary:hover {
         background-color: #554f70 !important;
     }
-#previous-btn {
+/*#previous-btn {
     margin-right: auto;
-}
+}*/
 thead {
     font-size: 0.9rem;
 }
 tbody {
     font-size: 0.7rem;
 }
-
+.pagination {
+    justify-content: center;
+    align-items: center;
+}
+.display-pagenumber {
+    margin: 0 10px;
+}

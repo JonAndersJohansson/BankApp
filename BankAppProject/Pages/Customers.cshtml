@@ -3,6 +3,7 @@
 @{
 }
 <h1>Customers</h1>
+<p>Page @Model.PageNumber</p>
 
 <table class="table table-bordered table-striped">
 
@@ -115,7 +116,7 @@
            asp-route-pageNumber="@(Model.PageNumber - 1)"
            class="btn btn-secondary" id="previous-btn"><i class="fa-solid fa-arrow-left"></i>Previous</a>
     }
-
+    <p class="display-pagenumber">Page @Model.PageNumber</p>
     @if ((Model.PageNumber * Model.PageSize) < Model.TotalCustomers)
     {
         <a asp-page="/Customers"
