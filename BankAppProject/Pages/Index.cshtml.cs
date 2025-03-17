@@ -1,3 +1,4 @@
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.DTO;
@@ -22,6 +23,7 @@ public class IndexModel : PageModel
     }
 
     private readonly IStatisticsService _statisticsService;
+
     public List<CountryStatisticsDto> CountryStatistics { get; set; }
 
     //public void OnGet()
