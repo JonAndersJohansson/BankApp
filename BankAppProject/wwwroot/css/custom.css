@@ -121,6 +121,7 @@ body .border-left-primary {
 }
 .navbar-login-aurora {
     height: 41px;
+    align-items: center;
 }
 #navbar-aurora-logged-in {
 
@@ -132,11 +133,11 @@ body .border-left-primary {
         background-color: #e4edf2;
         border-radius: 15px;
         padding: 5px !important;
+        margin-right: 10px;
     }
-#navbar-aurora-logged-in:hover {
-    background-color:darkgrey;
-
-}
+        #navbar-aurora-logged-in a:hover {
+            background-color: #9fc2d6;
+        }
 .nav-link {
     color: var(--primary) !important;
     letter-spacing: 1px !important;
@@ -144,6 +145,20 @@ body .border-left-primary {
 
     .nav-link:hover {
         color: #554f70 !important;
+    }
+
+#login-logout {
+    padding: 2px 10px;
+    align-self: center; /* Centrera lodrätt */
+    margin-bottom: 0 !important;
+    border: none !important;
+}
+.aurora-nav {
+    align-content: center;
+    color: var(--primary) !important;
+}
+    .aurora-nav:hover {
+        color: #82a9bf !important;
     }
 
 /* Customers page below */
@@ -192,7 +207,7 @@ tbody {
 #search-btn {
     background-color: var(--primary) !important;
     border: none !important;
-    padding: 3px 10px;
+    padding: 3px 15px !important;
     color: white !important;
     margin-left: 10px !important;
     font-weight: bold !important;
