@@ -6,6 +6,7 @@ using AutoMapper;
 using BankAppProject.Profiles;
 using Services.Statistics;
 using DataAccessLayer.Data;
+using Services.Profiles;
 
 namespace BankAppProject;
 
@@ -37,11 +38,12 @@ public class Program
         builder.Services.AddScoped<IStatisticsRepository, StatisticsRepository>();
         builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 
+        builder.Services.AddAutoMapper(typeof(CustomersProfile), typeof(CustomerInfoProfile));
 
-        builder.Services.AddSingleton<IMapper>(new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<CustomerProfile>();  // Lägg till din profil här
-        }).CreateMapper());
+        //builder.Services.AddSingleton<IMapper>(new MapperConfiguration(cfg =>
+        //{
+        //    cfg.AddProfile<CustomersProfile>();  // Lägg till din profil här
+        //}).CreateMapper());
 
         //SQL LOGGING
         builder.Services.AddLogging(logging =>
@@ -50,7 +52,7 @@ public class Program
             logging.AddDebug();
         });
 
-        //builder.Services.AddAutoMapper(typeof(CustomerProfile));
+        //builder.Services.AddAutoMapper(typeof(CustomersProfile));
 
 
         var app = builder.Build();

@@ -59,6 +59,42 @@ namespace Services.Customer
 
             return customers;
         }
+        public async Task<CustomerInfoDto?> GetCustomerAsync(int customerId)
+        {
+            var customer = await _customerRepository.GetCustomerByIdAsync(customerId);
+            if (customer == null)
+                return null;
+
+            Console.WriteLine($"Antal Dispositions: {customer.Dispositions.Count}");
+            Console.WriteLine($"Antal konton: {customer.Dispositions.Count(d => d.Account != null)}");
+
+            return new CustomerInfoDto
+            {
+                CustomerId = customer.CustomerId,
+                Givenname = customer.Givenname,
+                Surname = customer.Surname,
+                Streetaddress = customer.Streetaddress,
+                City = customer.City,
+                Zipcode = customer.Zipcode,
+                Country = customer.Country,
+                Birthday = customer.Birthday,
+                NationalId = customer.NationalId,
+                Telephonecountrycode = customer.Telephonecountrycode,
+                Telephonenumber = customer.Telephonenumber,
+                Emailaddress = customer.Emailaddress,
+
+                // Skapa listan med konton
+                Accounts = customer.Dispositions
+                    .Where(d => d.Account != null) // Kontrollera att konto finns
+                    .Select(d => new CustomerInfoAccountDto
+                    {
+                        AccountId = d.Account.AccountId,
+                        Balance = d.Account.Balance,
+                        Frequency = d.Account.Frequency,
+                        Created = d.Account.Created
+                    }).ToList()
+            };
+        }
 
     }
 }

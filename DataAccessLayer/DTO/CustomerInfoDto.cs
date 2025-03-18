@@ -21,7 +21,7 @@ namespace DataAccessLayer.DTO
         public string? Telephonecountrycode { get; set; }
         public string? Telephonenumber { get; set; }
         public string? Emailaddress { get; set; }
-        public List<AccountDto> Accounts { get; set; } = new List<AccountDto>();
+        public List<CustomerInfoAccountDto> Accounts { get; set; } = new List<CustomerInfoAccountDto>();
         public decimal TotalBalance => Accounts.Sum(a => a.Balance);
     }
 }

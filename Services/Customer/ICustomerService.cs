@@ -5,6 +5,8 @@ namespace Services.Customer
     public interface ICustomerService
     {
         List<CustomersDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers);
+
+        Task<CustomerInfoDto?> GetCustomerAsync(int customerId);
     }
 }
 
