@@ -21,29 +21,12 @@ html, body {
 /* Ändra alla primära knappar */
 .btn-primary {
     background-color: var(--primary) !important;
-    border-color: var(--primary) !important;
+    border: none !important;
 }
 
     .btn-primary:hover {
-        background-color: #3a3155 !important; /* Lite mörkare nyans vid hover */
+        background-color: #554f70 !important;
     }
-/*.btn-info {
-    background-color: var(--info) !important;
-    color: var(--primary) !important;
-}*/
-
-/*    .btn-info:hover {
-        background-color: #3a3155 !important;
-    }
-*/
-/* Ändra navbar-länkar */
-/*.navbar-light .navbar-nav .nav-link {
-    color: var(--primary) !important;
-}
-
-    .navbar-light .navbar-nav .nav-link:hover {
-        color: var(--secondary) !important;
-    }*/
 
 
 /* Ändra fonter */
@@ -162,31 +145,33 @@ body .border-left-primary {
 /* Customers page below */
 
 #customer-tabledata-view-btn {
-    vertical-align: middle; /* Centrerar innehållet i cellen lodrätt */
-    text-align: center; /* Centrerar innehållet vågrätt */
+    vertical-align: middle;  Centrerar innehållet i cellen lodrätt 
+    text-align: center;  Centrerar innehållet vågrätt 
 }
 #customer-view-btn {
     font-size: 0.8rem;
     background-color: var(--secondary) !important;
     color: var(--primary) !important;
+    border: none !important;
     padding: 0.2rem 0.8rem;
     display: block;
     text-align: center;
-    margin: 0 auto !important; /* Gör att den centreras horisontellt */
+    margin: 0 auto !important;
 }
+    #customer-view-btn:hover {
+        background-color: #82a9bf !important;
+    }
 .fa-angle-up, .fa-angle-down {
-    color: var(--primary);
+    color: #443c65;
 }
-.btn-secondary { /* Next & Previous buttons */
-    background-color: var(--primary) !important;
+/*.btn-secondary {*/ /* Next & Previous buttons */
+    /*background-color: var(--primary) !important;
 }
 
     .btn-secondary:hover {
         background-color: #554f70 !important;
-    }
-/*#previous-btn {
-    margin-right: auto;
-}*/
+    }*/
+
 thead {
     font-size: 0.9rem;
 }
@@ -194,9 +179,22 @@ tbody {
     font-size: 0.7rem;
 }
 .pagination {
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 .display-pagenumber {
     margin: 0 10px;
 }
+#search-btn {
+    background-color: var(--primary) !important;
+    border: none !important;
+    padding: 3px 10px;
+    color: white !important;
+    margin-left: 10px !important;
+    font-weight: bold !important;
+    border-radius: 20px !important;
+    letter-spacing: 2px !important;
+}
+    #search-btn:hover {
+        background-color: #554f70 !important;
+    }

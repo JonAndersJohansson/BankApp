@@ -7,11 +7,11 @@
 
 @*Search*@
 <form method="get">
-    <input type="text" name="q" value="@Model.Q" placeholder="Sök efter namn eller stad..." />
+    <input type="text" name="q" value="@Model.Q" placeholder="Search by name or city" />
     <input type="hidden" name="sortColumn" value="@Request.Query["sortColumn"]" />
     <input type="hidden" name="sortOrder" value="@Request.Query["sortOrder"]" />
-    <input type="hidden" name="pageNumber" value="1" /> <!-- Starta från första sidan vid ny sökning -->
-    <button type="submit">Sök</button>
+    <input type="hidden" name="pageNumber" value="1" />
+    <button type="submit" id="search-btn">Search</button>
 </form>
 
 <table class="table table-bordered table-striped">
@@ -144,7 +144,7 @@
            asp-route-sortOrder="@Request.Query["sortOrder"]"
            asp-route-q="@Model.Q"
            asp-route-pageNumber="@(Model.PageNumber - 1)"
-           class="btn btn-secondary" id="previous-btn"><i class="fa-solid fa-arrow-left"></i>Previous</a>
+           class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i>Previous</a>
     }
     <p class="display-pagenumber">Page @Model.PageNumber</p>
     @if ((Model.PageNumber * Model.PageSize) < Model.TotalCustomers)
@@ -154,7 +154,7 @@
            asp-route-sortOrder="@Request.Query["sortOrder"]"
            asp-route-q="@Model.Q"
            asp-route-pageNumber="@(Model.PageNumber + 1)"
-           class="btn btn-secondary">Next<i class="fa-solid fa-arrow-right"></i></a>
+           class="btn btn-primary">Next<i class="fa-solid fa-arrow-right"></i></a>
     }
 </div>
 
