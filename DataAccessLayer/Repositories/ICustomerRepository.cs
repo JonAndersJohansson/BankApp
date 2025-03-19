@@ -1,5 +1,4 @@
-﻿using DataAccessLayer.DTO;
-using DataAccessLayer.Models;
+﻿using DataAccessLayer.Models;
 
 namespace DataAccessLayer.Repositories
 {

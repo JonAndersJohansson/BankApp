@@ -1,12 +1,11 @@
+using BankAppProject.Profiles;
+using DataAccessLayer.Data;
+using DataAccessLayer.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Services.Customer;
-using DataAccessLayer.Repositories;
-using AutoMapper;
-using BankAppProject.Profiles;
-using Services.Statistics;
-using DataAccessLayer.Data;
 using Services.Profiles;
+using Services.Statistics;
 
 namespace BankAppProject;
 

@@ -1,5 +1,4 @@
 ﻿using DataAccessLayer.Data;
-using DataAccessLayer.DTO;
 using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +21,7 @@ namespace DataAccessLayer.Repositories
         {
             return await _dbContext.Customers
                 .Include(c => c.Dispositions)
-                    .ThenInclude(d => d.Account)
+                .ThenInclude(d => d.Account)
                 .FirstOrDefaultAsync(c => c.CustomerId == customerId);
         }
 

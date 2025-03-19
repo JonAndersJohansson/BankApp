@@ -1,6 +1,5 @@
 using AutoMapper;
 using BankAppProject.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Customer;
 
