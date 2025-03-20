@@ -1,6 +1,9 @@
 using BankAppProject.Profiles;
 using DataAccessLayer.Data;
-using DataAccessLayer.Repositories;
+using DataAccessLayer.Repositories.AccountRepositories;
+using DataAccessLayer.Repositories.CustomerRepositories;
+using DataAccessLayer.Repositories.CustomerrRepositories;
+using DataAccessLayer.Repositories.StatisticsRepositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Services.Customer;
@@ -18,8 +21,10 @@ public class Program
         // Add services to the container.
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
         builder.Services.AddDbContext<BankAppDataContext>(options =>
-            options.UseSqlServer(connectionString));
-        builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+            options.UseSqlServer(
+                builder.Configuration.GetConnectionString("DefaultConnection"),
+                sqlOptions => sqlOptions.MigrationsAssembly("DataAccessLayer"))); // Viktigt!
+
 
         builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddRoles<IdentityRole>()
@@ -32,6 +37,9 @@ public class Program
         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         builder.Services.AddTransient<ICustomerService, CustomerService>();
 
+        // Lägger till AccountRepository
+        builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+;
 
         // Lägger till StatisticsRepository och StatisticsService
         builder.Services.AddScoped<IStatisticsRepository, StatisticsRepository>();

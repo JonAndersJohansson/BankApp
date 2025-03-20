@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.DTO;
-using DataAccessLayer.Repositories;
+using DataAccessLayer.Repositories.AccountRepositories;
+using DataAccessLayer.Repositories.CustomerRepositories;
 
 namespace Services.Customer
 {
@@ -7,10 +8,12 @@ namespace Services.Customer
     {
 
         private readonly ICustomerRepository _customerRepository;
+        private readonly IAccountRepository _accountRepository;
 
-        public CustomerService(ICustomerRepository customerRepository)
+        public CustomerService(ICustomerRepository customerRepository, IAccountRepository accountRepository)
         {
             _customerRepository = customerRepository;
+            _accountRepository = accountRepository;
         }
 
         public List<CustomersDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers)
@@ -66,8 +69,8 @@ namespace Services.Customer
             if (customer == null)
                 return null;
 
-            Console.WriteLine($"Antal Dispositions: {customer.Dispositions.Count}");
-            Console.WriteLine($"Antal konton: {customer.Dispositions.Count(d => d.Account != null)}");
+            Console.WriteLine("Inside GetCustomerAsync in CustomerService");
+            
 
             return new CustomerInfoDto
             {
@@ -96,6 +99,36 @@ namespace Services.Customer
                     }).ToList()
             };
         }
+        public async Task<bool> DeleteCustomerAsync(int customerId)
+        {
+            //var customer = await _customerRepository.GetCustomerByIdAsync(customerId);
+            //if (customer == null) return false;
+
+            //// Ta bort alla dispositioner kopplade till kunden
+            //var dispositions = await _dispositionRepository.GetDispositionsByCustomerIdAsync(customerId);
+            //foreach (var disposition in dispositions)
+            //{
+            //    _dispositionRepository.DeleteDisposition(disposition);
+            //}
+
+            //// Ta bort alla kundens konton
+            //var accounts = await _accountRepository.GetAccountsByCustomerIdAsync(customerId);
+            //foreach (var account in accounts)
+            //{
+            //    _accountRepository.DeleteAccount(account);
+            //}
+
+            //// Spara ändringar efter att dispositioner och konton har tagits bort
+            //await _dispositionRepository.SaveAsync();
+            //await _accountRepository.SaveAsync();
+
+            //// Nu kan vi ta bort kunden
+            //_customerRepository.Delete(customer);
+            //await _customerRepository.SaveAsync();
+
+            return true;
+        }
+
 
     }
 }

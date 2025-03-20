@@ -13,6 +13,8 @@ public partial class Disposition
 
     public string Type { get; set; } = null!;
 
+    public bool IsActive { get; set; } = true;
+
     public virtual Account Account { get; set; } = null!;
 
     public virtual ICollection<Card> Cards { get; set; } = new List<Card>();

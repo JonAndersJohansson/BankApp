@@ -15,6 +15,7 @@
                         <th>Balance</th>
                         <th>Frequency</th>
                         <th>Created</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,11 +26,13 @@
                             <td>@account.Balance.ToString("C")</td>
                             <td>@account.Frequency</td>
                             <td>@account.Created.ToShortDateString()</td>
+                            <td id="customer-tabledata-view-btn"><a asp-page="/Account/AccountDetails" asp-route-id="@account.AccountId" class="btn btn-info" id="customer-view-btn">View</a></td>
                         </tr>
                     }
                 </tbody>
             </table>
             <div class="list-group-item"><strong>Total assets:</strong> @Model.Customer.TotalBalance.ToString("C", new System.Globalization.CultureInfo("de-DE"))</div>
+            <div id="customer-tabledata-view-btn"><a asp-page="/Account/NewAccount" asp-route-id="@Model.Customer.CustomerId." class="btn btn-info" id="customer-view-btn">Add new account</a></div>
         </div>
 
         <!-- Höger Kundinfo -->
@@ -73,9 +76,15 @@
                     <div class="col">@Model.Customer.Emailaddress</div>
                 </div>
             </div>
+            <div class="d-flex flex-row">
+                <a asp-page="/Customer/EditCustomerInfo" asp-route-id="@Model.Customer.CustomerId." class="btn btn-secondary">Edit Customer Info</a>
+                <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Are you sure you want to DELETE this customer?')">
+                    <input type="hidden" name="customerId" value="@Model.Customer.CustomerId" />
+                    <button type="submit" class="btn btn-danger">Delete Customer</button>
+                </form>
+
+            </div>
         </div>
-
-
     </div>
-    <button class="btn btn-secondary mt-3" onclick="window.history.back();">⬅ Back</button>
+    <button class="btn btn-primary mt-3" onclick="window.history.back();">⬅ Back</button>
 </div>

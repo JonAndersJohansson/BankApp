@@ -1,7 +1,7 @@
 ﻿using DataAccessLayer.Data;
 using DataAccessLayer.Models;
 
-namespace DataAccessLayer.Repositories
+namespace DataAccessLayer.Repositories.StatisticsRepositories
 {
     public class StatisticsRepository : IStatisticsRepository
     {

@@ -27,5 +27,18 @@ namespace BankAppProject.Pages.Customer
             Customer = _mapper.Map<CustomerInfoViewModel>(customerDto);
             return Page();
         }
+        public async Task<IActionResult> OnPostDeleteAsync(int customerId)
+        {
+            Console.WriteLine($"Försöker radera kund: {customerId}");
+            var success = await _customerService.DeleteCustomerAsync(customerId);
+            if (!success)
+            {
+                ModelState.AddModelError(string.Empty, "Kunden kunde inte raderas.");
+                return Page();
+            }
+
+            return RedirectToPage("/Customer/Index");
+        }
+
     }
 }

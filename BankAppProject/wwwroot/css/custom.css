@@ -29,10 +29,17 @@ html, body {
         background-color: #554f70 !important;
     }
 
+.btn-secondary {
+    background-color: var(--secondary) !important;
+    color: var(--primary) !important;
+    border: none !important;
+}
+    .btn-secondary:hover {
+        background-color: #82a9bf !important;
+    }
+    /* Fonts below */
 
-/* Fonts below */
-
-body, p, a, .btn {
+    body, p, a, .btn {
     font-family: "Helvetica", sans-serif !important;
 }
 

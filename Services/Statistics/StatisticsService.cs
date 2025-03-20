@@ -1,5 +1,5 @@
 ﻿using DataAccessLayer.DTO;
-using DataAccessLayer.Repositories;
+using DataAccessLayer.Repositories.StatisticsRepositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Services.Statistics

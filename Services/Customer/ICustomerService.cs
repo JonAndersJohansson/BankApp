@@ -7,6 +7,7 @@ namespace Services.Customer
         List<CustomersDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers);
 
         Task<CustomerInfoDto?> GetCustomerAsync(int customerId);
+        Task<bool> DeleteCustomerAsync(int customerId);
     }
 }
 

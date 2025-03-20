@@ -1,8 +1,9 @@
 ﻿using DataAccessLayer.Data;
 using DataAccessLayer.Models;
+using DataAccessLayer.Repositories.CustomerRepositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccessLayer.Repositories
+namespace DataAccessLayer.Repositories.CustomerrRepositories
 {
     public class CustomerRepository : ICustomerRepository
     {
@@ -23,6 +24,14 @@ namespace DataAccessLayer.Repositories
                 .Include(c => c.Dispositions)
                 .ThenInclude(d => d.Account)
                 .FirstOrDefaultAsync(c => c.CustomerId == customerId);
+        }
+        public void Delete(Customer customer)
+        {
+            _dbContext.Customers.Remove(customer);
+        }
+        public async Task SaveAsync()
+        {
+            await _dbContext.SaveChangesAsync();
         }
 
     }
