@@ -161,7 +161,7 @@ body .border-left-primary {
         color: #82a9bf !important;
     }
 
-/* Customers page below */
+/* CustomerIndex page below */
 
 #customer-tabledata-view-btn {
     vertical-align: middle;  Centrerar innehållet i cellen lodrätt 
@@ -183,13 +183,6 @@ body .border-left-primary {
 .fa-angle-up, .fa-angle-down {
     color: #443c65;
 }
-/*.btn-secondary {*/ /* Next & Previous buttons */
-    /*background-color: var(--primary) !important;
-}
-
-    .btn-secondary:hover {
-        background-color: #554f70 !important;
-    }*/
 
 thead {
     font-size: 0.9rem;
@@ -207,7 +200,7 @@ tbody {
 #search-btn {
     background-color: var(--primary) !important;
     border: none !important;
-    padding: 3px 15px !important;
+    padding: 3px 6px !important;
     color: white !important;
     margin-left: 10px !important;
     font-weight: bold !important;
@@ -217,3 +210,8 @@ tbody {
     #search-btn:hover {
         background-color: #554f70 !important;
     }
+.flexcontainer {
+    display: flex;
+    gap: 10px; /* Mellanrum mellan elementen */
+    align-items: center; /* Justerar vertikalt */
+}

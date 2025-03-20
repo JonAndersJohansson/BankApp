@@ -23,6 +23,7 @@ namespace Services.Customer
                 string searchQuery = q.Trim().ToLower();
 
                 query = query.Where(c =>
+                    c.CustomerId.ToString().Contains(searchQuery) ||
                     c.Givenname.ToLower().Contains(searchQuery) ||
                     c.Surname.ToLower().Contains(searchQuery) ||
                     c.City.ToLower().Contains(searchQuery));

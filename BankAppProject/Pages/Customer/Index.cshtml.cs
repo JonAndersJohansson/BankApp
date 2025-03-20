@@ -20,7 +20,7 @@ namespace BankAppProject.Pages.Customer
         public int TotalCustomers { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 50;
-        public string Q { get; set; }
+        public string? Q { get; set; }
 
         public void OnGet(string sortColumn = "Id", string sortOrder = "asc", int pageNumber = 1, string? q = null)
         {
