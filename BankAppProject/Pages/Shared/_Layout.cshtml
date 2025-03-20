@@ -40,7 +40,7 @@
                             <li class="nav-item">
                                 <a class="nav-link aurora-nav"
                                    asp-area=""
-                                   asp-page="/Privacy">Privacy</a>
+                                   asp-page="/Privacy">adminDELETE</a>
                             </li>
                         }
                         @if (User.IsInRole("Admin") || User.IsInRole("Cashier"))
@@ -48,7 +48,7 @@
                             <li class="nav-item">
                                 <a class="nav-link aurora-nav"
                                    asp-area=""
-                                   asp-page="/Customers">Customers</a>
+                                   asp-page="/Customer/Index">Customers</a>
                             </li>
                         }
                     </ul>

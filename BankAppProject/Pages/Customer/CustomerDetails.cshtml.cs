@@ -4,16 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Customer;
 
-namespace BankAppProject.Pages
+namespace BankAppProject.Pages.Customer
 {
-    public class CustomerInfoModel : PageModel
+    public class CustomerDetailsModel : PageModel
     {
         private readonly ICustomerService _customerService;
         private readonly IMapper _mapper;
 
         public CustomerInfoViewModel Customer { get; set; } = new();
 
-        public CustomerInfoModel(ICustomerService customerService, IMapper mapper)
+        public CustomerDetailsModel(ICustomerService customerService, IMapper mapper)
         {
             _customerService = customerService;
             _mapper = mapper;
