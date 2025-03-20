@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.DTO;
 using DataAccessLayer.Repositories.AccountRepositories;
 using DataAccessLayer.Repositories.CustomerRepositories;
+using DataAccessLayer.Repositories.DispositionRepositories;
 
 namespace Services.Customer
 {
@@ -9,11 +10,13 @@ namespace Services.Customer
 
         private readonly ICustomerRepository _customerRepository;
         private readonly IAccountRepository _accountRepository;
+        private readonly IDispositionRepository _dispositionRepository;
 
-        public CustomerService(ICustomerRepository customerRepository, IAccountRepository accountRepository)
+        public CustomerService(ICustomerRepository customerRepository, IAccountRepository accountRepository, IDispositionRepository dispositionRepository)
         {
             _customerRepository = customerRepository;
             _accountRepository = accountRepository;
+            _dispositionRepository = dispositionRepository;
         }
 
         public List<CustomersDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers)
@@ -101,34 +104,32 @@ namespace Services.Customer
         }
         public async Task<bool> DeleteCustomerAsync(int customerId)
         {
-            //var customer = await _customerRepository.GetCustomerByIdAsync(customerId);
-            //if (customer == null) return false;
+            var customer = await _customerRepository.GetCustomerByIdAsync(customerId);
+            if (customer == null) return false;
 
-            //// Ta bort alla dispositioner kopplade till kunden
-            //var dispositions = await _dispositionRepository.GetDispositionsByCustomerIdAsync(customerId);
-            //foreach (var disposition in dispositions)
-            //{
-            //    _dispositionRepository.DeleteDisposition(disposition);
-            //}
+            // Soft delete på kunden
+            customer.IsActive = false;
 
-            //// Ta bort alla kundens konton
-            //var accounts = await _accountRepository.GetAccountsByCustomerIdAsync(customerId);
-            //foreach (var account in accounts)
-            //{
-            //    _accountRepository.DeleteAccount(account);
-            //}
+            // Hämta och inaktivera alla dispositioner kopplade till kunden
+            var dispositions = await _dispositionRepository.GetByCustomerIdAsync(customerId);
+            foreach (var disposition in dispositions)
+            {
+                disposition.IsActive = false;
+            }
 
-            //// Spara ändringar efter att dispositioner och konton har tagits bort
-            //await _dispositionRepository.SaveAsync();
-            //await _accountRepository.SaveAsync();
+            // Hämta och inaktivera alla konton kopplade till kunden
+            var accounts = await _accountRepository.GetAccountsByCustomerIdAsync(customerId);
+            foreach (var account in accounts)
+            {
+                account.IsActive = false;
+            }
 
-            //// Nu kan vi ta bort kunden
-            //_customerRepository.Delete(customer);
-            //await _customerRepository.SaveAsync();
+            // Spara ändringar i databasen
+            await _customerRepository.SaveAsync();
+            await _dispositionRepository.SaveAsync();
+            await _accountRepository.SaveAsync();
 
             return true;
         }
-
-
     }
 }

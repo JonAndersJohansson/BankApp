@@ -7,11 +7,11 @@
     <div class="row">
         <!-- Vänster Kontoinfo -->
         <div class="col-md-6">
-            <h5>Accounts</h5>
+            <h5 class="ml-2">Accounts</h5>
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Account nr</th>
+                        <th>Acc #</th>
                         <th>Balance</th>
                         <th>Frequency</th>
                         <th>Created</th>
@@ -23,7 +23,7 @@
                     {
                         <tr>
                             <td>@account.AccountId</td>
-                            <td>@account.Balance.ToString("C")</td>
+                            <td>@account.Balance.ToString("C1", new System.Globalization.CultureInfo("de-DE"))</td>
                             <td>@account.Frequency</td>
                             <td>@account.Created.ToShortDateString()</td>
                             <td id="customer-tabledata-view-btn"><a asp-page="/Account/AccountDetails" asp-route-id="@account.AccountId" class="btn btn-info" id="customer-view-btn">View</a></td>
@@ -32,12 +32,15 @@
                 </tbody>
             </table>
             <div class="list-group-item"><strong>Total assets:</strong> @Model.Customer.TotalBalance.ToString("C", new System.Globalization.CultureInfo("de-DE"))</div>
-            <div id="customer-tabledata-view-btn"><a asp-page="/Account/NewAccount" asp-route-id="@Model.Customer.CustomerId." class="btn btn-info" id="customer-view-btn">Add new account</a></div>
+
+            <div style="display: flex; justify-content: flex-end;">
+                <a asp-page="/Account/NewAccount" asp-route-id="@Model.Customer.CustomerId." class="btn btn-success">Add new account</a>
+            </div>
         </div>
 
         <!-- Höger Kundinfo -->
         <div class="col-md-6">
-            <h5>Customer Info</h5>
+            <h5 class="ml-4">Customer Info</h5>
             <div class="container">
                 <div class="row">
                     <div class="col-md-3"><strong>Name:</strong></div>
@@ -76,11 +79,11 @@
                     <div class="col">@Model.Customer.Emailaddress</div>
                 </div>
             </div>
-            <div class="d-flex flex-row">
-                <a asp-page="/Customer/EditCustomerInfo" asp-route-id="@Model.Customer.CustomerId." class="btn btn-secondary">Edit Customer Info</a>
-                <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Are you sure you want to DELETE this customer?')">
+            <div class="d-flex flex-row mt-5">
+                <a asp-page="/Customer/EditCustomerInfo" asp-route-id="@Model.Customer.CustomerId." class="btn btn-secondary">Edit Customer</a>
+                <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Are you sure you want to Inactivate this customer? All accounts will also be inactivated.')">
                     <input type="hidden" name="customerId" value="@Model.Customer.CustomerId" />
-                    <button type="submit" class="btn btn-danger">Delete Customer</button>
+                    <button type="submit" class="btn btn-danger">Inactivate Customer</button>
                 </form>
 
             </div>

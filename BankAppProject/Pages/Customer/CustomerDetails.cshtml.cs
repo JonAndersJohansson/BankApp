@@ -29,16 +29,16 @@ namespace BankAppProject.Pages.Customer
         }
         public async Task<IActionResult> OnPostDeleteAsync(int customerId)
         {
-            Console.WriteLine($"Försöker radera kund: {customerId}");
             var success = await _customerService.DeleteCustomerAsync(customerId);
             if (!success)
             {
-                ModelState.AddModelError(string.Empty, "Kunden kunde inte raderas.");
+                ModelState.AddModelError(string.Empty, "Customer could not be Deleted");
                 return Page();
             }
 
             return RedirectToPage("/Customer/Index");
         }
+
 
     }
 }

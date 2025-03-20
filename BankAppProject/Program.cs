@@ -3,6 +3,7 @@ using DataAccessLayer.Data;
 using DataAccessLayer.Repositories.AccountRepositories;
 using DataAccessLayer.Repositories.CustomerRepositories;
 using DataAccessLayer.Repositories.CustomerrRepositories;
+using DataAccessLayer.Repositories.DispositionRepositories;
 using DataAccessLayer.Repositories.StatisticsRepositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -37,9 +38,9 @@ public class Program
         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         builder.Services.AddTransient<ICustomerService, CustomerService>();
 
-        // Lägger till AccountRepository
+        // Lägger till AccountRepository och DispositionRepository
         builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-;
+        builder.Services.AddScoped<IDispositionRepository, DispositionRepository>();
 
         // Lägger till StatisticsRepository och StatisticsService
         builder.Services.AddScoped<IStatisticsRepository, StatisticsRepository>();

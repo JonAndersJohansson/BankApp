@@ -16,7 +16,10 @@ namespace DataAccessLayer.Repositories.CustomerrRepositories
 
         public IQueryable<Customer> GetAllCustomers()
         {
-            return _dbContext.Customers.AsQueryable();
+            return _dbContext.Customers
+                .Where(c => c.IsActive)
+                .AsQueryable();
+
         }
         public async Task<Customer?> GetCustomerByIdAsync(int customerId)
         {
