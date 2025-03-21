@@ -2,92 +2,116 @@
 @model BankAppProject.Pages.Customer.CustomerDetailsModel
 @{
 }
-<div class="container mt-4">
-    <h4>Id: @Model.Customer.CustomerId, @Model.Customer.Name</h4>
+
+<div class="container mt-3 p-0">
+    <button class="btn btn-primary mb-2" onclick="window.history.back();">⬅ Back</button>
+
+    <div class="card-header d-flex flex-wrap justify-content-between mb-2">
+        <h4 class="mb-0">Id: @Model.Customer.CustomerId, @Model.Customer.Name</h4>
+        <form method="post" asp-page-handler="Delete"
+              onsubmit="return confirm('Are you sure you want to Inactivate this customer? All accounts will also be inactivated.')">
+            <input type="hidden" name="customerId" value="@Model.Customer.CustomerId" />
+            <button type="submit" class="btn btn-outline-danger">
+                Inactivate Customer <i class="fa-solid fa-trash-can"></i>
+            </button>
+        </form>
+    </div>
+
     <div class="row">
-        <!-- Vänster Kontoinfo -->
-        <div class="col-md-6">
-            <h5 class="ml-2">Accounts</h5>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Acc #</th>
-                        <th>Balance</th>
-                        <th>Frequency</th>
-                        <th>Created</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var account in Model.Customer.Accounts)
-                    {
-                        <tr>
-                            <td>@account.AccountId</td>
-                            <td>@account.Balance.ToString("C1", new System.Globalization.CultureInfo("de-DE"))</td>
-                            <td>@account.Frequency</td>
-                            <td>@account.Created.ToShortDateString()</td>
-                            <td id="customer-tabledata-view-btn"><a asp-page="/Account/AccountDetails" asp-route-id="@account.AccountId" class="btn btn-info" id="customer-view-btn">View</a></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <div class="list-group-item"><strong>Total assets:</strong> @Model.Customer.TotalBalance.ToString("C", new System.Globalization.CultureInfo("de-DE"))</div>
 
-            <div style="display: flex; justify-content: flex-end;">
-                <a asp-page="/Account/NewAccount" asp-route-id="@Model.Customer.CustomerId." class="btn btn-success">Add new account</a>
+@*         <div class="col-12 col-md-6 order-1 order-md-2"> *@
+        <!-- Customer Info -->
+        <div class="col-12 col-md-6 order-2 order-md-1">
+            <div class="d-flex flex-wrap justify-content-between">
+                <h5 class="ps-3">Customer Info</h5>
+                <a asp-page="/Customer/EditCustomerInfo" asp-route-id="@Model.Customer.CustomerId" class="btn btn-secondary">
+                    Edit Customer <i class="fa-solid fa-pen-to-square"></i>
+                </a>
             </div>
-        </div>
-
-        <!-- Höger Kundinfo -->
-        <div class="col-md-6">
-            <h5 class="ml-4">Customer Info</h5>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3"><strong>Name:</strong></div>
+            <div class="container p-0">
+                <div class="row mb-2">
+                    <div class="col-4 col-sm-3"><strong>Name:</strong></div>
                     <div class="col">@Model.Customer.Name</div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3"><strong>Address:</strong></div>
+                <div class="row mb-2">
+                    <div class="col-4 col-sm-3"><strong>Address:</strong></div>
                     <div class="col">@Model.Customer.Streetaddress</div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3">@* <strong>Postnummer & Stad:</strong> *@</div>
+                <div class="row mb-2">
+                    <div class="col-4 col-sm-3"></div>
                     <div class="col">@Model.Customer.ZipcodeCity</div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3">@* <strong>Land:</strong> *@</div>
+                <div class="row mb-2">
+                    <div class="col-4 col-sm-3"></div>
                     <div class="col">@Model.Customer.Country</div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3"><strong>Birthday:</strong></div>
+                <div class="row mb-2">
+                    <div class="col-4 col-sm-3"><strong>Birthday:</strong></div>
                     <div class="col">@Model.Customer.Birthday?.ToShortDateString()</div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3"><strong>Age:</strong></div>
+                <div class="row mb-2">
+                    <div class="col-4 col-sm-3"><strong>Age:</strong></div>
                     <div class="col">@Model.Customer.Age</div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3"><strong>Nat. ID:</strong></div>
+                <div class="row mb-2">
+                    <div class="col-4 col-sm-3"><strong>Nat. ID:</strong></div>
                     <div class="col">@Model.Customer.NationalId</div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3"><strong>Phone:</strong></div>
+                <div class="row mb-2">
+                    <div class="col-4 col-sm-3"><strong>Phone:</strong></div>
                     <div class="col">@Model.Customer.Phonenumber</div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3"><strong>E-mail:</strong></div>
+                <div class="row mb-2">
+                    <div class="col-4 col-sm-3"><strong>E-mail:</strong></div>
                     <div class="col">@Model.Customer.Emailaddress</div>
                 </div>
             </div>
-            <div class="d-flex flex-row mt-5">
-                <a asp-page="/Customer/EditCustomerInfo" asp-route-id="@Model.Customer.CustomerId." class="btn btn-secondary">Edit Customer</a>
-                <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Are you sure you want to Inactivate this customer? All accounts will also be inactivated.')">
-                    <input type="hidden" name="customerId" value="@Model.Customer.CustomerId" />
-                    <button type="submit" class="btn btn-danger">Inactivate Customer</button>
-                </form>
+        </div>
 
+        <!-- Accounts -->
+        <div class="col-12 col-md-6 order-1 order-md-2">
+            <div class="card-header d-flex flex-wrap justify-content-between p-1">
+                <h5 class="ms-2 mb-0">Accounts</h5>
+                <a asp-page="/Account/NewAccount" asp-route-id="@Model.Customer.CustomerId" class="btn btn-success mb-0">
+                    Add new account <i class="fa-solid fa-plus"></i>
+                </a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-sm table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>Acc #</th>
+                            <th>Balance</th>
+                            <th>Frequency</th>
+                            <th>Created</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var account in Model.Customer.Accounts)
+                        {
+                            <tr>
+                                <td>@account.AccountId</td>
+                                <td>@account.Balance.ToString("C1", new System.Globalization.CultureInfo("de-DE"))</td>
+                                <td>@account.Frequency</td>
+                                <td>@account.Created.ToShortDateString()</td>
+                                <td>
+                                    <div class="d-flex justify-content-end">
+                                        <a asp-page="/Account/AccountDetails" asp-route-id="@account.AccountId" class="btn btn-secondary">
+                                            View
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="list-group-item mb-5">
+                <strong>Total assets:</strong> @Model.Customer.TotalBalance.ToString("C", new System.Globalization.CultureInfo("de-DE"))
             </div>
         </div>
     </div>
-    <button class="btn btn-primary mt-3" onclick="window.history.back();">⬅ Back</button>
 </div>

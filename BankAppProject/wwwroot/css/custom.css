@@ -16,10 +16,13 @@ html, body {
 .btn {
     font-weight: bold !important; /* Tvinga fetstil på alla Bootstrap-knappar */
     border-radius: 20px !important; /* Runda kanter på alla Bootstrap-knappar */
-    margin-bottom: 10px !important; /* Lägg till lite extra mellanrum mellan knappar */
+    /*    margin-bottom: 10px !important;*/
     letter-spacing: 1px !important;
     padding: 1px 8px !important;
-
+    align-content: center !important;
+}
+.btn a {
+    text-decoration: none !important;
 }
 
 .btn-primary {
@@ -42,9 +45,10 @@ html, body {
 
     .btn-secondary a {
         color: var(--primary) !important;
-        text-decoration: none !important;
     }
-
+.btn-success a {
+        color: white !important;
+}
 
     body, p, a, .btn {
     font-family: "Helvetica", sans-serif !important;
@@ -224,11 +228,11 @@ tbody {
     #search-btn:hover {
         background-color: #554f70 !important;
     }
-.flexcontainer {
+/*.flexcontainer {
     display: flex;
-    gap: 10px; /* Mellanrum mellan elementen */
-    align-items: center; /* Justerar vertikalt */
-}
+    gap: 10px; 
+    align-items: center;
+}*/
 @media (max-width: 450px) {
     .btn {
         padding-top: 0 !important;
