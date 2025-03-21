@@ -4,9 +4,9 @@ using DataAccessLayer.DTO;
 
 namespace Services.Profiles
 {
-    public class CustomersProfile : Profile
+    public class CustomerIndexProfile : Profile
     {
-        public CustomersProfile()
+        public CustomerIndexProfile()
         {
             CreateMap<CustomerIndexDto, CustomerIndexViewModel>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Givenname + " " + src.Surname));

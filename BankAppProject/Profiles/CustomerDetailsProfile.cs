@@ -4,9 +4,9 @@ using DataAccessLayer.DTO;
 
 namespace BankAppProject.Profiles
 {
-    public class CustomerInfoProfile : Profile
+    public class CustomerDetailsProfile : Profile
     {
-        public CustomerInfoProfile()
+        public CustomerDetailsProfile()
         {
             CreateMap<CustomerDetailsDto, CustomerDetailsViewModel>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.Givenname} {src.Surname}"))

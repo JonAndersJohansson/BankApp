@@ -46,11 +46,11 @@ public class Program
         builder.Services.AddScoped<IStatisticsRepository, StatisticsRepository>();
         builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 
-        builder.Services.AddAutoMapper(typeof(CustomersProfile), typeof(CustomerInfoProfile));
+        builder.Services.AddAutoMapper(typeof(CustomerIndexProfile), typeof(CustomerDetailsProfile), typeof(AccountDetailsProfile));
 
         //builder.Services.AddSingleton<IMapper>(new MapperConfiguration(cfg =>
         //{
-        //    cfg.AddProfile<CustomersProfile>();  // Lägg till din profil här
+        //    cfg.AddProfile<CustomerIndexProfile>();  // Lägg till din profil här
         //}).CreateMapper());
 
         //SQL LOGGING
@@ -60,7 +60,7 @@ public class Program
             logging.AddDebug();
         });
 
-        //builder.Services.AddAutoMapper(typeof(CustomersProfile));
+        //builder.Services.AddAutoMapper(typeof(CustomerIndexProfile));
 
 
         var app = builder.Build();

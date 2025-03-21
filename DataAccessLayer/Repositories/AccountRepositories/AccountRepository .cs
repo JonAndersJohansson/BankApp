@@ -1,12 +1,6 @@
 ﻿using DataAccessLayer.Data;
-using DataAccessLayer.DTO;
 using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.AccountRepositories
 {
@@ -42,7 +36,6 @@ namespace DataAccessLayer.Repositories.AccountRepositories
             await _dbContext.SaveChangesAsync();
         }
 
-        // Nya metoder
         public async Task<List<Account>> GetAccountsByCustomerIdAsync(int customerId)
         {
             return await _dbContext.Accounts
@@ -54,14 +47,11 @@ namespace DataAccessLayer.Repositories.AccountRepositories
         {
             _dbContext.Accounts.Remove(account);
         }
-        //public IQueryable<Account> GetAllAccounts()
-        //{
-        //    return _dbContext.Accounts
-        //        .Where(c => c.IsActive)
-        //        .AsQueryable();
-
-        //}
-
+        public async Task<Account?> GetAccountWithTransactionsAsync(int accountId)
+        {
+            return await _dbContext.Accounts
+                .Include(a => a.Transactions)
+                .FirstOrDefaultAsync(a => a.AccountId == accountId);
+        }
     }
-
 }
