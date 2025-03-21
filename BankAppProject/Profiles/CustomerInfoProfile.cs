@@ -8,7 +8,7 @@ namespace BankAppProject.Profiles
     {
         public CustomerInfoProfile()
         {
-            CreateMap<CustomerInfoDto, CustomerInfoViewModel>()
+            CreateMap<CustomerDetailsDto, CustomerDetailsViewModel>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.Givenname} {src.Surname}"))
                 .ForMember(dest => dest.ZipcodeCity, opt => opt.MapFrom(src => $"{src.Zipcode} {src.City}"))
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src =>
@@ -21,8 +21,8 @@ namespace BankAppProject.Profiles
                         ? $"+{src.Telephonecountrycode} {src.Telephonenumber}"
                         : src.Telephonenumber));
 
-            // Mappa CustomerInfoAccountDto till CustomerInfoAccountViewModel
-            CreateMap<CustomerInfoAccountDto, CustomerInfoAccountViewModel>();
+            // Mappa AccountInCustomerDetailsDto till AccountInCustomerDetailsViewModel
+            CreateMap<AccountInCustomerDetailsDto, AccountInCustomerDetailsViewModel>();
         }
     }
 

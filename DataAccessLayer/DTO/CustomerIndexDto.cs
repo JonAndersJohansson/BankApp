@@ -1,10 +1,11 @@
-﻿namespace BankAppProject.ViewModels
+﻿namespace DataAccessLayer.DTO
 {
-    public class CustomersViewModel
+    public class CustomerIndexDto
     {
         public int Id { get; set; }
         public string? NationalId { get; set; }
-        public string? Name { get; set; } //Denna är en sammanslagning av för- och efternamn
+        public string Givenname { get; set; }  // Förnamn
+        public string Surname { get; set; }   // Efternamn
         public string Address { get; set; }
         public string City { get; set; }
     }

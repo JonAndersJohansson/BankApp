@@ -14,6 +14,7 @@ namespace DataAccessLayer.Repositories.CustomerrRepositories
             _dbContext = dbContext;
         }
 
+
         public IQueryable<Customer> GetAllCustomers()
         {
             return _dbContext.Customers

@@ -11,7 +11,7 @@ namespace BankAppProject.Pages.Customer
         private readonly ICustomerService _customerService;
         private readonly IMapper _mapper;
 
-        public CustomerInfoViewModel Customer { get; set; } = new();
+        public CustomerDetailsViewModel Customer { get; set; } = new();
 
         public CustomerDetailsModel(ICustomerService customerService, IMapper mapper)
         {
@@ -24,7 +24,7 @@ namespace BankAppProject.Pages.Customer
             var customerDto = await _customerService.GetCustomerAsync(id);
             if (customerDto == null) return NotFound();
 
-            Customer = _mapper.Map<CustomerInfoViewModel>(customerDto);
+            Customer = _mapper.Map<CustomerDetailsViewModel>(customerDto);
             return Page();
         }
         public async Task<IActionResult> OnPostDeleteAsync(int customerId)

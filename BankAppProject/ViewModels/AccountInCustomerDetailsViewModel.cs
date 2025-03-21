@@ -1,7 +1,6 @@
-﻿namespace DataAccessLayer.DTO
+﻿namespace BankAppProject.ViewModels
 {
-
-    public class CustomerInfoAccountDto
+    public class AccountInCustomerDetailsViewModel
     {
         public int AccountId { get; set; }
         public string Frequency { get; set; } = string.Empty;

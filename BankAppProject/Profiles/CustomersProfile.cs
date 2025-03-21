@@ -8,7 +8,7 @@ namespace Services.Profiles
     {
         public CustomersProfile()
         {
-            CreateMap<CustomersDto, CustomersViewModel>()
+            CreateMap<CustomerIndexDto, CustomerIndexViewModel>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Givenname + " " + src.Surname));
         }
     }

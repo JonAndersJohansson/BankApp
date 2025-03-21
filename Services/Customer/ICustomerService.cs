@@ -4,9 +4,9 @@ namespace Services.Customer
 {
     public interface ICustomerService
     {
-        List<CustomersDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers);
+        List<CustomerIndexDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers);
 
-        Task<CustomerInfoDto?> GetCustomerAsync(int customerId);
+        Task<CustomerDetailsDto?> GetCustomerAsync(int customerId);
         Task<bool> DeleteCustomerAsync(int customerId);
     }
 }

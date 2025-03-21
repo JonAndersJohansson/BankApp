@@ -19,7 +19,7 @@ namespace Services.Customer
             _dispositionRepository = dispositionRepository;
         }
 
-        public List<CustomersDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers)
+        public List<CustomerIndexDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers)
         {
             var query = _customerRepository.GetAllCustomers();
 
@@ -40,7 +40,7 @@ namespace Services.Customer
             query = sortColumn switch
             {
                 "Id" => sortOrder == "asc" ? query.OrderBy(c => c.CustomerId) : query.OrderByDescending(c => c.CustomerId),
-                "NationalId" => sortOrder == "asc" ? query.OrderBy(c => c.NationalId) : query.OrderByDescending(c => c.NationalId),
+                "National Id" => sortOrder == "asc" ? query.OrderBy(c => c.NationalId) : query.OrderByDescending(c => c.NationalId),
                 "Name" => sortOrder == "asc" ? query.OrderBy(c => c.Surname) : query.OrderByDescending(c => c.Surname),
                 "Address" => sortOrder == "asc" ? query.OrderBy(c => c.Streetaddress) : query.OrderByDescending(c => c.Streetaddress),
                 "City" => sortOrder == "asc" ? query.OrderBy(c => c.City) : query.OrderByDescending(c => c.City),
@@ -54,7 +54,7 @@ namespace Services.Customer
             var customers = query
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .Select(c => new CustomersDto
+                .Select(c => new CustomerIndexDto
                 {
                     Id = c.CustomerId,
                     NationalId = c.NationalId,
@@ -66,7 +66,7 @@ namespace Services.Customer
 
             return customers;
         }
-        public async Task<CustomerInfoDto?> GetCustomerAsync(int customerId)
+        public async Task<CustomerDetailsDto?> GetCustomerAsync(int customerId)
         {
             var customer = await _customerRepository.GetCustomerByIdAsync(customerId);
             if (customer == null)
@@ -75,7 +75,7 @@ namespace Services.Customer
             Console.WriteLine("Inside GetCustomerAsync in CustomerService");
             
 
-            return new CustomerInfoDto
+            return new CustomerDetailsDto
             {
                 CustomerId = customer.CustomerId,
                 Givenname = customer.Givenname,
@@ -93,7 +93,7 @@ namespace Services.Customer
                 // Skapa listan med konton
                 Accounts = customer.Dispositions
                     .Where(d => d.Account != null) // Kontrollera att konto finns
-                    .Select(d => new CustomerInfoAccountDto
+                    .Select(d => new AccountInCustomerDetailsDto
                     {
                         AccountId = d.Account.AccountId,
                         Balance = d.Account.Balance,

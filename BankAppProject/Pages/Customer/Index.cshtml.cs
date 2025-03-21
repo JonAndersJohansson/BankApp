@@ -16,7 +16,7 @@ namespace BankAppProject.Pages.Customer
             _mapper = mapper;
         }
 
-        public List<CustomersViewModel> Customers { get; set; }
+        public List<CustomerIndexViewModel> Customers { get; set; }
         public int TotalCustomers { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 50;
@@ -29,7 +29,7 @@ namespace BankAppProject.Pages.Customer
             var customersDto = _customerService.GetCustomers(sortColumn, sortOrder, PageNumber, PageSize, q, out int totalCustomers);
             TotalCustomers = totalCustomers;
 
-            Customers = _mapper.Map<List<CustomersViewModel>>(customersDto);
+            Customers = _mapper.Map<List<CustomerIndexViewModel>>(customersDto);
         }
     }
 }

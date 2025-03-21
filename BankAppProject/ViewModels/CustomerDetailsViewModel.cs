@@ -1,6 +1,6 @@
 ﻿namespace BankAppProject.ViewModels
 {
-    public class CustomerInfoViewModel
+    public class CustomerDetailsViewModel
     {
         public int CustomerId { get; set; }
         public string Gender { get; set; } = string.Empty;
@@ -20,7 +20,7 @@
             ? $"+{Telephonecountrycode} {Telephonenumber}"
             : Telephonenumber;      // Sammanslagning av Telephonecountrycode och Telephonenumber
         public string? Emailaddress { get; set; }
-        public List<CustomerInfoAccountViewModel> Accounts { get; set; } = new List<CustomerInfoAccountViewModel>();
+        public List<AccountInCustomerDetailsViewModel> Accounts { get; set; } = new List<AccountInCustomerDetailsViewModel>();
         public decimal TotalBalance => Accounts.Sum(a => a.Balance);
     }
 }

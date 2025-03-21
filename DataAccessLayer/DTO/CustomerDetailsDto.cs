@@ -1,6 +1,6 @@
 ﻿namespace DataAccessLayer.DTO
 {
-    public class CustomerInfoDto
+    public class CustomerDetailsDto
     {
         public int CustomerId { get; set; }
         public string Gender { get; set; } = string.Empty;
@@ -15,7 +15,7 @@
         public string? Telephonecountrycode { get; set; }
         public string? Telephonenumber { get; set; }
         public string? Emailaddress { get; set; }
-        public List<CustomerInfoAccountDto> Accounts { get; set; } = new List<CustomerInfoAccountDto>();
+        public List<AccountInCustomerDetailsDto> Accounts { get; set; } = new List<AccountInCustomerDetailsDto>();
         public decimal TotalBalance => Accounts.Sum(a => a.Balance);
     }
 }
