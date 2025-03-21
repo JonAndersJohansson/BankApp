@@ -7,6 +7,7 @@ using DataAccessLayer.Repositories.DispositionRepositories;
 using DataAccessLayer.Repositories.StatisticsRepositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Services.Account;
 using Services.Customer;
 using Services.Profiles;
 using Services.Statistics;
@@ -34,24 +35,19 @@ public class Program
 
         builder.Services.AddTransient<DataInitializer>();
 
-        // Lägger till CustomerRepository och CustomerService
+        // Repositories
         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-        builder.Services.AddTransient<ICustomerService, CustomerService>();
-
-        // Lägger till AccountRepository och DispositionRepository
         builder.Services.AddScoped<IAccountRepository, AccountRepository>();
         builder.Services.AddScoped<IDispositionRepository, DispositionRepository>();
-
-        // Lägger till StatisticsRepository och StatisticsService
         builder.Services.AddScoped<IStatisticsRepository, StatisticsRepository>();
+
+        // Services
+        builder.Services.AddTransient<ICustomerService, CustomerService>();
         builder.Services.AddScoped<IStatisticsService, StatisticsService>();
+        builder.Services.AddScoped<IAccountService, AccountService>();
 
+        // AutoMapper
         builder.Services.AddAutoMapper(typeof(CustomerIndexProfile), typeof(CustomerDetailsProfile), typeof(AccountDetailsProfile));
-
-        //builder.Services.AddSingleton<IMapper>(new MapperConfiguration(cfg =>
-        //{
-        //    cfg.AddProfile<CustomerIndexProfile>();  // Lägg till din profil här
-        //}).CreateMapper());
 
         //SQL LOGGING
         builder.Services.AddLogging(logging =>
@@ -59,8 +55,6 @@ public class Program
             logging.AddConsole();
             logging.AddDebug();
         });
-
-        //builder.Services.AddAutoMapper(typeof(CustomerIndexProfile));
 
 
         var app = builder.Build();
