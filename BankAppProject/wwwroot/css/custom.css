@@ -17,7 +17,9 @@ html, body {
     font-weight: bold !important; /* Tvinga fetstil på alla Bootstrap-knappar */
     border-radius: 20px !important; /* Runda kanter på alla Bootstrap-knappar */
     margin-bottom: 10px !important; /* Lägg till lite extra mellanrum mellan knappar */
-    letter-spacing: 2px !important;
+    letter-spacing: 1px !important;
+    padding: 1px 8px !important;
+
 }
 
 .btn-primary {
@@ -37,7 +39,12 @@ html, body {
     .btn-secondary:hover {
         background-color: #82a9bf !important;
     }
-    /* Fonts below */
+
+    .btn-secondary a {
+        color: var(--primary) !important;
+        text-decoration: none !important;
+    }
+
 
     body, p, a, .btn {
     font-family: "Helvetica", sans-serif !important;
@@ -221,4 +228,12 @@ tbody {
     display: flex;
     gap: 10px; /* Mellanrum mellan elementen */
     align-items: center; /* Justerar vertikalt */
+}
+@media (max-width: 450px) {
+    .btn {
+        padding-top: 0 !important;
+    }
+    .btn a{
+        font-size: 0.8rem !important;
+    }
 }
