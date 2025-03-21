@@ -1,4 +1,116 @@
-﻿@page
+﻿@page "{id:int}"
 @model BankAppProject.Pages.Account.AccountDetailsModel
 @{
+}
+<div class="container mt-4">
+    <!-- Kontoinfo -->
+    <div class="card mb-2">
+        <div class="card-header d-flex flex-wrap justify-content-between">
+            <h5>Account nr: @Model.Account.AccountId</h5>
+            <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Are you sure you want to Inactivate this account?')">
+                <input type="hidden" name="accountId" value="@Model.Account.AccountId" />
+                <button type="submit" class="btn btn-danger">Inactivate Account</button>
+            </form>
+        </div>
+        <div class="card-body d-flex flex-wrap justify-content-between">
+            <p class="mb-0 me-2"><strong>Balance:</strong> @Model.Account.Balance.ToString("C", new System.Globalization.CultureInfo("de-DE"))</p>
+            <p class="mb-0"><strong>Created:</strong> @Model.Account.Created.ToShortDateString()</p>
+        </div>
+    </div>
+    <div class="d-flex flex-wrap justify-content-between">
+        <button class="btn btn-primary mt-0" onclick="window.history.back();">⬅ Back</button>
+
+    </div>
+    <!--Transaktioner i tabell -->
+    <div class="card">
+        <div class="card-header p-1">
+            <h6 class="m-0">Transactions</h6>
+        </div>
+        <div class="table-responsive">
+            @if (Model.Account.Transactions.Any())
+            {
+                <table class="table table-sm table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Operation</th>
+                            <th>Amount</th>
+                            <th>Balance after</th>
+                            <th>Symbol</th>
+                            <th>Bank</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-body">
+                        @foreach (var tx in Model.Account.Transactions)
+                        {
+                            <tr>
+                                <td>@tx.Date.ToShortDateString()</td>
+                                <td>@tx.Type</td>
+                                <td>@tx.Operation</td>
+                                <td>@tx.Amount.ToString("C", new System.Globalization.CultureInfo("de-DE"))</td>
+                                <td>@tx.Balance.ToString("C", new System.Globalization.CultureInfo("de-DE"))</td>
+                                <td>@tx.Symbol</td>
+                                <td>@tx.Bank</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="p-3">
+                    <em>No transactions available for this account.</em>
+                </div>
+            }
+        </div>
+
+        <!-- Ladda fler knapp -->
+        <div class="text-center p-3">
+            <button class="btn btn-secondary" id="loadMoreBtn">Load more <i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let offset = 20;
+        const pageSize = 20;
+        const accountId = @Model.Account.AccountId;
+
+        document.getElementById("loadMoreBtn").addEventListener("click", function () {
+            fetch(`?handler=Transactions&accountId=${accountId}&offset=${offset}&pageSize=${pageSize}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById("transactions-body");
+
+                    data.forEach(tx => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${tx.date}</td>
+                            <td>${tx.type}</td>
+                            <td>${tx.operation}</td>
+                            <td>${formatCurrency(tx.amount)}</td>
+                            <td>${formatCurrency(tx.balance)}</td>
+                            <td>${tx.symbol ?? ""}</td>
+                            <td>${tx.bank ?? ""}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+
+                    offset += pageSize;
+
+                    if (data.length < pageSize) {
+                        document.getElementById("loadMoreBtn").style.display = "none";
+                    }
+                });
+        });
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('de-DE', {
+                style: 'currency',
+                currency: 'EUR'
+            }).format(amount);
+        }
+    </script>
 }

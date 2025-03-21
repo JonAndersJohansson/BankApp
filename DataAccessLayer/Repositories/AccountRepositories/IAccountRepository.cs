@@ -7,7 +7,7 @@ namespace DataAccessLayer.Repositories.AccountRepositories
         Task<Account?> GetAccountWithTransactionsAsync(int accountId);
         Task SaveAsync();
         Task<List<Account>> GetAccountsByCustomerIdAsync(int customerId);
-        void DeleteAccount(Account account);
+        Task<Account?> GetAccountByIdAsync(int accountId);
     }
 
 }

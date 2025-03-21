@@ -29,10 +29,10 @@ namespace DataAccessLayer.Repositories.CustomerrRepositories
                 .ThenInclude(d => d.Account)
                 .FirstOrDefaultAsync(c => c.CustomerId == customerId);
         }
-        public void Delete(Customer customer)
-        {
-            _dbContext.Customers.Remove(customer);
-        }
+        //public void Delete(Customer customer)
+        //{
+        //    _dbContext.Customers.Remove(customer);
+        //}
         public async Task SaveAsync()
         {
             await _dbContext.SaveChangesAsync();

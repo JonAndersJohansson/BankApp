@@ -38,7 +38,5 @@ namespace BankAppProject.Pages.Customer
 
             return RedirectToPage("/Customer/Index");
         }
-
-
     }
 }

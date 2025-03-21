@@ -8,9 +8,9 @@ namespace DataAccessLayer.Repositories.AccountRepositories
     {
         private readonly BankAppDataContext _dbContext;
 
-        public AccountRepository(BankAppDataContext context)
+        public AccountRepository(BankAppDataContext bankAppDataContext)
         {
-            _dbContext = context;
+            _dbContext = bankAppDataContext;
         }
 
         public async Task<Account> GetByIdAsync(int accountId)
@@ -25,10 +25,10 @@ namespace DataAccessLayer.Repositories.AccountRepositories
                 .ToListAsync();
         }
 
-        public async Task AddAsync(Account account)
-        {
-            await _dbContext.Accounts.AddAsync(account);
-        }
+        //public async Task AddAsync(Account account)
+        //{
+        //    await _dbContext.Accounts.AddAsync(account);
+        //}
 
 
         public async Task SaveAsync()
@@ -43,15 +43,15 @@ namespace DataAccessLayer.Repositories.AccountRepositories
                 .ToListAsync();
         }
 
-        public void DeleteAccount(Account account)
-        {
-            _dbContext.Accounts.Remove(account);
-        }
         public async Task<Account?> GetAccountWithTransactionsAsync(int accountId)
         {
             return await _dbContext.Accounts
                 .Include(a => a.Transactions)
                 .FirstOrDefaultAsync(a => a.AccountId == accountId);
+        }
+        public async Task<Account?> GetAccountByIdAsync(int accountId)
+        {
+            return await _dbContext.Accounts.FirstOrDefaultAsync(a => a.AccountId == accountId);
         }
     }
 }

@@ -92,7 +92,7 @@ namespace Services.Customer
 
                 // Skapa listan med konton
                 Accounts = customer.Dispositions
-                    .Where(d => d.Account != null) // Kontrollera att konto finns
+                    .Where(d => d.Account != null && d.Account.IsActive) // Kontroll IsActive
                     .Select(d => new AccountInCustomerDetailsDto
                     {
                         AccountId = d.Account.AccountId,

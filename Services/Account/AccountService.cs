@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.DTO;
+using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.AccountRepositories;
 
 namespace Services.Account
@@ -38,6 +39,17 @@ namespace Services.Account
                         Bank = t.Bank
                     }).ToList()
             };
+        }
+        public async Task<bool> DeleteAccountAsync(int accountId)
+        {
+            var account = await _accountRepository.GetAccountByIdAsync(accountId);
+            if (account == null) return false;
+
+            account.IsActive = false;
+
+            await _accountRepository.SaveAsync();
+
+            return true;
         }
     }
 }
