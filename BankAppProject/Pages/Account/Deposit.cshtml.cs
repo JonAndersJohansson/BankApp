@@ -32,7 +32,7 @@ namespace BankAppProject.Pages.Account
 
 
         [MaxLength(250, ErrorMessage = "Max 50 letters in comment.")]
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public int AccountId { get; set; }

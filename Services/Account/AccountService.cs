@@ -86,7 +86,7 @@ namespace Services.Account
 
             return ValidationResult.OK;
         }
-        public async Task<ValidationResult> WithdrawAsync(int accountId, decimal amount, string comment, DateTime depositDate)
+        public async Task<ValidationResult> WithdrawAsync(int accountId, decimal amount, string comment, DateTime withdrawDate)
         {
             var account = _accountRepository.GetAccountById(accountId);
 
@@ -96,18 +96,20 @@ namespace Services.Account
             if (amount < 1 || amount > 100000)
                 return ValidationResult.IncorrectAmount;
 
-            if (depositDate.Date < DateTime.Now.Date)
+            if (withdrawDate.Date < DateTime.Now.Date)
                 return ValidationResult.DateInPast;
+            if (account.Balance < amount)
+                return ValidationResult.BalanceTooLow;
 
-            account.Balance += amount;
+            account.Balance -= amount;
             await _accountRepository.UpdateAsync(account);
 
             var transaction = new Transaction
             {
                 AccountId = accountId,
-                Date = DateOnly.FromDateTime(depositDate),
-                Type = "Credit",
-                Operation = "Deposit",
+                Date = DateOnly.FromDateTime(withdrawDate),
+                Type = "Debit",
+                Operation = "Withdraw",
                 Amount = amount,
                 Balance = account.Balance,
                 Symbol = comment,
