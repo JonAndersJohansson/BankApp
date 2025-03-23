@@ -5,7 +5,7 @@ namespace DataAccessLayer.Models;
 
 public partial class Transaction
 {
-    public int TransactionId { get; set; }
+    public int TransactionId { get; set; } 
 
     public int AccountId { get; set; }
 
@@ -21,9 +21,9 @@ public partial class Transaction
 
     public string? Symbol { get; set; }
 
-    public string? Bank { get; set; }
+    public string? Bank { get; set; } 
 
-    public string? Account { get; set; }
+    public string? Account { get; set; } 
 
     public virtual Account AccountNavigation { get; set; } = null!;
 }

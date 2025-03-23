@@ -8,6 +8,8 @@ namespace DataAccessLayer.Repositories.AccountRepositories
         Task SaveAsync();
         Task<List<Account>> GetAccountsByCustomerIdAsync(int customerId);
         Task<Account?> GetAccountByIdAsync(int accountId);
+        Account GetAccountById(int accountId);
+        Task UpdateAsync(Account account);
     }
 
 }

@@ -1,16 +1,21 @@
 ﻿using DataAccessLayer.DTO;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.AccountRepositories;
+using DataAccessLayer.Repositories.TransactionRepositories;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Services.Account
 {
     public class AccountService : IAccountService
     {
         private readonly IAccountRepository _accountRepository;
+        private readonly ITransactionRepository _transactionRepository;
 
-        public AccountService(IAccountRepository accountRepository)
+        public AccountService(IAccountRepository accountRepository, ITransactionRepository transactionRepository)
         {
             _accountRepository = accountRepository;
+            _transactionRepository = transactionRepository;
         }
 
         public async Task<AccountDetailsDto?> GetAccountDetailsAsync(int accountId)
@@ -51,5 +56,36 @@ namespace Services.Account
 
             return true;
         }
+        public async Task<ValidationResult> DepositAsync(int accountId, decimal amount, string comment, DateTime depositDate)
+        {
+            var account = _accountRepository.GetAccountById(accountId);
+
+            if (account == null || account.IsActive == false)
+                return ValidationResult.NoAccountFound;
+
+            if (amount < 1 || amount > 100000)
+                return ValidationResult.IncorrectAmount;
+
+            if (depositDate.Date < DateTime.Now.Date)
+                return ValidationResult.DateInPast;
+
+            account.Balance += amount;
+            await _accountRepository.UpdateAsync(account);
+
+            var transaction = new Transaction
+            {
+                AccountId = accountId,
+                Date = DateOnly.FromDateTime(depositDate),
+                Type = "Credit",
+                Operation = "Deposit",
+                Amount = amount,
+                Balance = account.Balance,
+                Symbol = comment,
+            };
+            await _transactionRepository.AddAsync(transaction);
+
+            return ValidationResult.OK;
+        }
+
     }
 }

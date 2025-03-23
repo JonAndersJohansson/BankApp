@@ -53,5 +53,15 @@ namespace DataAccessLayer.Repositories.AccountRepositories
         {
             return await _dbContext.Accounts.FirstOrDefaultAsync(a => a.AccountId == accountId);
         }
+        public Account GetAccountById(int accountId)
+        {
+            return _dbContext.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+        }
+        public async Task UpdateAsync(Account account)
+        {
+            _dbContext.Accounts.Update(account);
+            await _dbContext.SaveChangesAsync();
+        }
+
     }
 }
