@@ -19,9 +19,9 @@ namespace BankAppProject.Pages.Account
 
         public AccountDetailsViewModel Account { get; set; } = new();
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int accountId)
         {
-            var accountDto = await _accountService.GetAccountDetailsAsync(id);
+            var accountDto = await _accountService.GetAccountDetailsAsync(accountId);
             if (accountDto == null)
                 return NotFound();
 

@@ -15,5 +15,6 @@ namespace Services.Account
         Task<bool> DeleteAccountAsync(int accountId);
         Task<AccountDetailsDto?> GetAccountDetailsAsync(int accountId);
         Task<ValidationResult> DepositAsync(int accountId, decimal amount, string comment, DateTime depositDate);
+        Task<ValidationResult> WithdrawAsync(int accountId, decimal amount, string comment, DateTime withdrawDate);
     }
 }
