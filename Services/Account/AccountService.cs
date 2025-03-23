@@ -56,7 +56,7 @@ namespace Services.Account
 
             return true;
         }
-        public async Task<ValidationResult> DepositAsync(int accountId, decimal amount, string comment, DateTime depositDate)
+        public async Task<ValidationResult> DepositAsync(int accountId, decimal amount, string comment, DateTime depositDate, string operation)
         {
             var account = _accountRepository.GetAccountById(accountId);
 
@@ -77,7 +77,7 @@ namespace Services.Account
                 AccountId = accountId,
                 Date = DateOnly.FromDateTime(depositDate),
                 Type = "Credit",
-                Operation = "Deposit",
+                Operation = operation,
                 Amount = amount,
                 Balance = account.Balance,
                 Symbol = comment,
@@ -86,7 +86,7 @@ namespace Services.Account
 
             return ValidationResult.OK;
         }
-        public async Task<ValidationResult> WithdrawAsync(int accountId, decimal amount, string comment, DateTime withdrawDate)
+        public async Task<ValidationResult> WithdrawAsync(int accountId, decimal amount, string comment, DateTime withdrawDate, string operation)
         {
             var account = _accountRepository.GetAccountById(accountId);
 
@@ -109,12 +109,30 @@ namespace Services.Account
                 AccountId = accountId,
                 Date = DateOnly.FromDateTime(withdrawDate),
                 Type = "Debit",
-                Operation = "Withdraw",
+                Operation = operation,
                 Amount = amount,
                 Balance = account.Balance,
                 Symbol = comment,
             };
             await _transactionRepository.AddAsync(transaction);
+
+            return ValidationResult.OK;
+        }
+        public async Task<ValidationResult> TransferAsync(int fromAccountId, decimal amount, string comment, DateTime transferDate, int toAccountId)
+        {
+            var receivingAccount = _accountRepository.GetAccountById(toAccountId);
+            if (receivingAccount == null || !receivingAccount.IsActive)
+                return ValidationResult.NoReceivingAccountFound;
+
+            // Withdraw
+            var withdrawResult = await WithdrawAsync(fromAccountId, amount, comment, transferDate, $"Transfer to {toAccountId}");
+            if (withdrawResult != ValidationResult.OK)
+                return withdrawResult;
+
+            // Deposit
+            var depositResult = await DepositAsync(toAccountId, amount, comment, transferDate, $"Transfer from {toAccountId}");
+            if (depositResult != ValidationResult.OK)
+                return depositResult;
 
             return ValidationResult.OK;
         }

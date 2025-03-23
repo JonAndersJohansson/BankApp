@@ -5,7 +5,10 @@
 @if (Model.Account != null)
 {
     <div class="d-flex flex-wrap justify-content-between">
-        <button class="btn btn-primary mt-0" onclick="window.history.back();">⬅ Back</button>
+        <a asp-page="/Account/AccountDetails" asp-route-accountId="@Model.Account.AccountId" class="btn btn-primary">
+            <i class="fa-solid fa-arrow-left"></i> Back
+        </a>
+@*         <button class="btn btn-primary mt-0" onclick="window.history.back();">⬅ Back</button> *@
         <h5>Account nr: @Model.Account.AccountId</h5>
         <h5>Balance: @Model.Account.Balance.ToString("C", new System.Globalization.CultureInfo("de-DE"))</h5>
     </div>

@@ -6,7 +6,8 @@ public enum ValidationResult
     BalanceTooLow,
     IncorrectAmount,
     NoAccountFound,
-    DateInPast
+    DateInPast,
+    NoReceivingAccountFound
 }
 namespace Services.Account
 {
@@ -14,7 +15,8 @@ namespace Services.Account
     {
         Task<bool> DeleteAccountAsync(int accountId);
         Task<AccountDetailsDto?> GetAccountDetailsAsync(int accountId);
-        Task<ValidationResult> DepositAsync(int accountId, decimal amount, string comment, DateTime depositDate);
-        Task<ValidationResult> WithdrawAsync(int accountId, decimal amount, string comment, DateTime withdrawDate);
+        Task<ValidationResult> DepositAsync(int accountId, decimal amount, string comment, DateTime depositDate, string operation);
+        Task<ValidationResult> WithdrawAsync(int accountId, decimal amount, string comment, DateTime withdrawDate, string operation);
+        Task<ValidationResult> TransferAsync(int accountId, decimal amount, string? comment, DateTime transferDate, int ReceiverAccountId);
     }
 }

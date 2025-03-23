@@ -56,7 +56,8 @@ namespace BankAppProject.Pages.Account
             if (!ModelState.IsValid)
                 return Page();
 
-            var status = await _accountService.DepositAsync(AccountId, Amount, Comment, DepositDate);
+            string operation = "Deposit";
+            var status = await _accountService.DepositAsync(AccountId, Amount, Comment, DepositDate, operation);
 
             if (status == ValidationResult.OK)
             {

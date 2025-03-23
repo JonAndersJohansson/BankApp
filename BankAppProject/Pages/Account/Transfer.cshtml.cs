@@ -10,24 +10,29 @@ namespace BankAppProject.Pages.Account
 {
     [Authorize(Roles = "Cashier,Admin")]
     [BindProperties]
-    public class WithdrawModel : PageModel
+    public class TransferModel : PageModel
     {
         private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
 
-        public WithdrawModel(IAccountService accountService, IMapper mapper)
+        public TransferModel(IAccountService accountService, IMapper mapper)
         {
             _accountService = accountService;
             _mapper = mapper;
         }
         public AccountDetailsViewModel Account { get; set; }
 
+
+        [Range(1, int.MaxValue, ErrorMessage = "Receiving account must be a positive number.")]
+        public int ReceiverAccountId { get; set; }
+
+
         [Required(ErrorMessage = "Amount required.")]
         [Range(1, 100000)]
         public decimal Amount { get; set; }
 
         [Required(ErrorMessage = "Date required.")]
-        public DateTime WithdrawDate { get; set; }
+        public DateTime TransferDate { get; set; }
 
 
         [MaxLength(250, ErrorMessage = "Max 50 letters in comment.")]
@@ -47,7 +52,7 @@ namespace BankAppProject.Pages.Account
             }
 
             Account = _mapper.Map<AccountDetailsViewModel>(accountDto);
-            WithdrawDate = DateTime.Today;
+            TransferDate = DateTime.Today;
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -68,8 +73,8 @@ namespace BankAppProject.Pages.Account
                 ModelState.AddModelError(nameof(Amount), "Amount cannot be greater than account balance.");
                 return Page();
             }
-            string operation = "Withdraw";
-            var status = await _accountService.WithdrawAsync(AccountId, Amount, Comment, WithdrawDate, operation);
+
+            var status = await _accountService.TransferAsync(AccountId, Amount, Comment, TransferDate, ReceiverAccountId);
 
             if (status == ValidationResult.OK)
             {
