@@ -40,12 +40,14 @@ namespace BankAppProject.Pages.Account
             var status = await _accountService.DepositAsync(accountId, Amount, Comment, DepositDate);
 
             if (status == ValidationResult.OK)
-                return RedirectToPage("AccountDetails", new { accountId });
-            else
             {
-                Console.WriteLine(status);
-                return Page();
+                return RedirectToPage("AccountDetails", new { id = accountId });
             }
+
+            // Lägg till ett felmeddelande om något affärsregel-fel uppstod
+            ModelState.AddModelError(string.Empty, $"Transaction failed: {status}");
+            return Page();
         }
+
     }
 }
