@@ -4,7 +4,10 @@
 }
 
 <div class="container mt-3 p-0">
-    <button class="btn btn-primary mb-2" onclick="window.history.back();">⬅ Back</button>
+    <a asp-page="/Customer/Index"
+       class="btn btn-primary">
+        <i class="fa-solid fa-arrow-left"></i>
+    </a>
 
     <div class="card-header d-flex flex-wrap justify-content-between mb-2">
         <h4 class="mb-0">Id: @Model.Customer.CustomerId, @Model.Customer.Name</h4>
@@ -98,9 +101,13 @@
                                 <td>@account.Created.ToShortDateString()</td>
                                 <td>
                                     <div class="d-flex justify-content-end">
-                                        <a asp-page="/Account/AccountDetails" asp-route-accountId="@account.AccountId" class="btn btn-secondary">
+                                        <a asp-page="/Account/AccountDetails"
+                                           asp-route-accountId="@account.AccountId"
+                                           asp-route-customerId="@Model.Customer.CustomerId"
+                                           class="btn btn-secondary">
                                             View
                                         </a>
+
                                     </div>
                                 </td>
                             </tr>

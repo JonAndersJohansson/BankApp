@@ -16,6 +16,8 @@ namespace BankAppProject.Pages.Account
             _accountService = accountService;
             _mapper = mapper;
         }
+        [BindProperty(SupportsGet = true)]
+        public int CustomerId { get; set; }
 
         public AccountDetailsViewModel Account { get; set; } = new();
 
