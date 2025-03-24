@@ -8,6 +8,7 @@ namespace Services.Customer
 
         Task<CustomerDetailsDto?> GetCustomerAsync(int customerId);
         Task<bool> DeleteCustomerAsync(int customerId);
+        void GetGenderList();
     }
 }
 
