@@ -2,6 +2,8 @@
 using DataAccessLayer.Repositories.AccountRepositories;
 using DataAccessLayer.Repositories.CustomerRepositories;
 using DataAccessLayer.Repositories.DispositionRepositories;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using NuGet.Protocol.Plugins;
 
 namespace Services.Customer
 {
@@ -130,6 +132,28 @@ namespace Services.Customer
             await _accountRepository.SaveAsync();
 
             return true;
+        }
+        public List<SelectListItem> GetGenderList()
+        {
+            var Genders = Enum.GetValues<Gender>()
+                .Select(g => new SelectListItem
+                {
+                    Value = g.ToString(),
+                    Text = g.ToString()
+                })
+                .ToList();
+            return Genders;
+        }
+        public List<SelectListItem> GetCountryList()
+        {
+            var Countries = Enum.GetValues<Country>()
+                .Select(c => new SelectListItem
+                {
+                    Value = c.ToString(),
+                    Text = c.ToString()
+                })
+                .ToList();
+            return Countries;
         }
     }
 }

@@ -2,3 +2,82 @@
 @model BankAppProject.Pages.Customer.NewCustomerModel
 @{
 }
+<div class="card">
+    <div class="card-header">
+        <h1>Ny person</h1>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="Givenname">First name</label>
+                    <input class="form-control" asp-for="Givenname" required>
+                    <span asp-validation-for="Givenname" class="field-validation-error"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Surname">Last name</label>
+                    <input class="form-control" asp-for="Surname" required>
+                    <span asp-validation-for="Surname" class="field-validation-error"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="CustomerGender">Gender</label>
+                    <select class="form-control" asp-for="CustomerGender" required asp-items="@Model.Genders">
+                    </select>
+                    <span asp-validation-for="CustomerGender"
+                          class="field-validation-error"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="StreetAddress">Street address</label>
+                    <input class="form-control" asp-for="StreetAddress" required>
+                    <span asp-validation-for="StreetAddress" class="field-validation-error"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="City">City</label>
+                    <input class="form-control" asp-for="City" required>
+                    <span asp-validation-for="City" class="field-validation-error"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="ZipCode">Zipcode</label>
+                    <input class="form-control" asp-for="ZipCode" required>
+                    <span asp-validation-for="ZipCode" class="field-validation-error"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="CustomerCountry">Country</label>
+                    <select class="form-control" asp-for="CustomerCountry" required asp-items="@Model.Countries">
+                    </select>
+                    <span asp-validation-for="CustomerCountry"
+                          class="field-validation-error"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="Birthday" required class="form-label">Birthday</label>
+                    <input type="date" class="form-control" max="@DateTime.Today.ToString("yyyy-MM-dd")" asp-for="Birthday" required />
+                    <span class="text-danger" asp-validation-for="Birthday"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="NationalId">Social security nr</label>
+                    <input class="form-control" asp-for="NationalId" required>
+                    <span asp-validation-for="NationalId" class="field-validation-error"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="Telephonenumber">Phone number</label>
+                    <input class="form-control" asp-for="Telephonenumber" required>
+                    <span asp-validation-for="Telephonenumber" class="field-validation-error"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Emailaddress">Email</label>
+                    <input class="form-control" asp-for="Emailaddress" required>
+                    <span asp-validation-for="Emailaddress" class="field-validation-error"></span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
