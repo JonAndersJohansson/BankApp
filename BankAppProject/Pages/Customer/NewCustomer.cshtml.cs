@@ -95,14 +95,13 @@ namespace BankAppProject.Pages.Customer
                 }
 
 
-                ModelState.AddModelError(string.Empty, $"Transaction failed: {status}");
+                ModelState.AddModelError(string.Empty, $"New customer failed: {status}");
 
-                Birthday = new DateTime(1990, 1, 1);
                 Countries = _customerService.GetCountryList();
                 Genders = _customerService.GetGenderList();
                 return Page();
             }
-            Birthday = new DateTime(1990, 1, 1);
+
             Countries = _customerService.GetCountryList();
             Genders = _customerService.GetGenderList();
             return Page();
