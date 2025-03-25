@@ -1,10 +1,13 @@
 using AutoMapper;
 using BankAppProject.ViewModels;
+using DataAccessLayer.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Services.Customer;
 using System.ComponentModel.DataAnnotations;
+using System.Net.Mail;
+using System.Reflection.Emit;
 
 namespace BankAppProject.Pages.Customer
 {
@@ -40,22 +43,48 @@ namespace BankAppProject.Pages.Customer
 
             Customer = _mapper.Map<EditCustomerViewModel>(dto);
 
-            Countries = _customerService.GetCountryList();
-            Genders = _customerService.GetGenderList();
+            if (!Enum.TryParse(Customer.Gender, out Gender gender))
+                gender = Gender.Choose; // fallback default
+
+            CustomerGender = gender;
+
+            if (!Enum.TryParse(Customer.Country, out Country country))
+                country = Country.Choose;
+
+            CustomerCountry = country;
 
             return Page();
+        }
 
-            //      Givenname
-            //      Surname
-            //      CustomerGender
-            //       StreetAddress
-            //        ZipCode
-            //        City
-            //        CustomerCountry
-            //       Birthday
-            //       NationalId
-            //       Telephonenumber
-            //       Emailaddress
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (ModelState.IsValid)
+            {
+                var dto = _mapper.Map<CustomerDetailsDto>(Customer);
+
+                var (status, customerId) = await _customerService.EditCustomerAsync(dto);
+
+                if (status == ValidationResult.OK && customerId.HasValue)
+                {
+                    TempData["EditCustomerMessage"] = $"Customer updated successfully";
+                    return RedirectToPage("/Customer/CustomerDetails", new { id = customerId.Value });
+
+                }
+
+                ModelState.AddModelError(string.Empty, $"Update customer failed: {status}");
+
+                CustomerGender = Gender.Choose;
+                CustomerCountry = Country.Choose;
+                Countries = _customerService.GetCountryList();
+                Genders = _customerService.GetGenderList();
+                return Page();
+            }
+
+            CustomerGender = Gender.Choose;
+            CustomerCountry = Country.Choose;
+            Countries = _customerService.GetCountryList();
+            Genders = _customerService.GetGenderList();
+            return Page();
         }
     }
 }

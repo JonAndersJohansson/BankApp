@@ -23,6 +23,10 @@ namespace BankAppProject.Profiles
 
             // Mappa AccountInCustomerDetailsDto till AccountInCustomerDetailsViewModel
             CreateMap<AccountInCustomerDetailsDto, AccountInCustomerDetailsViewModel>();
+
+            // Mappa CustomerDetailsDto till EditCustomerViewModel och vice versa
+            CreateMap<CustomerDetailsDto, EditCustomerViewModel>();
+            CreateMap<EditCustomerViewModel, CustomerDetailsDto>();
         }
     }
 

@@ -22,7 +22,8 @@ public enum ValidationResult
     MissingPhone,
     MissingEmail,
     InvalidCountry,
-    InvalidTelephoneCountryCode
+    InvalidTelephoneCountryCode,
+    CustomerNotFound
 }
 //public enum Frequency
 //{

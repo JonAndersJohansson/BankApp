@@ -206,6 +206,50 @@ namespace Services.Customer
             return (ValidationResult.OK, customer.CustomerId);
 
         }
+        public async Task<(ValidationResult Result, int? CustomerId)> EditCustomerAsync(CustomerDetailsDto editedCustomer)
+        {
+            var validation = ValidateCustomerDto(editedCustomer);
+            if (validation != ValidationResult.OK)
+                return (validation, null);
+
+            var existingCustomer = await _customerRepository.GetCustomerByIdAsync(editedCustomer.CustomerId);
+            if (existingCustomer == null)
+                return (ValidationResult.CustomerNotFound, null);
+
+            existingCustomer.Givenname = editedCustomer.Givenname;
+            existingCustomer.Surname = editedCustomer.Surname;
+            existingCustomer.Gender = editedCustomer.Gender;
+            existingCustomer.Streetaddress = editedCustomer.Streetaddress;
+            existingCustomer.City = editedCustomer.City;
+            existingCustomer.Zipcode = editedCustomer.Zipcode;
+            existingCustomer.Country = editedCustomer.Country;
+            existingCustomer.CountryCode = editedCustomer.Country switch
+            {
+                "Sweden" => "SE",
+                "Denmark" => "DK",
+                "Norway" => "NO",
+                "Finland" => "FI",
+                _ => ""
+            };
+            existingCustomer.Birthday = editedCustomer.Birthday;
+            existingCustomer.NationalId = editedCustomer.NationalId;
+            existingCustomer.Telephonecountrycode = editedCustomer.Country switch
+            {
+                "Sweden" => "+46",
+                "Denmark" => "+45",
+                "Norway" => "+47",
+                "Finland" => "+358",
+                _ => ""
+            };
+            existingCustomer.Telephonenumber = editedCustomer.Telephonenumber;
+            existingCustomer.Emailaddress = editedCustomer.Emailaddress;
+
+            // Spara ändringarna
+            await _customerRepository.SaveAsync();
+
+            return (ValidationResult.OK, existingCustomer.CustomerId);
+        }
+
         private ValidationResult ValidateCustomerDto(CustomerDetailsDto dto)
         {
             if (string.IsNullOrWhiteSpace(dto.Givenname))

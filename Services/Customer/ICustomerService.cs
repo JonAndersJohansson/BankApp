@@ -27,7 +27,7 @@ namespace Services.Customer
         List<SelectListItem> GetGenderList();
         List<SelectListItem> GetCountryList();
         Task<(ValidationResult Result, int? CustomerId)> CreateNewCustomerAsync(CustomerDetailsDto dto);
-
+        Task<(ValidationResult Result, int? CustomerId)> EditCustomerAsync(CustomerDetailsDto dto);
     }
 }
 
