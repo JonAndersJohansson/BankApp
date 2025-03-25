@@ -37,7 +37,9 @@ namespace DataAccessLayer.Repositories.CustomerrRepositories
         {
             await _dbContext.SaveChangesAsync();
         }
-
+        public async Task AddAsync(Customer customer)
+        {
+            await _dbContext.Customers.AddAsync(customer);
+        }
     }
-
 }

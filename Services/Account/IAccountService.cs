@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.DTO;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public enum ValidationResult
 {
@@ -7,8 +8,31 @@ public enum ValidationResult
     IncorrectAmount,
     NoAccountFound,
     DateInPast,
-    NoReceivingAccountFound
+    NoReceivingAccountFound,
+    MissingGivenName,
+    MissingSurname,
+    MissingStreetAddress,
+    MissingCity,
+    MissingZipCode,
+    MissingCountry,
+    MissingGender,
+    MissingBirthday,
+    InvalidBirthday,
+    MissingNationalId,
+    MissingPhone,
+    MissingEmail,
+    InvalidCountry,
+    InvalidTelephoneCountryCode
 }
+//public enum Frequency
+//{
+//    Choose = 0,
+//    Daily = 1,
+//    Weekly = 2,
+//    Monthly = 3,
+//    Yearly = 4
+//}
+
 namespace Services.Account
 {
     public interface IAccountService
@@ -18,5 +42,6 @@ namespace Services.Account
         Task<ValidationResult> DepositAsync(int accountId, decimal amount, string comment, DateTime depositDate, string operation);
         Task<ValidationResult> WithdrawAsync(int accountId, decimal amount, string comment, DateTime withdrawDate, string operation);
         Task<ValidationResult> TransferAsync(int accountId, decimal amount, string? comment, DateTime transferDate, int ReceiverAccountId);
+        Task CreateAccountAsync(int customerId);
     }
 }

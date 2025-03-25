@@ -136,6 +136,27 @@ namespace Services.Account
 
             return ValidationResult.OK;
         }
+        public async Task CreateAccountAsync(int customerId)
+        {
+            var account = new DataAccessLayer.Models.Account
+            {
+                Created = DateOnly.FromDateTime(DateTime.Today),
+                Frequency = "Monthly",
+                Balance = 0,
+                IsActive = true
+            };
+
+            account.Dispositions.Add(new Disposition
+            {
+                CustomerId = customerId,
+                Type = "OWNER"
+            });
+
+            await _accountRepository.AddAsync(account);
+            await _accountRepository.SaveAsync();
+        }
+
+
 
     }
 }

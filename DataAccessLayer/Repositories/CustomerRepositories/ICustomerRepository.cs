@@ -8,6 +8,8 @@ namespace DataAccessLayer.Repositories.CustomerRepositories
         IQueryable<Customer> GetAllCustomers();
         Task<Customer?> GetCustomerByIdAsync(int customerId);
         Task SaveAsync();
+        Task AddAsync(Customer customer);
+
     }
 
 }

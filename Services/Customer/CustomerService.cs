@@ -3,7 +3,7 @@ using DataAccessLayer.Repositories.AccountRepositories;
 using DataAccessLayer.Repositories.CustomerRepositories;
 using DataAccessLayer.Repositories.DispositionRepositories;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using NuGet.Protocol.Plugins;
+using Services.Account;
 
 namespace Services.Customer
 {
@@ -13,12 +13,14 @@ namespace Services.Customer
         private readonly ICustomerRepository _customerRepository;
         private readonly IAccountRepository _accountRepository;
         private readonly IDispositionRepository _dispositionRepository;
+        private readonly IAccountService _accountService;
 
-        public CustomerService(ICustomerRepository customerRepository, IAccountRepository accountRepository, IDispositionRepository dispositionRepository)
+        public CustomerService(ICustomerRepository customerRepository, IAccountRepository accountRepository, IDispositionRepository dispositionRepository, IAccountService accountService)
         {
             _customerRepository = customerRepository;
             _accountRepository = accountRepository;
             _dispositionRepository = dispositionRepository;
+            _accountService = accountService;
         }
 
         public List<CustomerIndexDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers)
@@ -155,5 +157,119 @@ namespace Services.Customer
                 .ToList();
             return Countries;
         }
+        public async Task<ValidationResult> CreateNewCustomer(CustomerDetailsDto newCustomer)
+        {
+            var validation = ValidateCustomerDto(newCustomer);
+            if (validation != ValidationResult.OK)
+                return validation;
+
+            var countryCode = newCustomer.Country switch
+            {
+                "Sweden" => "SE",
+                "Denmark" => "DK",
+                "Norway" => "NO",
+                "Finland" => "FI",
+                _ => ""
+            };
+
+            var telephoneCountryCode = newCustomer.Country switch
+            {
+                "Sweden" => "+46",
+                "Denmark" => "+45",
+                "Norway" => "+47",
+                "Finland" => "+358",
+                _ => ""
+            };
+
+            var customer = new DataAccessLayer.Models.Customer
+            {
+                Givenname = newCustomer.Givenname,
+                Surname = newCustomer.Surname,
+                Gender = newCustomer.Gender,
+                Streetaddress = newCustomer.Streetaddress,
+                City = newCustomer.City,
+                Zipcode = newCustomer.Zipcode,
+                Country = newCustomer.Country,
+                CountryCode = countryCode,
+                Birthday = newCustomer.Birthday,
+                NationalId = newCustomer.NationalId,
+                Telephonecountrycode = telephoneCountryCode,
+                Telephonenumber = newCustomer.Telephonenumber,
+                Emailaddress = newCustomer.Emailaddress,
+                IsActive = true
+            };
+
+            await _customerRepository.AddAsync(customer);
+            await _customerRepository.SaveAsync();
+            await _accountService.CreateAccountAsync(customer.CustomerId);
+
+            return ValidationResult.OK;
+        }
+        private ValidationResult ValidateCustomerDto(CustomerDetailsDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.Givenname))
+                return ValidationResult.MissingGivenName;
+
+            if (string.IsNullOrWhiteSpace(dto.Surname))
+                return ValidationResult.MissingSurname;
+
+            if (string.IsNullOrWhiteSpace(dto.Streetaddress))
+                return ValidationResult.MissingStreetAddress;
+
+            if (string.IsNullOrWhiteSpace(dto.City))
+                return ValidationResult.MissingCity;
+
+            if (string.IsNullOrWhiteSpace(dto.Zipcode))
+                return ValidationResult.MissingZipCode;
+
+            if (string.IsNullOrWhiteSpace(dto.Country))
+                return ValidationResult.MissingCountry;
+
+            if (string.IsNullOrWhiteSpace(dto.Gender))
+                return ValidationResult.MissingGender;
+
+            if (dto.Birthday == null)
+                return ValidationResult.MissingBirthday;
+
+            if (dto.Birthday > DateOnly.FromDateTime(DateTime.Today))
+                return ValidationResult.InvalidBirthday;
+
+            if (string.IsNullOrWhiteSpace(dto.NationalId))
+                return ValidationResult.MissingNationalId;
+
+            if (string.IsNullOrWhiteSpace(dto.Telephonenumber))
+                return ValidationResult.MissingPhone;
+
+            if (string.IsNullOrWhiteSpace(dto.Emailaddress))
+                return ValidationResult.MissingEmail;
+
+            var countryCode = dto.Country switch
+            {
+                "Sweden" => "SE",
+                "Denmark" => "DK",
+                "Norway" => "NO",
+                "Finland" => "FI",
+                _ => ""
+            };
+
+            if (countryCode == "")
+                return ValidationResult.InvalidCountry;
+
+            var telephoneCountryCode = dto.Country switch
+            {
+                "Sweden" => "+46",
+                "Denmark" => "+45",
+                "Norway" => "+47",
+                "Finland" => "+358",
+                _ => ""
+            };
+
+            if (telephoneCountryCode == "")
+                return ValidationResult.InvalidTelephoneCountryCode;
+
+            return ValidationResult.OK;
+        }
+
+
     }
 }

@@ -4,27 +4,27 @@
 }
 <div class="card">
     <div class="card-header">
-        <h1>Ny person</h1>
+        <h2 class="mb-0">New Customer</h2>
     </div>
     <div class="card-body">
         <form method="post">
             <div class="row mb-3">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <label asp-for="Givenname">First name</label>
                     <input class="form-control" asp-for="Givenname" required>
                     <span asp-validation-for="Givenname" class="field-validation-error"></span>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <label asp-for="Surname">Last name</label>
                     <input class="form-control" asp-for="Surname" required>
                     <span asp-validation-for="Surname" class="field-validation-error"></span>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-2">
                     <label asp-for="CustomerGender">Gender</label>
                     <select class="form-control" asp-for="CustomerGender" required asp-items="@Model.Genders">
                     </select>
                     <span asp-validation-for="CustomerGender"
-                          class="field-validation-error"></span>
+                          class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
@@ -50,25 +50,30 @@
                     <select class="form-control" asp-for="CustomerCountry" required asp-items="@Model.Countries">
                     </select>
                     <span asp-validation-for="CustomerCountry"
-                          class="field-validation-error"></span>
+                          class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label asp-for="Birthday" required class="form-label">Birthday</label>
-                    <input type="date" class="form-control" max="@DateTime.Today.ToString("yyyy-MM-dd")" asp-for="Birthday" required />
-                    <span class="text-danger" asp-validation-for="Birthday"></span>
+                    <label asp-for="Birthday">Birthday</label>
+                    <input type="date" class="form-control"
+                           asp-for="Birthday"
+                           max="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Birthday" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
-                    <label asp-for="NationalId">Social security nr</label>
+                    <label asp-for="NationalId">Social security #</label>
                     <input class="form-control" asp-for="NationalId" required>
                     <span asp-validation-for="NationalId" class="field-validation-error"></span>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label asp-for="Telephonenumber">Phone number</label>
-                    <input class="form-control" asp-for="Telephonenumber" required>
+                    <label asp-for="Telephonenumber">Phone</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="countryCode"></span>
+                        <input class="form-control" asp-for="Telephonenumber" required>
+                    </div>
                     <span asp-validation-for="Telephonenumber" class="field-validation-error"></span>
                 </div>
                 <div class="col-md-6">
@@ -79,5 +84,29 @@
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
+        <!-- Enum errors -->
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+        }
     </div>
 </div>
+@section Scripts {
+    <script>
+        const countrySelect = document.querySelector('[name="CustomerCountry"]');
+        const prefixSpan = document.getElementById('countryCode');
+
+        const countryCodes = {
+            Sweden: "+46",
+            Norway: "+47",
+            Denmark: "+45",
+            Finland: "+358"
+        };
+
+        countrySelect.addEventListener('change', () => {
+            const country = countrySelect.value;
+            const code = countryCodes[country] || '';
+            prefixSpan.textContent = code;
+        });
+    </script>
+}

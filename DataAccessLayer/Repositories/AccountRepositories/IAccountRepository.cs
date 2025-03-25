@@ -6,6 +6,7 @@ namespace DataAccessLayer.Repositories.AccountRepositories
     {
         Task<Account?> GetAccountWithTransactionsAsync(int accountId);
         Task SaveAsync();
+        Task AddAsync(Account account);
         Task<List<Account>> GetAccountsByCustomerIdAsync(int customerId);
         Task<Account?> GetAccountByIdAsync(int accountId);
         Account GetAccountById(int accountId);

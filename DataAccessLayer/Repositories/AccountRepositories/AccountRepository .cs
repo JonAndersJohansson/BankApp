@@ -25,10 +25,10 @@ namespace DataAccessLayer.Repositories.AccountRepositories
                 .ToListAsync();
         }
 
-        //public async Task AddAsync(Account account)
-        //{
-        //    await _dbContext.Accounts.AddAsync(account);
-        //}
+        public async Task AddAsync(Account account)
+        {
+            await _dbContext.Accounts.AddAsync(account);
+        }
 
 
         public async Task SaveAsync()

@@ -26,6 +26,7 @@ namespace Services.Customer
         Task<bool> DeleteCustomerAsync(int customerId);
         List<SelectListItem> GetGenderList();
         List<SelectListItem> GetCountryList();
+        Task<ValidationResult> CreateNewCustomer(CustomerDetailsDto newCustomer);
     }
 }
 

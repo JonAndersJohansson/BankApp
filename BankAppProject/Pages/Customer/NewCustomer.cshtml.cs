@@ -1,3 +1,4 @@
+using DataAccessLayer.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -23,8 +24,7 @@ namespace BankAppProject.Pages.Customer
         [Required(ErrorMessage = "Last name required.")]
         public string Surname { get; set; }
 
-        [Range(1, 99, ErrorMessage = "Please choose a valid gender!")]
-        [Required(ErrorMessage = "Gender required.")]
+        [Range(1, 99, ErrorMessage = "Invalid")]
         public Gender CustomerGender { get; set; }
         public List<SelectListItem> Genders { get; set; }
 
@@ -40,13 +40,14 @@ namespace BankAppProject.Pages.Customer
         [Required(ErrorMessage = "City required.")]
         public string City { get; set; }
 
-        [Range(1, 10, ErrorMessage = "Please choose a gender")]
-        [Required(ErrorMessage = "Counry required.")]
+        [Range(1, 10, ErrorMessage = "Invalid")]
         public Country CustomerCountry { get; set; }
         public List<SelectListItem> Countries { get; set; }
 
         [Required(ErrorMessage = "Birthday required.")]
-        public DateTime Birthday { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? Birthday { get; set; }
+
 
         [MaxLength(12, ErrorMessage = "Social security number not valid.")]
         [Required(ErrorMessage = "Social security number required.")]
@@ -58,11 +59,51 @@ namespace BankAppProject.Pages.Customer
 
         [MaxLength(50, ErrorMessage = "Email address not valid, to long.")]
         [Required(ErrorMessage = "Email address required.")]
+        [EmailAddress(ErrorMessage = "Email address is not valid.")]
+
         public string Emailaddress { get; set; }
+
         public void OnGet()
         {
             Countries = _customerService.GetCountryList();
             Genders = _customerService.GetGenderList();
+        }
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (ModelState.IsValid)
+            {
+                var newCustomer = new CustomerDetailsDto
+                {
+                    Givenname = Givenname,
+                    Surname = Surname,
+                    Gender = CustomerGender.ToString(),
+                    Streetaddress = StreetAddress,
+                    Zipcode = ZipCode,
+                    City = City,
+                    Country = CustomerCountry.ToString(),
+                    Birthday = DateOnly.FromDateTime(Birthday!.Value),
+                    NationalId = NationalId,
+                    Telephonenumber = Telephonenumber,
+                    Emailaddress = Emailaddress
+                };
+                var status = await _customerService.CreateNewCustomer(newCustomer);
+
+                if (status == ValidationResult.OK)
+                {
+                    return RedirectToPage("Index");
+                }
+
+                ModelState.AddModelError(string.Empty, $"Transaction failed: {status}");
+
+                Birthday = new DateTime(1990, 1, 1);
+                Countries = _customerService.GetCountryList();
+                Genders = _customerService.GetGenderList();
+                return Page();
+            }
+            Birthday = new DateTime(1990, 1, 1);
+            Countries = _customerService.GetCountryList();
+            Genders = _customerService.GetGenderList();
+            return Page();
         }
     }
 }
