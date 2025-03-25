@@ -86,12 +86,14 @@ namespace BankAppProject.Pages.Customer
                     Telephonenumber = Telephonenumber,
                     Emailaddress = Emailaddress
                 };
-                var status = await _customerService.CreateNewCustomer(newCustomer);
+                var (status, customerId) = await _customerService.CreateNewCustomerAsync(newCustomer);
 
-                if (status == ValidationResult.OK)
+                if (status == ValidationResult.OK && customerId.HasValue)
                 {
-                    return RedirectToPage("Index");
+                    TempData["NewCustomerMessage"] = $"Customer created successfully";
+                    return RedirectToPage("CustomerDetails", new { id = customerId.Value });
                 }
+
 
                 ModelState.AddModelError(string.Empty, $"Transaction failed: {status}");
 

@@ -1,4 +1,4 @@
-﻿@page "{accountId:int}"
+﻿@page
 @model BankAppProject.Pages.Account.AccountDetailsModel
 @{
 }
@@ -13,6 +13,7 @@
         <div class="card-header d-flex flex-wrap justify-content-between">
             <h5>Account nr: @Model.Account.AccountId</h5>
             <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Are you sure you want to Inactivate this account?')">
+                <input type="hidden" name="customerId" value="@Model.CustomerId" />
                 <input type="hidden" name="accountId" value="@Model.Account.AccountId" />
                 <button type="submit" class="btn btn-outline-danger">Inactivate Account</button>
             </form>
@@ -27,6 +28,31 @@
         <button class="btn btn-secondary"><a asp-page="/Account/Withdraw" asp-route-accountId="@Model.Account.AccountId">Withdraw <i class="fa-solid fa-minus"></i></a></button>
         <button class="btn btn-secondary"><a asp-page="/Account/Transfer" asp-route-accountId="@Model.Account.AccountId">Transfer <i class="fa-solid fa-arrow-up-from-bracket"></i></a></button>
     </div>
+    @if (TempData["WithdrawMessage"] != null)
+    {
+        <div class="alert alert-success mt-2 text-center">
+            @TempData["WithdrawMessage"]
+        </div>
+    }
+    @if (TempData["DepositMessage"] != null)
+    {
+        <div class="alert alert-success mt-2 text-center">
+            @TempData["DepositMessage"]
+        </div>
+    }
+    @if (TempData["TransferMessage"] != null)
+    {
+        <div class="alert alert-success mt-2 text-center">
+            @TempData["TransferMessage"]
+        </div>
+    }
+    @if (TempData["InactivatedAccount"] != null)
+    {
+        <div class="alert alert-success mt-2 text-center">
+            @TempData["InactivatedAccount"]
+        </div>
+    }
+
     <!--Transaktioner i tabell -->
     <div class="card mt-2">
         <div class="card-header p-1">

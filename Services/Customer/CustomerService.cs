@@ -157,11 +157,11 @@ namespace Services.Customer
                 .ToList();
             return Countries;
         }
-        public async Task<ValidationResult> CreateNewCustomer(CustomerDetailsDto newCustomer)
+        public async Task<(ValidationResult Result, int? CustomerId)> CreateNewCustomerAsync(CustomerDetailsDto newCustomer)
         {
             var validation = ValidateCustomerDto(newCustomer);
             if (validation != ValidationResult.OK)
-                return validation;
+                return (validation, null);
 
             var countryCode = newCustomer.Country switch
             {
@@ -203,7 +203,8 @@ namespace Services.Customer
             await _customerRepository.SaveAsync();
             await _accountService.CreateAccountAsync(customer.CustomerId);
 
-            return ValidationResult.OK;
+            return (ValidationResult.OK, customer.CustomerId);
+
         }
         private ValidationResult ValidateCustomerDto(CustomerDetailsDto dto)
         {

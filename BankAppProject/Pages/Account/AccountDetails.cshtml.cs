@@ -1,5 +1,6 @@
 using AutoMapper;
 using BankAppProject.ViewModels;
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Account;
@@ -18,11 +19,15 @@ namespace BankAppProject.Pages.Account
         }
         [BindProperty(SupportsGet = true)]
         public int CustomerId { get; set; }
+        public int AccountId { get; set; }
 
         public AccountDetailsViewModel Account { get; set; } = new();
 
-        public async Task<IActionResult> OnGetAsync(int accountId)
+        public async Task<IActionResult> OnGetAsync(int accountId, int customerId)
         {
+            CustomerId = customerId;
+            AccountId = accountId;
+
             var accountDto = await _accountService.GetAccountDetailsAsync(accountId);
             if (accountDto == null)
                 return NotFound();
@@ -51,8 +56,10 @@ namespace BankAppProject.Pages.Account
             var viewModels = _mapper.Map<List<TransactionInAccountDetailsViewModel>>(transactions);
             return new JsonResult(viewModels);
         }
-        public async Task<IActionResult> OnPostDeleteAsync(int accountId)
+        public async Task<IActionResult> OnPostDeleteAsync(int accountId, int customerId)
         {
+            CustomerId = customerId;
+
             var success = await _accountService.DeleteAccountAsync(accountId);
             if (!success)
             {
@@ -60,7 +67,9 @@ namespace BankAppProject.Pages.Account
                 return Page();
             }
 
-            return RedirectToPage("/Customer/Index");
+            TempData["InactivatedAccount"] = $"Account inactivated successfully";
+            return RedirectToPage("/Customer/CustomerDetails", new { id = CustomerId });
         }
+
     }
 }

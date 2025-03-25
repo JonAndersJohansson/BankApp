@@ -73,6 +73,7 @@ namespace BankAppProject.Pages.Account
 
             if (status == ValidationResult.OK)
             {
+                TempData["WithdrawMessage"] = $"Withdraw successfull";
                 return RedirectToPage("AccountDetails", new { accountId = AccountId });
             }
 

@@ -13,14 +13,20 @@ namespace BankAppProject.Pages.Customer
 
         public CustomerDetailsViewModel Customer { get; set; } = new();
 
+        [BindProperty(SupportsGet = true)]
+        public int CustomerId { get; set; }
+
         public CustomerDetailsModel(ICustomerService customerService, IMapper mapper)
         {
             _customerService = customerService;
             _mapper = mapper;
         }
 
+
         public async Task<IActionResult> OnGetAsync(int id)
         {
+            CustomerId = id;
+
             var customerDto = await _customerService.GetCustomerAsync(id);
             if (customerDto == null) return NotFound();
 

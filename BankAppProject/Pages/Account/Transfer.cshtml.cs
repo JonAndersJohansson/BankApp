@@ -78,6 +78,7 @@ namespace BankAppProject.Pages.Account
 
             if (status == ValidationResult.OK)
             {
+                TempData["TransferMessage"] = $"Transfer successfull";
                 return RedirectToPage("AccountDetails", new { accountId = AccountId });
             }
 
