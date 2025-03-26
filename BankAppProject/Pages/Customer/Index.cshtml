@@ -13,14 +13,16 @@
 
 @*Search*@
 <div class="flexcontainer d-flex justify-content-between align-items-center">
-    <div>
+    <div class="input-group">
         <form method="get">
-            <input type="text" name="q" value="@Model.Q" placeholder="Search by Id, name, city" />
+            <input type="text" class="form-control bg-light border-0 small" name="q" value="@Model.Q" placeholder="Search by Id, name, city" />
             <input type="hidden" name="sortColumn" value="@Request.Query["sortColumn"]" />
             <input type="hidden" name="sortOrder" value="@Request.Query["sortOrder"]" />
             <input type="hidden" name="pageNumber" value="1" />
-            <button type="submit" id="search-btn"><i class="fas fa-search"></i></button>
         </form>
+        <div class="input-group-append">
+            <button type="submit" id="search-btn"><i class="fas fa-search"></i></button>
+        </div>
     </div>
     <div class="d-flex justify-content-end">
         <a asp-page="/Customer/NewCustomer" class="btn btn-info" id="customer-view-btn">ADD NEW CUSTOMER</a>
@@ -28,7 +30,7 @@
 </div>
 
 
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped mt-2">
 
     <thead>
         <tr>
@@ -153,7 +155,7 @@
 <div class="pagination">
     @if (Model.PageNumber > 1)
     {
-        <a asp-page="/Customers"
+        <a asp-page="/Customer/Index"
            asp-route-sortColumn="@Request.Query["sortColumn"]"
            asp-route-sortOrder="@Request.Query["sortOrder"]"
            asp-route-q="@Model.Q"
@@ -163,7 +165,7 @@
     <p class="display-pagenumber">Page @Model.PageNumber</p>
     @if ((Model.PageNumber * Model.PageSize) < Model.TotalCustomers)
     {
-        <a asp-page="/Customers"
+        <a asp-page="/Customer/Index"
            asp-route-sortColumn="@Request.Query["sortColumn"]"
            asp-route-sortOrder="@Request.Query["sortOrder"]"
            asp-route-q="@Model.Q"
