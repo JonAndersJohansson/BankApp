@@ -33,7 +33,16 @@ html, body {
     .btn-primary:hover {
         background-color: #554f70 !important;
     }
+.btn-outline-primary {
+    color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
 
+    .btn-outline-primary:hover {
+        color: #fff !important;
+        background-color: var(--primary) !important;
+        border-color: var(--primary) !important;
+    }
 .btn-secondary {
     background-color: var(--secondary) !important;
     color: var(--primary) !important;
@@ -49,8 +58,14 @@ html, body {
 .btn-success a {
         color: white !important;
 }
+.btn-icon {
+    color: var(--primary) !important;
+    border: solid 2px var(--primary) !important;
+    padding: 0 5px;
+    border-radius: 25px !important;
+}
 
-    body, p, a, .btn {
+body, p, a, .btn {
     font-family: "Helvetica", sans-serif !important;
 }
 
@@ -181,11 +196,41 @@ body .border-left-primary {
 
 /* CustomerIndex page below */
 
-#customer-tabledata-view-btn {
-    vertical-align: middle;  Centrerar innehållet i cellen lodrätt 
-    text-align: center;  Centrerar innehållet vågrätt 
+/*.table-row-view:hover {
+    border: solid 2px var(--primary) !important;
+}*/
+.table-striped tbody tr.table-row-view:hover {
+    /*background-color: #9fc2d6 !important;*/
+    outline: solid 2px var(--secondary) !important;
 }
-#customer-view-btn {
+
+
+.cell-clickable {
+    padding: 0 !important;
+    text-align: center;
+}
+
+    .cell-clickable a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-decoration: none !important;
+    }
+
+        .cell-clickable a i {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #82a9bf;
+            width: 100%;
+            height: 100%;
+            font-size: 1.6rem; /* eller större om du vill ha en tydlig ikon */
+        }
+            .cell-clickable a i:hover {
+                color: var(--primary);
+            }
+
+/*#customer-view-btn {
     font-size: 0.8rem;
     background-color: var(--secondary) !important;
     color: var(--primary) !important;
@@ -197,7 +242,7 @@ body .border-left-primary {
 }
     #customer-view-btn:hover {
         background-color: #82a9bf !important;
-    }
+    }*/
 .fa-angle-up, .fa-angle-down {
     color: #443c65;
 }
@@ -220,19 +265,18 @@ tbody {
     border: none !important;
     padding: 3px 6px !important;
     color: white !important;
-    margin-left: 10px !important;
     font-weight: bold !important;
-    border-radius: 20px !important;
-    letter-spacing: 2px !important;
+    border-bottom-right-radius: 5px !important;
+    border-top-right-radius: 5px !important;
 }
     #search-btn:hover {
         background-color: #554f70 !important;
     }
-/*.flexcontainer {
-    display: flex;
-    gap: 10px; 
-    align-items: center;
-}*/
+
+
+/* Media Querys below */
+
+
 @media (max-width: 450px) {
     .btn {
         padding-top: 0 !important;
