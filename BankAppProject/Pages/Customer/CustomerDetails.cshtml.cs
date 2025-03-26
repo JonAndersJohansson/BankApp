@@ -33,16 +33,16 @@ namespace BankAppProject.Pages.Customer
             Customer = _mapper.Map<CustomerDetailsViewModel>(customerDto);
             return Page();
         }
-        public async Task<IActionResult> OnPostDeleteAsync(int customerId)
-        {
-            var success = await _customerService.DeleteCustomerAsync(customerId);
-            if (!success)
-            {
-                ModelState.AddModelError(string.Empty, "Customer could not be Deleted");
-                return Page();
-            }
+        //public async Task<IActionResult> OnPostDeleteAsync(int customerId)
+        //{
+        //    var success = await _customerService.DeleteCustomerAsync(customerId);
+        //    if (!success)
+        //    {
+        //        ModelState.AddModelError(string.Empty, "Customer could not be Deleted");
+        //        return Page();
+        //    }
 
-            return RedirectToPage("/Customer/Index");
-        }
+        //    return RedirectToPage("/Customer/Index");
+        //}
     }
 }

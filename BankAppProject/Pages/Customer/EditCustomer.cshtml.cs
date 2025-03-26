@@ -86,5 +86,16 @@ namespace BankAppProject.Pages.Customer
             Genders = _customerService.GetGenderList();
             return Page();
         }
+        public async Task<IActionResult> OnPostDeleteAsync(int customerId)
+        {
+            var success = await _customerService.DeleteCustomerAsync(customerId);
+            if (!success)
+            {
+                ModelState.AddModelError(string.Empty, "Customer could not be Deleted");
+                return Page();
+            }
+            TempData["InactivatedCustomerMessage"] = $"Customer inactivated successfully";
+            return RedirectToPage("/Customer/Index");
+        }
     }
 }

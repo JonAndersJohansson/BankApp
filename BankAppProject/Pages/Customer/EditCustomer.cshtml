@@ -2,9 +2,21 @@
 @model BankAppProject.Pages.Customer.EditCustomerModel
 @{
 }
+<a asp-page="/Customer/CustomerDetails"
+   asp-route-id="@Model.Customer.CustomerId"
+   class="btn btn-primary">
+    <i class="fa-solid fa-arrow-left"></i>
+</a>
 <div class="card">
-    <div class="card-header">
+    <div class="card-header d-flex flex-wrap justify-content-between mb-2">
         <h2 class="mb-0">Edit Customer</h2>
+        <form method="post" asp-page-handler="Delete"
+              onsubmit="return confirm('Are you sure you want to Inactivate this customer? All accounts will also be inactivated.')">
+            <input type="hidden" name="customerId" value="@Model.Customer.CustomerId" />
+            <button type="submit" class="btn btn-outline-danger">
+                Inactivate Customer <i class="fa-solid fa-trash-can"></i>
+            </button>
+        </form>
     </div>
     <div class="card-body">
         <form method="post">

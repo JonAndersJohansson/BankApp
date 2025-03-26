@@ -2,22 +2,20 @@
 @model BankAppProject.Pages.Customer.CustomerDetailsModel
 @{
 }
-
-<div class="container mt-3 p-0">
-    <a asp-page="/Customer/Index"
-       class="btn btn-primary">
-        <i class="fa-solid fa-arrow-left"></i>
-    </a>
-
+<a asp-page="/Customer/Index"
+   class="btn btn-primary">
+    <i class="fa-solid fa-arrow-left"></i>
+</a>
+<div class="container p-0">
     <div class="card-header d-flex flex-wrap justify-content-between mb-2">
         <h4 class="mb-0">Id: @Model.Customer.CustomerId, @Model.Customer.Name</h4>
-        <form method="post" asp-page-handler="Delete"
+@*         <form method="post" asp-page-handler="Delete"
               onsubmit="return confirm('Are you sure you want to Inactivate this customer? All accounts will also be inactivated.')">
             <input type="hidden" name="customerId" value="@Model.Customer.CustomerId" />
             <button type="submit" class="btn btn-outline-danger">
                 Inactivate Customer <i class="fa-solid fa-trash-can"></i>
             </button>
-        </form>
+        </form> *@
     </div>
     @if (TempData["NewCustomerMessage"] != null)
     {
