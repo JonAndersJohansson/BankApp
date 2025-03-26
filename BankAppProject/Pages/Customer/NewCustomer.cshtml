@@ -6,7 +6,7 @@
    class="btn btn-primary">
     <i class="fa-solid fa-arrow-left"></i>
 </a>
-<div class="card">
+<div class="card mt-2">
     <div class="card-header">
         <h2 class="mb-0">New Customer</h2>
     </div>
@@ -86,7 +86,12 @@
                     <span asp-validation-for="Emailaddress" class="text-danger"></span>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            
         </form>
         <!-- Enum errors -->
         @if (!ViewData.ModelState.IsValid)

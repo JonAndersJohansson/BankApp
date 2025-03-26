@@ -30,8 +30,8 @@
         <div class="col-12 col-md-6 order-2 order-md-1">
             <div class="d-flex flex-wrap justify-content-between">
                 <h5 class="ps-3">Customer Info</h5>
-                <a asp-page="/Customer/EditCustomer" asp-route-id="@Model.Customer.CustomerId" class="btn btn-secondary">
-                    Edit Customer <i class="fa-solid fa-pen-to-square"></i>
+                <a asp-page="/Customer/EditCustomer" asp-route-id="@Model.Customer.CustomerId" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-pen-to-square"></i>
                 </a>
             </div>
             <div class="container p-0">
@@ -78,13 +78,13 @@
         <div class="col-12 col-md-6 order-1 order-md-2">
             <div class="card-header d-flex flex-wrap justify-content-between p-1">
                 <h5 class="ms-2 mb-0">Accounts</h5>
-                <a asp-page="/Account/NewAccount" asp-route-id="@Model.Customer.CustomerId" class="btn btn-success mb-0">
-                    Add new account <i class="fa-solid fa-plus"></i>
+                <a asp-page="/Account/NewAccount" asp-route-id="@Model.Customer.CustomerId" class="btn btn-outline-secondary mb-0">
+                    Add <i class="fa-solid fa-plus"></i>
                 </a>
             </div>
 
-            <div class="table-responsive">
-                <table class="table table-sm table-striped mb-0">
+            <div @* class="table-responsive" *@>
+                <table class="table table-sm table-striped">
                     <thead>
                         <tr>
                             <th>Acc #</th>
@@ -94,24 +94,20 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="table-sm">
                         @foreach (var account in Model.Customer.Accounts)
                         {
-                            <tr>
+                            <tr class="table-row-view">
                                 <td>@account.AccountId</td>
                                 <td>@account.Balance.ToString("C1", new System.Globalization.CultureInfo("de-DE"))</td>
                                 <td>@account.Frequency</td>
                                 <td>@account.Created.ToShortDateString()</td>
-                                <td>
-                                    <div class="d-flex justify-content-end">
-                                        <a asp-page="/Account/AccountDetails"
-                                           asp-route-accountId="@account.AccountId"
-                                           asp-route-customerId="@Model.Customer.CustomerId"
-                                           class="btn btn-secondary">
-                                            View
-                                        </a>
-
-                                    </div>
+                                <td class="cell-clickable">
+                                    <a asp-page="/Account/AccountDetails"
+                                        asp-route-accountId="@account.AccountId"
+                                        asp-route-customerId="@Model.Customer.CustomerId">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
                                 </td>
                             </tr>
                         }

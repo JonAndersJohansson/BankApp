@@ -36,6 +36,7 @@ html, body {
 .btn-outline-primary {
     color: var(--primary) !important;
     border-color: var(--primary) !important;
+    border: solid 2px var(--primary) !important;
 }
 
     .btn-outline-primary:hover {
@@ -54,6 +55,17 @@ html, body {
 
     .btn-secondary a {
         color: var(--primary) !important;
+    }
+.btn-outline-secondary {
+    color: var(--secondary) !important;
+    border: solid 2px var(--secondary) !important;
+    border-color: var(--secondary) !important;
+}
+
+    .btn-outline-secondary:hover {
+        color: #fff !important;
+        background-color: var(--secondary) !important;
+        border-color: var(--secondary) !important;
     }
 .btn-success a {
         color: white !important;
@@ -254,7 +266,7 @@ tbody {
     font-size: 0.7rem;
 }
 .pagination {
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 .display-pagenumber {
