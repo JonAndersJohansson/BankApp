@@ -26,12 +26,14 @@ namespace BankAppProject.Pages.Customer
         [BindProperty]
         public int CustomerId { get; set; }
 
-        [Range(1, 99, ErrorMessage = "Invalid")]
-        public Gender CustomerGender { get; set; }
+
+
+        //[Range(1, 99, ErrorMessage = "Invalid")]
+        //public Gender CustomerGender { get; set; }
         public List<SelectListItem> Genders { get; set; }
 
-        [Range(1, 10, ErrorMessage = "Invalid")]
-        public Country CustomerCountry { get; set; }
+        //[Range(1, 10, ErrorMessage = "Invalid")]
+        //public Country CustomerCountry { get; set; }
         public List<SelectListItem> Countries { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int customerId)
@@ -45,15 +47,15 @@ namespace BankAppProject.Pages.Customer
 
             Customer = _mapper.Map<EditCustomerViewModel>(dto);
 
-            if (!Enum.TryParse(Customer.Gender, out Gender gender))
-                gender = Gender.Choose; // fallback default
+            //if (!Enum.TryParse(Customer.CustomerGender, out Gender gender))
+            //    gender = Gender.Choose; // fallback default
 
-            CustomerGender = gender;
+            //CustomerGender = gender;
 
-            if (!Enum.TryParse(Customer.Country, out Country country))
-                country = Country.Choose;
+            //if (!Enum.TryParse(Customer.Country, out Country country))
+            //    country = Country.Choose;
 
-            CustomerCountry = country;
+            //CustomerCountry = country;
 
             return Page();
         }
@@ -63,6 +65,14 @@ namespace BankAppProject.Pages.Customer
             if (ModelState.IsValid)
             {
                 var dto = _mapper.Map<CustomerDetailsDto>(Customer);
+                //dto.Telephonecountrycode = CustomerCountry switch
+                //{
+                //    Country.Sweden => "+46",
+                //    Country.Norway => "+47",
+                //    Country.Denmark => "+45",
+                //    Country.Finland => "+358",
+                //    _ => ""
+                //};
 
                 var (status, customerId) = await _customerService.EditCustomerAsync(dto);
 
@@ -74,15 +84,15 @@ namespace BankAppProject.Pages.Customer
 
                 ModelState.AddModelError(string.Empty, $"Update customer failed: {status}");
 
-                CustomerGender = Gender.Choose;
-                CustomerCountry = Country.Choose;
+                //CustomerGender = Gender.Choose;
+                //CustomerCountry = Country.Choose;
                 Countries = _customerService.GetCountryList();
                 Genders = _customerService.GetGenderList();
                 return Page();
             }
 
-            CustomerGender = Gender.Choose;
-            CustomerCountry = Country.Choose;
+            //CustomerGender = Gender.Choose;
+            //CustomerCountry = Country.Choose;
             Countries = _customerService.GetCountryList();
             Genders = _customerService.GetGenderList();
             return Page();

@@ -16,6 +16,11 @@ namespace BankAppProject.Pages.Customer
         {
             _customerService = customerService;
         }
+
+        [BindProperty]
+        public int CustomerId { get; set; }
+
+
         [MaxLength(30, ErrorMessage = "First name not valid, to long")]
         [Required(ErrorMessage = "First name required.")]
         public string Givenname { get; set; }
@@ -63,8 +68,9 @@ namespace BankAppProject.Pages.Customer
 
         public string Emailaddress { get; set; }
 
-        public void OnGet()
+        public void OnGet(int customerId)
         {
+            CustomerId = customerId;
             Countries = _customerService.GetCountryList();
             Genders = _customerService.GetGenderList();
         }
@@ -86,12 +92,12 @@ namespace BankAppProject.Pages.Customer
                     Telephonenumber = Telephonenumber,
                     Emailaddress = Emailaddress
                 };
-                var (status, customerId) = await _customerService.CreateNewCustomerAsync(newCustomer);
+                var (status, customer) = await _customerService.CreateNewCustomerAsync(newCustomer);
 
-                if (status == ValidationResult.OK && customerId.HasValue)
+                if (status == ValidationResult.OK && customer.HasValue)
                 {
                     TempData["NewCustomerMessage"] = $"Customer created successfully";
-                    return RedirectToPage("CustomerDetails", new { id = customerId.Value });
+                    return RedirectToPage("CustomerDetails", new { customerId = CustomerId });
                 }
 
 

@@ -10,6 +10,7 @@
         public string City { get; set; } = string.Empty;
         public string Zipcode { get; set; } = string.Empty;
         public string Country { get; set; } = string.Empty;
+        public string? CountryCode { get; set; }
         public DateOnly? Birthday { get; set; }
         public string? NationalId { get; set; }
         public string? Telephonecountrycode { get; set; }

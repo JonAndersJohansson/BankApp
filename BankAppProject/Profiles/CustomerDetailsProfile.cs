@@ -18,7 +18,7 @@ namespace BankAppProject.Profiles
                         : 0))
                 .ForMember(dest => dest.Phonenumber, opt => opt.MapFrom(src =>
                     !string.IsNullOrEmpty(src.Telephonecountrycode) && !string.IsNullOrEmpty(src.Telephonenumber)
-                        ? $"+{src.Telephonecountrycode} {src.Telephonenumber}"
+                        ? $"{src.Telephonecountrycode} {src.Telephonenumber}"
                         : src.Telephonenumber));
 
             // Mappa AccountInCustomerDetailsDto till AccountInCustomerDetailsViewModel
