@@ -83,7 +83,7 @@
                 <div class="col-md-6">
                     <label asp-for="Customer.Telephonenumber">Phone</label>
                     <div class="input-group">
-                        <span class="input-group-text" id="countryCode"></span>
+                        <span class="input-group-text" id="countryCode">&nbsp;</span>
                         <input class="form-control" asp-for="Customer.Telephonenumber">
                     </div>
                     <span asp-validation-for="Customer.Telephonenumber" class="text-danger"></span>
@@ -109,27 +109,32 @@
 </div>
 @section Scripts {
     <script>
-        const countrySelect = document.querySelector('[name="CustomerCountry"]');
-        const prefixSpan = document.getElementById('countryCode');
+        document.addEventListener("DOMContentLoaded", function () {
+            const countrySelect = document.querySelector('[name="Customer.Country"]');
+            const prefixSpan = document.getElementById('countryCode');
 
-        const countryCodes = {
-            1: "+358", // Finland
-            2: "+45",  // Denmark
-            3: "+47",  // Norway
-            4: "+46"   // Sweden
-        };
+            console.log("countrySelect exists?", countrySelect);
+
+            const countryCodes = {
+                Sweden: "+46",
+                Norway: "+47",
+                Denmark: "+45",
+                Finland: "+358"
+            };
 
 
-        // Uppdatera direkt när sidan laddas
-        const country = countrySelect.value;
-        const code = countryCodes[country] || '';
-        prefixSpan.textContent = code;
+            // Visa initial kod
+            const country = countrySelect.value;
+            console.log("Country on load:", country);
+            const code = countryCodes[country] || '';
+            prefixSpan.textContent = code;
 
-        // Uppdatera vid förändring
-        countrySelect.addEventListener('change', () => {
-            const newCountry = countrySelect.value;
-            const newCode = countryCodes[newCountry] || '';
-            prefixSpan.textContent = newCode;
+            // Ändra när man väljer nytt
+            countrySelect.addEventListener('change', () => {
+                const newCountry = countrySelect.value;
+                const newCode = countryCodes[newCountry] || '';
+                prefixSpan.textContent = newCode;
+            });
         });
     </script>
 }
