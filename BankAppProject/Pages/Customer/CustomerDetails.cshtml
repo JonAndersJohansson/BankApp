@@ -3,13 +3,11 @@
 @{
 }
 <a asp-page="/Customer/Index"
-   class="btn btn-primary">
+   class="btn btn-primary mb-2">
     <i class="fa-solid fa-arrow-left"></i>
 </a>
-<div class="container p-0">
-    <div class="card-header d-flex flex-wrap justify-content-between mb-2">
-        <h2 class="mb-0">Id: @Model.Customer.CustomerId, @Model.Customer.Name</h2>
-    </div>
+<h2 class="card-header mb-2">Id: @Model.Customer.CustomerId, @Model.Customer.Name</h2>
+
     @if (TempData["NewCustomerMessage"] != null)
     {
         <div class="alert alert-success mt-2 text-center">
@@ -20,13 +18,13 @@
 
         <!-- Customer Info -->
         <div class="col-12 col-md-6 order-2 order-md-1">
-            <div class="d-flex flex-wrap justify-content-between">
-                <h5 class="ps-3">Customer Info</h5>
+            <div class="card-header d-flex flex-wrap justify-content-between align-content-center p-2">
+                <h5 class="m-0">Customer Info</h5>
                 <a asp-page="/Customer/EditCustomer" asp-route-id="@Model.Customer.CustomerId" class="btn btn-outline-secondary">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </a>
             </div>
-            <div class="container p-0">
+            <div class="card p-2">
                 <div class="row mb-2">
                     <div class="col-4 col-sm-3"><strong>Name:</strong></div>
                     <div class="col">@Model.Customer.Name</div>
@@ -68,14 +66,14 @@
 
         <!-- Accounts -->
         <div class="col-12 col-md-6 order-1 order-md-2">
-            <div class="card-header d-flex flex-wrap justify-content-between p-1">
+            <div class="card-header d-flex flex-wrap justify-content-between p-2">
                 <h5 class="ms-2 mb-0">Accounts</h5>
                 <a asp-page="/Account/NewAccount" asp-route-id="@Model.Customer.CustomerId" class="btn btn-outline-secondary mb-0">
-                    Add <i class="fa-solid fa-plus"></i>
+                Add <i class="fa-regular fa-credit-card"></i>
                 </a>
             </div>
 
-            <div @* class="table-responsive" *@>
+            <div class="card mb-5">
                 <table class="table table-sm table-striped">
                     <thead>
                         <tr>
@@ -105,11 +103,10 @@
                         }
                     </tbody>
                 </table>
-            </div>
-
-            <div class="list-group-item mb-5">
+            <div class="p-2">
                 <strong>Total assets:</strong> @Model.Customer.TotalBalance.ToString("C", new System.Globalization.CultureInfo("de-DE"))
+            </div>
             </div>
         </div>
     </div>
-</div>
+
