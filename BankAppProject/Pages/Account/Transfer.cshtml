@@ -1,8 +1,11 @@
-﻿@page
+﻿@page "{accountId:int}/{customerId:int}"
 @model BankAppProject.Pages.Account.TransferModel
 @{
 }
-<a asp-page="/Account/AccountDetails" asp-route-accountId="@Model.Account.AccountId" class="btn btn-primary mb-2">
+<a asp-page="/Account/AccountDetails"
+   asp-route-accountId="@Model.Account.AccountId"
+   asp-route-customerId="@Model.CustomerId"
+   class="btn btn-primary mb-2">
     <i class="fa-solid fa-arrow-left"></i>
 </a>
 <div class="card-header p-2">

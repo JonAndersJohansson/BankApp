@@ -33,12 +33,12 @@ namespace BankAppProject.Pages.Customer
         public Country CustomerCountry { get; set; }
         public List<SelectListItem> Countries { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int customerId)
         {
             Countries = _customerService.GetCountryList();
             Genders = _customerService.GetGenderList();
 
-            var dto = await _customerService.GetCustomerAsync(id);
+            var dto = await _customerService.GetCustomerAsync(customerId);
             if (dto == null) return NotFound();
 
             Customer = _mapper.Map<EditCustomerViewModel>(dto);

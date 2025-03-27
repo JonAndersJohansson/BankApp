@@ -18,8 +18,10 @@ namespace BankAppProject.Pages.Account
             _mapper = mapper;
         }
         [BindProperty(SupportsGet = true)]
-        public int CustomerId { get; set; }
         public int AccountId { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int CustomerId { get; set; }
 
         public AccountDetailsViewModel Account { get; set; } = new();
 

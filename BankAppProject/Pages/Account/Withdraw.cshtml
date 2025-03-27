@@ -1,8 +1,11 @@
-﻿@page
+﻿@page "{accountId:int}/{customerId:int}"
 @model BankAppProject.Pages.Account.WithdrawModel
 @{
 }
-<a asp-page="/Account/AccountDetails" asp-route-accountId="@Model.Account.AccountId" class="btn btn-primary mb-2">
+<a asp-page="/Account/AccountDetails"
+   asp-route-accountId="@Model.Account.AccountId"
+   asp-route-customerId="@Model.CustomerId"
+   class="btn btn-primary mb-2">
     <i class="fa-solid fa-arrow-left"></i>
 </a>
 <div class="card-header p-2">
@@ -21,7 +24,7 @@ else
 }
 
 <form method="post" class="mt-3">
-    <input type="hidden" asp-for="AccountId" />
+@*     <input type="hidden" asp-for="AccountId" /> *@
     <div class="row mb-3">
         <div class="col-md-6">
             <label asp-for="Amount" class="form-label">Amount</label>

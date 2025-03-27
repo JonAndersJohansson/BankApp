@@ -1,5 +1,6 @@
 using AutoMapper;
 using BankAppProject.ViewModels;
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,6 +21,11 @@ namespace BankAppProject.Pages.Account
             _accountService = accountService;
             _mapper = mapper;
         }
+        [BindProperty(SupportsGet = true)]
+        public int AccountId { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int CustomerId { get; set; }
         public AccountDetailsViewModel Account { get; set; }
 
 
@@ -37,9 +43,6 @@ namespace BankAppProject.Pages.Account
 
         [MaxLength(250, ErrorMessage = "Max 50 letters in comment.")]
         public string? Comment { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public int AccountId { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -79,7 +82,7 @@ namespace BankAppProject.Pages.Account
             if (status == ValidationResult.OK)
             {
                 TempData["TransferMessage"] = $"Transfer successfull";
-                return RedirectToPage("AccountDetails", new { accountId = AccountId });
+                return RedirectToPage("/Account/AccountDetails", new { accountId = AccountId, customerId = CustomerId });
             }
 
             ModelState.AddModelError(string.Empty, $"Transaction failed: {status}");

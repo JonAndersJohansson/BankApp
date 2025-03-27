@@ -1,4 +1,4 @@
-﻿@page "{id:int}"
+﻿@page "{customerId:int}"
 @model BankAppProject.Pages.Customer.CustomerDetailsModel
 @{
 }
@@ -20,7 +20,7 @@
         <div class="col-12 col-md-6 order-2 order-md-1">
             <div class="card-header d-flex flex-wrap justify-content-between align-content-center p-2">
                 <h5 class="m-0">Customer Info</h5>
-                <a asp-page="/Customer/EditCustomer" asp-route-id="@Model.Customer.CustomerId" class="btn btn-outline-secondary">
+                <a asp-page="/Customer/EditCustomer" asp-route-customerId="@Model.Customer.CustomerId" class="btn btn-outline-secondary">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </a>
             </div>
@@ -68,7 +68,7 @@
         <div class="col-12 col-md-6 order-1 order-md-2">
             <div class="card-header d-flex flex-wrap justify-content-between p-2">
                 <h5 class="ms-2 mb-0">Accounts</h5>
-                <a asp-page="/Account/NewAccount" asp-route-id="@Model.Customer.CustomerId" class="btn btn-outline-secondary mb-0">
+                <a asp-page="/Account/NewAccount" asp-route-customerId="@Model.Customer.CustomerId" class="btn btn-outline-secondary mb-0">
                 <i class="fa-solid fa-plus"></i><i class="fa-regular fa-credit-card"></i>
                 </a>
             </div>
