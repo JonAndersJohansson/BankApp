@@ -9,7 +9,7 @@
 </a>
 <!-- Kontoinfo -->
 <div class="card-header d-flex flex-wrap justify-content-between align-items-center p-2">
-    <h2>Account nr: @Model.Account.AccountId</h2>
+    <h2 class="mb-0">Account nr: @Model.Account.AccountId</h2>
     <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Are you sure you want to Inactivate this account?')">
         <input type="hidden" name="customerId" value="@Model.CustomerId" />
         <input type="hidden" name="accountId" value="@Model.Account.AccountId" />
