@@ -2,7 +2,7 @@
 @model BankAppProject.Pages.Customer.IndexModel
 @{
 }
-<h1>Customers</h1>
+<h2>Customers</h2>
 @if (TempData["InactivatedCustomerMessage"] != null)
 {
     <div class="alert alert-success mt-2 text-center">
@@ -28,7 +28,7 @@
         </div>
     </form>
 
-    <a asp-page="/Customer/NewCustomer" class="btn btn-outline-secondary">Add new customer <i class="fa-solid fa-plus"></i></a>
+    <a asp-page="/Customer/NewCustomer" class="btn btn-outline-secondary"><i class="fa-solid fa-plus"></i><i class="fa-solid fa-user"></i></a>
 </div>
 
 
@@ -41,104 +41,131 @@
     <thead>
         <tr>
             <th scope="col">
-                ID
-                <a asp-page="/Customer/Index"
-                   asp-route-sortColumn="Id"
-                   asp-route-sortOrder="asc"
-                   asp-route-q="@Model.Q"
-                   asp-route-pageNumber="1"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-up"></i>
+                <div class="d-flex flex-column flex-md-row align-items-center">
+                    <span class="pr-3 th-content">ID</span>
+                    <div>
+                        <a asp-page="/Customer/Index"
+                           asp-route-sortColumn="Id"
+                           asp-route-sortOrder="asc"
+                           asp-route-q="@Model.Q"
+                           asp-route-pageNumber="1"
+                           class="th-content"
+                           style="text-decoration:none">
+                            <i class="fa-solid fa-angle-up"></i>
 
-                </a>
-                <a asp-page="/Customer/Index"
-                   asp-route-sortColumn="Id"
-                   asp-route-sortOrder="desc"
-                   asp-route-q="@Model.Q"
-                   asp-route-pageNumber="1"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-down"></i>
-                </a>
+                        </a>
+                        <a asp-page="/Customer/Index"
+                           asp-route-sortColumn="Id"
+                           asp-route-sortOrder="desc"
+                           asp-route-q="@Model.Q"
+                           asp-route-pageNumber="1"
+                           class="th-content"
+                           style="text-decoration:none">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </a>
+                    </div>
+                </div>
             </th>
             <th scope="col">
-                Nat.ID
-                <a asp-page="/Customer/Index"
-                   asp-route-sortColumn="National Id"
-                   asp-route-sortOrder="asc"
-                   asp-route-q="@Model.Q"
-                   asp-route-pageNumber="1"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-up"></i>
-
-                </a>
-                <a asp-page="/Customer/Index"
-                   asp-route-sortColumn="National Id"
-                   asp-route-sortOrder="desc"
-                   asp-route-q="@Model.Q"
-                   asp-route-pageNumber="1"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-down"></i>
-                </a>
+                <div class="d-flex flex-column flex-md-row align-items-center">
+                    <span class="pr-2 th-content">Nat.ID</span>
+                    <div>
+                        <a asp-page="/Customer/Index"
+                           asp-route-sortColumn="National Id"
+                           asp-route-sortOrder="asc"
+                           asp-route-q="@Model.Q"
+                           asp-route-pageNumber="1"
+                           class="th-content"
+                           style="text-decoration:none">
+                            <i class="fa-solid fa-angle-up"></i>
+                        </a>
+                        <a asp-page="/Customer/Index"
+                           asp-route-sortColumn="National Id"
+                           asp-route-sortOrder="desc"
+                           asp-route-q="@Model.Q"
+                           asp-route-pageNumber="1"
+                           class="th-content"
+                           style="text-decoration:none">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </a>
+                    </div>
+                </div>
             </th>
             <th scope="col">
-                Name
-                <a asp-page="/Customer/Index"
-                   asp-route-sortColumn="Name"
-                   asp-route-sortOrder="asc"
-                   asp-route-q="@Model.Q"
-                   asp-route-pageNumber="1"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-up"></i>
+                <div class="d-flex flex-column flex-md-row align-items-center">
+                    <span class="pr-2 th-content">Name</span>
+                    <div>
+                        <a asp-page="/Customer/Index"
+                           asp-route-sortColumn="Name"
+                           asp-route-sortOrder="asc"
+                           asp-route-q="@Model.Q"
+                           asp-route-pageNumber="1"
+                           class="th-content"
+                           style="text-decoration:none">
+                            <i class="fa-solid fa-angle-up"></i>
 
-                </a>
-                <a asp-page="/Customer/Index"
-                   asp-route-sortColumn="Name"
-                   asp-route-sortOrder="desc"
-                   asp-route-q="@Model.Q"
-                   asp-route-pageNumber="1"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-down"></i>
-                </a>
+                        </a>
+                        <a asp-page="/Customer/Index"
+                           asp-route-sortColumn="Name"
+                           asp-route-sortOrder="desc"
+                           asp-route-q="@Model.Q"
+                           asp-route-pageNumber="1"
+                           class="th-content"
+                           style="text-decoration:none">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </a>
+                    </div>
+                </div>
             </th>
             <th scope="col">
-                Address
-                <a asp-page="/Customer/Index"
-                   asp-route-sortColumn="Address"
-                   asp-route-sortOrder="asc"
-                   asp-route-q="@Model.Q"
-                   asp-route-pageNumber="1"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-up"></i>
-
-                </a>
-                <a asp-page="/Customer/Index"
-                   asp-route-sortColumn="Address"
-                   asp-route-sortOrder="desc"
-                   asp-route-q="@Model.Q"
-                   asp-route-pageNumber="1"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-down"></i>
-                </a>
+                <div class="d-flex flex-column flex-md-row align-items-center">
+                    <span class="pr-2 th-content">Address</span>
+                    <div>
+                        <a asp-page="/Customer/Index"
+                           asp-route-sortColumn="Address"
+                           asp-route-sortOrder="asc"
+                           asp-route-q="@Model.Q"
+                           asp-route-pageNumber="1"
+                           class="th-content"
+                           style="text-decoration:none">
+                            <i class="fa-solid fa-angle-up"></i>
+                        </a>
+                        <a asp-page="/Customer/Index"
+                           asp-route-sortColumn="Address"
+                           asp-route-sortOrder="desc"
+                           asp-route-q="@Model.Q"
+                           asp-route-pageNumber="1"
+                           class="th-content"
+                           style="text-decoration:none">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </a>
+                    </div>
+                </div>
             </th>
             <th scope="col">
-                City
-                <a asp-page="/Customer/Index"
-                   asp-route-sortColumn="City"
-                   asp-route-sortOrder="asc"
-                   asp-route-q="@Model.Q"
-                   asp-route-pageNumber="1"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-up"></i>
-
-                </a>
-                <a asp-page="/Customer/Index"
-                   asp-route-sortColumn="City"
-                   asp-route-sortOrder="desc"
-                   asp-route-q="@Model.Q"
-                   asp-route-pageNumber="1"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-down"></i>
-                </a>
+                <div class="d-flex flex-column flex-md-row align-items-center">
+                    <span class="pr-2 th-content">City</span>
+                    <div>
+                        <a asp-page="/Customer/Index"
+                           asp-route-sortColumn="City"
+                           asp-route-sortOrder="asc"
+                           asp-route-q="@Model.Q"
+                           asp-route-pageNumber="1"
+                           class="th-content"
+                           style="text-decoration:none">
+                            <i class="fa-solid fa-angle-up"></i>
+                        </a>
+                        <a asp-page="/Customer/Index"
+                           asp-route-sortColumn="City"
+                           asp-route-sortOrder="desc"
+                           asp-route-q="@Model.Q"
+                           asp-route-pageNumber="1"
+                           class="th-content"
+                           style="text-decoration:none">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </a>
+                    </div>
+                </div>
             </th>
             <th></th>
         </tr>
