@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Services.Customer;
 using System.ComponentModel.DataAnnotations;
-using System.Net.Mail;
-using System.Reflection.Emit;
 
 namespace BankAppProject.Pages.Customer
 {
@@ -25,6 +23,9 @@ namespace BankAppProject.Pages.Customer
         [BindProperty]
         public EditCustomerViewModel Customer { get; set; } = new();
 
+        [BindProperty]
+        public int CustomerId { get; set; }
+
         [Range(1, 99, ErrorMessage = "Invalid")]
         public Gender CustomerGender { get; set; }
         public List<SelectListItem> Genders { get; set; }
@@ -35,6 +36,7 @@ namespace BankAppProject.Pages.Customer
 
         public async Task<IActionResult> OnGetAsync(int customerId)
         {
+            CustomerId = customerId;
             Countries = _customerService.GetCountryList();
             Genders = _customerService.GetGenderList();
 
@@ -67,8 +69,7 @@ namespace BankAppProject.Pages.Customer
                 if (status == ValidationResult.OK && customerId.HasValue)
                 {
                     TempData["EditCustomerMessage"] = $"Customer updated successfully";
-                    return RedirectToPage("/Customer/CustomerDetails", new { id = customerId.Value });
-
+                    return RedirectToPage("/Customer/CustomerDetails", new { customerId = CustomerId });
                 }
 
                 ModelState.AddModelError(string.Empty, $"Update customer failed: {status}");
