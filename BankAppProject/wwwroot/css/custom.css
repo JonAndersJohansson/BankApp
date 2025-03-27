@@ -303,13 +303,15 @@ tbody {
     .th-content {
         font-size: 0.7rem !important;
     }
+    .small-p {
+        font-size: 0.8rem !important;
+    }
 }
 @media (max-width: 450px) {
     .btn {
-        padding-top: 0 !important;
+        padding-top: 1px !important;
+        font-size: 0.9rem !important;
     }
-    .btn a{
-        font-size: 0.8rem !important;
-    }
+
 }
 
