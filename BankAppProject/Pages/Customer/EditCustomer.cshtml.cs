@@ -23,22 +23,11 @@ namespace BankAppProject.Pages.Customer
         [BindProperty]
         public EditCustomerViewModel Customer { get; set; } = new();
 
-        //[BindProperty]
-        //public int CustomerId { get; set; }
-
-
-
-        //[Range(1, 99, ErrorMessage = "Invalid")]
-        //public Gender CustomerGender { get; set; }
         public List<SelectListItem> Genders { get; set; }
-
-        //[Range(1, 10, ErrorMessage = "Invalid")]
-        //public Country CustomerCountry { get; set; }
         public List<SelectListItem> Countries { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int customerId)
         {
-            //CustomerId = customerIdd;
             Countries = _customerService.GetCountryList();
             Genders = _customerService.GetGenderList();
 

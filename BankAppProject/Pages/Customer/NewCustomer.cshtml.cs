@@ -1,3 +1,4 @@
+using BankAppProject.ViewModels;
 using DataAccessLayer.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,61 +17,15 @@ namespace BankAppProject.Pages.Customer
         {
             _customerService = customerService;
         }
-
         [BindProperty]
-        public int CustomerId { get; set; }
+        public NewCustomerViewModel Customer { get; set; } = new();
 
 
-        [MaxLength(30, ErrorMessage = "First name not valid, to long")]
-        [Required(ErrorMessage = "First name required.")]
-        public string Givenname { get; set; }
-
-        [MaxLength(30, ErrorMessage = "Last name not valid, to long")]
-        [Required(ErrorMessage = "Last name required.")]
-        public string Surname { get; set; }
-
-        [Range(1, 99, ErrorMessage = "Invalid")]
-        public Gender CustomerGender { get; set; }
         public List<SelectListItem> Genders { get; set; }
-
-        [MaxLength(50, ErrorMessage = "Street address not valid, to long.")]
-        [Required(ErrorMessage = "Street address required.")]
-        public string StreetAddress { get; set; }
-
-        [MaxLength(8, ErrorMessage = "Zipcode not valid.")]
-        [Required(ErrorMessage = "Zipcode required.")]
-        public string ZipCode { get; set; }
-
-        [MaxLength(20, ErrorMessage = "City name is to long.")]
-        [Required(ErrorMessage = "City required.")]
-        public string City { get; set; }
-
-        [Range(1, 10, ErrorMessage = "Invalid")]
-        public Country CustomerCountry { get; set; }
         public List<SelectListItem> Countries { get; set; }
 
-        [Required(ErrorMessage = "Birthday required.")]
-        [DataType(DataType.Date)]
-        public DateTime? Birthday { get; set; }
-
-
-        [MaxLength(12, ErrorMessage = "Social security number not valid.")]
-        [Required(ErrorMessage = "Social security number required.")]
-        public string NationalId { get; set; }
-
-        [MaxLength(20, ErrorMessage = "Phone number not valid, to long.")]
-        [Required(ErrorMessage = "Phone number required.")]
-        public string Telephonenumber { get; set; }
-
-        [MaxLength(50, ErrorMessage = "Email address not valid, to long.")]
-        [Required(ErrorMessage = "Email address required.")]
-        [EmailAddress(ErrorMessage = "Email address is not valid.")]
-
-        public string Emailaddress { get; set; }
-
-        public void OnGet(int customerId)
+        public void OnGet()
         {
-            CustomerId = customerId;
             Countries = _customerService.GetCountryList();
             Genders = _customerService.GetGenderList();
         }
@@ -80,24 +35,24 @@ namespace BankAppProject.Pages.Customer
             {
                 var newCustomer = new CustomerDetailsDto
                 {
-                    Givenname = Givenname,
-                    Surname = Surname,
-                    Gender = CustomerGender.ToString(),
-                    Streetaddress = StreetAddress,
-                    Zipcode = ZipCode,
-                    City = City,
-                    Country = CustomerCountry.ToString(),
-                    Birthday = DateOnly.FromDateTime(Birthday!.Value),
-                    NationalId = NationalId,
-                    Telephonenumber = Telephonenumber,
-                    Emailaddress = Emailaddress
+                    Givenname = Customer.Givenname,
+                    Surname = Customer.Surname,
+                    Gender = Customer.CustomerGender.ToString(),
+                    Streetaddress = Customer.StreetAddress,
+                    Zipcode = Customer.ZipCode,
+                    City = Customer.City,
+                    Country = Customer.CustomerCountry.ToString(),
+                    Birthday = DateOnly.FromDateTime(Customer.Birthday!.Value),
+                    NationalId = Customer.NationalId,
+                    Telephonenumber = Customer.Telephonenumber,
+                    Emailaddress = Customer.Emailaddress
                 };
                 var (status, customer) = await _customerService.CreateNewCustomerAsync(newCustomer);
 
                 if (status == ValidationResult.OK && customer.HasValue)
                 {
                     TempData["NewCustomerMessage"] = $"Customer created successfully";
-                    return RedirectToPage("CustomerDetails", new { customerId = CustomerId });
+                    return RedirectToPage("CustomerDetails", new { customerId = customer });
                 }
 
 

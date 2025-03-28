@@ -14,76 +14,76 @@
         <form method="post">
             <div class="row mb-3">
                 <div class="col-md-5">
-                    <label asp-for="Givenname">First name</label>
-                    <input class="form-control" asp-for="Givenname" required>
-                    <span asp-validation-for="Givenname" class="text-danger"></span>
+                    <label asp-for="Customer.Givenname">First name</label>
+                    <input class="form-control" asp-for="Customer.Givenname">
+                    <span asp-validation-for="Customer.Givenname" class="text-danger"></span>
                 </div>
                 <div class="col-md-5">
-                    <label asp-for="Surname">Last name</label>
-                    <input class="form-control" asp-for="Surname" required>
-                    <span asp-validation-for="Surname" class="text-danger"></span>
+                    <label asp-for="Customer.Surname">Last name</label>
+                    <input class="form-control" asp-for="Customer.Surname">
+                    <span asp-validation-for="Customer.Surname" class="text-danger"></span>
                 </div>
                 <div class="col-md-2">
-                    <label asp-for="CustomerGender">Gender</label>
-                    <select class="form-control" asp-for="CustomerGender" required asp-items="@Model.Genders">
+                    <label asp-for="Customer.CustomerGender">Gender</label>
+                    <select class="form-control" asp-for="Customer.CustomerGender" asp-items="@Model.Genders">
                     </select>
-                    <span asp-validation-for="CustomerGender"
+                    <span asp-validation-for="Customer.CustomerGender"
                           class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label asp-for="StreetAddress">Street address</label>
-                    <input class="form-control" asp-for="StreetAddress" required>
-                    <span asp-validation-for="StreetAddress" class="text-danger"></span>
+                    <label asp-for="Customer.StreetAddress">Street address</label>
+                    <input class="form-control" asp-for="Customer.StreetAddress">
+                    <span asp-validation-for="Customer.StreetAddress" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
-                    <label asp-for="City">City</label>
-                    <input class="form-control" asp-for="City" required>
-                    <span asp-validation-for="City" class="text-danger"></span>
+                    <label asp-for="Customer.City">City</label>
+                    <input class="form-control" asp-for="Customer.City">
+                    <span asp-validation-for="Customer.City" class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label asp-for="ZipCode">Zipcode</label>
-                    <input class="form-control" asp-for="ZipCode" required>
-                    <span asp-validation-for="ZipCode" class="text-danger"></span>
+                    <label asp-for="Customer.ZipCode">Zipcode</label>
+                    <input class="form-control" asp-for="Customer.ZipCode">
+                    <span asp-validation-for="Customer.ZipCode" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
-                    <label asp-for="CustomerCountry">Country</label>
-                    <select class="form-control" asp-for="CustomerCountry" required asp-items="@Model.Countries">
+                    <label asp-for="Customer.CustomerCountry">Country</label>
+                    <select class="form-control" asp-for="Customer.CustomerCountry" asp-items="@Model.Countries">
                     </select>
-                    <span asp-validation-for="CustomerCountry"
+                    <span asp-validation-for="Customer.CustomerCountry"
                           class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label asp-for="Birthday">Birthday</label>
+                    <label asp-for="Customer.Birthday">Birthday</label>
                     <input type="date" class="form-control"
-                           asp-for="Birthday"
+                           asp-for="Customer.Birthday"
                            max="@DateTime.Today.ToString("yyyy-MM-dd")" />
-                    <span asp-validation-for="Birthday" class="text-danger"></span>
+                    <span asp-validation-for="Customer.Birthday" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
-                    <label asp-for="NationalId">Social security #</label>
-                    <input class="form-control" asp-for="NationalId" required>
-                    <span asp-validation-for="NationalId" class="text-danger"></span>
+                    <label asp-for="Customer.NationalId">Social security #</label>
+                    <input class="form-control" asp-for="Customer.NationalId">
+                    <span asp-validation-for="Customer.NationalId" class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label asp-for="Telephonenumber">Phone</label>
+                    <label asp-for="Customer.Telephonenumber">Phone</label>
                     <div class="input-group">
                         <span class="input-group-text" id="countryCode"></span>
-                        <input class="form-control" asp-for="Telephonenumber" required>
+                        <input class="form-control" asp-for="Customer.Telephonenumber">
                     </div>
-                    <span asp-validation-for="Telephonenumber" class="text-danger"></span>
+                    <span asp-validation-for="Customer.Telephonenumber" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
-                    <label asp-for="Emailaddress">Email</label>
-                    <input class="form-control" asp-for="Emailaddress" required>
-                    <span asp-validation-for="Emailaddress" class="text-danger"></span>
+                    <label asp-for="Customer.Emailaddress">Email</label>
+                    <input class="form-control" asp-for="Customer.Emailaddress">
+                    <span asp-validation-for="Customer.Emailaddress" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
@@ -102,7 +102,7 @@
 </div>
 @section Scripts {
     <script>
-        const countrySelect = document.querySelector('[name="CustomerCountry"]');
+        const countrySelect = document.querySelector('[name="Customer.CustomerCountry"]');
         const prefixSpan = document.getElementById('countryCode');
 
         const countryCodes = {

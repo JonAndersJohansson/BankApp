@@ -175,10 +175,10 @@ namespace Services.Customer
 
             var telephoneCountryCode = newCustomer.Country switch
             {
-                "Sweden" => "+46",
-                "Denmark" => "+45",
-                "Norway" => "+47",
-                "Finland" => "+358",
+                "Sweden" => "46",
+                "Denmark" => "45",
+                "Norway" => "47",
+                "Finland" => "358",
                 _ => ""
             };
 
