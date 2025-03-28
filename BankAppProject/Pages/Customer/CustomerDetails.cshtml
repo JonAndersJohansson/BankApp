@@ -26,6 +26,12 @@
         @TempData["InactivatedAccount"]
     </div>
 }
+@if (TempData["CreatedAccountMessage"] != null)
+{
+    <div class="alert alert-success mt-2 text-center">
+        @TempData["CreatedAccountMessage"]
+    </div>
+}
 <div class="row">
 
     <!-- Customer Info -->
@@ -54,6 +60,10 @@
                 <div class="col">@Model.Customer.Country</div>
             </div>
             <div class="row mb-2">
+                <div class="col-4 col-sm-3"><strong>Gender:</strong></div>
+                <div class="col">@Model.Customer.Gender</div>
+            </div>
+            <div class="row mb-2">
                 <div class="col-4 col-sm-3"><strong>Birthday:</strong></div>
                 <div class="col">@Model.Customer.Birthday?.ToShortDateString()</div>
             </div>
@@ -80,9 +90,13 @@
     <div class="col-12 col-md-6 order-1 order-md-2">
         <div class="card-header d-flex flex-wrap justify-content-between p-2">
             <h5 class="ms-2 mb-0">Accounts</h5>
-            <a asp-page="/Account/NewAccount" asp-route-customerId="@Model.Customer.CustomerId" class="btn btn-outline-secondary mb-0">
-                <i class="fa-solid fa-plus"></i><i class="fa-regular fa-credit-card"></i>
-            </a>
+            <form method="post" asp-page-handler="AddAccount"
+                  onsubmit="return confirm('Are you sure you want to add a new account to this customer?')">
+                <input type="hidden" name="customerId" value="@Model.Customer.CustomerId" />
+                <button type="submit" class="btn btn-outline-secondary mb-0">
+                    <i class="fa-solid fa-plus"></i><i class="fa-regular fa-credit-card"></i>
+                </button>
+            </form>
         </div>
 
         <div class="card mb-5">

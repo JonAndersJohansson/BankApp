@@ -105,17 +105,29 @@
 
     <!-- Ladda fler knapp -->
     <div class="text-center p-3">
-        <button class="btn btn-outline-secondary" id="loadMoreBtn">Load more <i class="fa-solid fa-plus"></i></button>
+        <button class="btn btn-outline-secondary" id="loadMoreBtn" style="display: none;">
+            Load more <i class="fa-solid fa-plus"></i>
+        </button>
     </div>
+
+
 </div>
 
 @section Scripts {
     <script>
-        let offset = 20;
+        let offset = 0;
         const pageSize = 20;
         const accountId = @Model.Account.AccountId;
 
+        document.addEventListener("DOMContentLoaded", function () {
+            loadTransactions(); // Första laddningen
+        });
+
         document.getElementById("loadMoreBtn").addEventListener("click", function () {
+            loadTransactions(); // Ladda fler
+        });
+
+        function loadTransactions() {
             fetch(`?handler=Transactions&accountId=${accountId}&offset=${offset}&pageSize=${pageSize}`)
                 .then(response => response.json())
                 .then(data => {
@@ -123,6 +135,7 @@
 
                     data.forEach(tx => {
                         const row = document.createElement("tr");
+                        row.classList.add("table-row-view");
                         row.innerHTML = `
                             <td>${tx.date}</td>
                             <td>${tx.type}</td>
@@ -137,11 +150,14 @@
 
                     offset += pageSize;
 
-                    if (data.length < pageSize) {
-                        document.getElementById("loadMoreBtn").style.display = "none";
+                    const loadMoreBtn = document.getElementById("loadMoreBtn");
+                    if (data.length === pageSize) {
+                        loadMoreBtn.style.display = "inline-block";
+                    } else {
+                        loadMoreBtn.style.display = "none";
                     }
                 });
-        });
+        }
 
         function formatCurrency(amount) {
             return new Intl.NumberFormat('de-DE', {
