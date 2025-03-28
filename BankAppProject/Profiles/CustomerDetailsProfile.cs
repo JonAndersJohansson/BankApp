@@ -2,6 +2,7 @@
 using BankAppProject.ViewModels;
 using DataAccessLayer.DTO;
 using Services.Customer;
+using Services.Enums;
 
 namespace BankAppProject.Profiles
 {

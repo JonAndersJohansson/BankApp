@@ -1,4 +1,5 @@
 ﻿using Services.Customer;
+using Services.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace BankAppProject.ViewModels

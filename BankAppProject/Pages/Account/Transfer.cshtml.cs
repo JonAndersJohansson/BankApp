@@ -1,11 +1,11 @@
 using AutoMapper;
 using BankAppProject.ViewModels;
-using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Account;
 using System.ComponentModel.DataAnnotations;
+using ValidationResult = Services.Enums.ValidationResult;
 
 namespace BankAppProject.Pages.Account
 {

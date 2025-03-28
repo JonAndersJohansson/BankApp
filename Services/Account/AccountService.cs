@@ -2,8 +2,7 @@
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.AccountRepositories;
 using DataAccessLayer.Repositories.TransactionRepositories;
-using Microsoft.EntityFrameworkCore;
-using System;
+using Services.Enums;
 
 namespace Services.Account
 {
