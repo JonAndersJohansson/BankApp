@@ -7,8 +7,8 @@ namespace BankAppProject.ViewModels
     {
         public int CustomerId { get; set; }
 
-        [Required(ErrorMessage = "Gender is required.")]
-        public string Gender { get; set; } = string.Empty;
+        [Range(1, 99, ErrorMessage = "Invalid")]
+        public Gender? Gender { get; set; }
 
         [MaxLength(30, ErrorMessage = "First name not valid, to long")]
         [Required(ErrorMessage = "First name required.")]
@@ -30,8 +30,8 @@ namespace BankAppProject.ViewModels
         [Required(ErrorMessage = "Zipcode required.")]
         public string Zipcode { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Country is required.")]
-        public string Country { get; set; } = string.Empty;
+        [Range(1, 10, ErrorMessage = "Invalid")]
+        public Country Country { get; set; }
         public string? CountryCode { get; set; }
 
 
@@ -39,9 +39,11 @@ namespace BankAppProject.ViewModels
         [DataType(DataType.Date)]
         public DateOnly? Birthday { get; set; }
 
-        [MaxLength(12, ErrorMessage = "Social security number not valid.")]
         [Required(ErrorMessage = "Social security number required.")]
+        [StringLength(12, MinimumLength = 10, ErrorMessage = "Social security number must be between 10 and 12 characters.")]
+        [RegularExpression(@"^\d{6}[-+A]?\d{4}$|^\d{8}\d{4}$", ErrorMessage = "Invalid format for social security number.")]
         public string? NationalId { get; set; }
+
 
         public string? Telephonecountrycode { get; set; }
 

@@ -3,7 +3,7 @@
 @{
 }
 <a asp-page="/Customer/CustomerDetails"
-   asp-route-customerId="@Model.CustomerId"
+   asp-route-customerId="@Model.Customer.CustomerId"
    class="btn btn-primary mb-2">
     <i class="fa-solid fa-arrow-left"></i>
 </a>
@@ -20,6 +20,7 @@
     </div>
     <div class="card-body">
         <form method="post">
+            <input type="hidden" asp-for="Customer.CustomerId" /> <!--CustomerId-->
             <div class="row mb-3">
                 <div class="col-md-5">
                     <label asp-for="Customer.Givenname">First name</label>
@@ -113,8 +114,6 @@
             const countrySelect = document.querySelector('[name="Customer.Country"]');
             const prefixSpan = document.getElementById('countryCode');
 
-            console.log("countrySelect exists?", countrySelect);
-
             const countryCodes = {
                 Sweden: "+46",
                 Norway: "+47",
@@ -122,10 +121,9 @@
                 Finland: "+358"
             };
 
-
             // Visa initial kod
             const country = countrySelect.value;
-            console.log("Country on load:", country);
+            console.log("Country on load:", country); //test
             const code = countryCodes[country] || '';
             prefixSpan.textContent = code;
 

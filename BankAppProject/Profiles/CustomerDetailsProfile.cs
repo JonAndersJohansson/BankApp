@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BankAppProject.ViewModels;
 using DataAccessLayer.DTO;
+using Services.Customer;
 
 namespace BankAppProject.Profiles
 {
@@ -25,9 +26,38 @@ namespace BankAppProject.Profiles
             CreateMap<AccountInCustomerDetailsDto, AccountInCustomerDetailsViewModel>();
 
             // Mappa CustomerDetailsDto till EditCustomerViewModel och vice versa
-            CreateMap<CustomerDetailsDto, EditCustomerViewModel>();
-            CreateMap<EditCustomerViewModel, CustomerDetailsDto>();
+            //CreateMap<CustomerDetailsDto, EditCustomerViewModel>();
+            //CreateMap<EditCustomerViewModel, CustomerDetailsDto>();
+
+
+
+
+
+            //CreateMap<CustomerDetailsDto, EditCustomerViewModel>()
+            //    .ForMember(dest => dest.Country, opt => opt.MapFrom(src => ParseEnumOrDefault(src.Country, Country.Choose)))
+            //    .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => ParseEnumOrDefault(src.Gender, Gender.Choose)));
+
+            //CreateMap<EditCustomerViewModel, CustomerDetailsDto>()
+            //    .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country.ToString()))
+            //    .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender.ToString()));
+
+            CreateMap<CustomerDetailsDto, EditCustomerViewModel>()
+                .ForMember(dest => dest.Country, opt => opt.MapFrom(src => ParseEnumOrDefault(src.Country, Country.Choose)))
+                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => ParseEnumOrDefault(src.Gender, Gender.Choose)));
+
+            CreateMap<EditCustomerViewModel, CustomerDetailsDto>()
+                .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country.ToString()))
+                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender.ToString()));
+
+
         }
+
+
+        private static TEnum ParseEnumOrDefault<TEnum>(string? value, TEnum defaultValue) where TEnum : struct
+        {
+            return Enum.TryParse<TEnum>(value, true, out var result) ? result : defaultValue;
+        }
+
     }
 
 }

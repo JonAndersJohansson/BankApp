@@ -23,8 +23,8 @@ namespace BankAppProject.Pages.Customer
         [BindProperty]
         public EditCustomerViewModel Customer { get; set; } = new();
 
-        [BindProperty]
-        public int CustomerId { get; set; }
+        //[BindProperty]
+        //public int CustomerId { get; set; }
 
 
 
@@ -38,7 +38,7 @@ namespace BankAppProject.Pages.Customer
 
         public async Task<IActionResult> OnGetAsync(int customerId)
         {
-            CustomerId = customerId;
+            //CustomerId = customerIdd;
             Countries = _customerService.GetCountryList();
             Genders = _customerService.GetGenderList();
 
@@ -65,34 +65,22 @@ namespace BankAppProject.Pages.Customer
             if (ModelState.IsValid)
             {
                 var dto = _mapper.Map<CustomerDetailsDto>(Customer);
-                //dto.Telephonecountrycode = CustomerCountry switch
-                //{
-                //    Country.Sweden => "+46",
-                //    Country.Norway => "+47",
-                //    Country.Denmark => "+45",
-                //    Country.Finland => "+358",
-                //    _ => ""
-                //};
 
-                var (status, customerId) = await _customerService.EditCustomerAsync(dto);
+                var status = await _customerService.EditCustomerAsync(dto);
 
-                if (status == ValidationResult.OK && customerId.HasValue)
+                if (status == ValidationResult.OK)
                 {
                     TempData["EditCustomerMessage"] = $"Customer updated successfully";
-                    return RedirectToPage("/Customer/CustomerDetails", new { customerId = CustomerId });
+                    return RedirectToPage("/Customer/CustomerDetails", new { customerId = Customer.CustomerId });
                 }
 
                 ModelState.AddModelError(string.Empty, $"Update customer failed: {status}");
 
-                //CustomerGender = Gender.Choose;
-                //CustomerCountry = Country.Choose;
                 Countries = _customerService.GetCountryList();
                 Genders = _customerService.GetGenderList();
                 return Page();
             }
 
-            //CustomerGender = Gender.Choose;
-            //CustomerCountry = Country.Choose;
             Countries = _customerService.GetCountryList();
             Genders = _customerService.GetGenderList();
             return Page();

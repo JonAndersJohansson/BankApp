@@ -84,6 +84,7 @@ namespace Services.Customer
                 CustomerId = customer.CustomerId,
                 Givenname = customer.Givenname,
                 Surname = customer.Surname,
+                Gender = customer.Gender,
                 Streetaddress = customer.Streetaddress,
                 City = customer.City,
                 Zipcode = customer.Zipcode,
@@ -206,15 +207,15 @@ namespace Services.Customer
             return (ValidationResult.OK, customer.CustomerId);
 
         }
-        public async Task<(ValidationResult Result, int? CustomerId)> EditCustomerAsync(CustomerDetailsDto editedCustomer)
+        public async Task<ValidationResult> EditCustomerAsync(CustomerDetailsDto editedCustomer)
         {
             var validation = ValidateCustomerDto(editedCustomer);
             if (validation != ValidationResult.OK)
-                return (validation, null);
+                return validation;
 
             var existingCustomer = await _customerRepository.GetCustomerByIdAsync(editedCustomer.CustomerId);
             if (existingCustomer == null)
-                return (ValidationResult.CustomerNotFound, null);
+                return ValidationResult.CustomerNotFound;
 
             existingCustomer.Givenname = editedCustomer.Givenname;
             existingCustomer.Surname = editedCustomer.Surname;
@@ -235,10 +236,10 @@ namespace Services.Customer
             existingCustomer.NationalId = editedCustomer.NationalId;
             existingCustomer.Telephonecountrycode = editedCustomer.Country switch
             {
-                "Sweden" => "+46",
-                "Denmark" => "+45",
-                "Norway" => "+47",
-                "Finland" => "+358",
+                "Sweden" => "46",
+                "Denmark" => "45",
+                "Norway" => "47",
+                "Finland" => "358",
                 _ => ""
             };
             existingCustomer.Telephonenumber = editedCustomer.Telephonenumber;
@@ -247,7 +248,7 @@ namespace Services.Customer
             // Spara ändringarna
             await _customerRepository.SaveAsync();
 
-            return (ValidationResult.OK, existingCustomer.CustomerId);
+            return ValidationResult.OK;
         }
 
         private ValidationResult ValidateCustomerDto(CustomerDetailsDto dto)
@@ -302,10 +303,10 @@ namespace Services.Customer
 
             var telephoneCountryCode = dto.Country switch
             {
-                "Sweden" => "+46",
-                "Denmark" => "+45",
-                "Norway" => "+47",
-                "Finland" => "+358",
+                "Sweden" => "46",
+                "Denmark" => "45",
+                "Norway" => "47",
+                "Finland" => "358",
                 _ => ""
             };
 
