@@ -70,7 +70,7 @@ namespace BankAppProject.Pages.Account
             }
 
             TempData["InactivatedAccount"] = $"Account inactivated successfully";
-            return RedirectToPage("/Customer/CustomerDetails", new { id = CustomerId });
+            return RedirectToPage("/Customer/CustomerDetails", new { customerId = CustomerId });
         }
 
     }

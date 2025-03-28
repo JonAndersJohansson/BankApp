@@ -8,105 +8,117 @@
 </a>
 <h2 class="card-header mb-2">Id: @Model.Customer.CustomerId, @Model.Customer.Name</h2>
 
-    @if (TempData["NewCustomerMessage"] != null)
-    {
-        <div class="alert alert-success mt-2 text-center">
-            @TempData["NewCustomerMessage"]
+@if (TempData["NewCustomerMessage"] != null)
+{
+    <div class="alert alert-success mt-2 text-center">
+        @TempData["NewCustomerMessage"]
+    </div>
+}
+@if (TempData["EditCustomerMessage"] != null)
+{
+    <div class="alert alert-success mt-2 text-center">
+        @TempData["EditCustomerMessage"]
+    </div>
+}
+@if (TempData["InactivatedAccount"] != null)
+{
+    <div class="alert alert-success mt-2 text-center">
+        @TempData["InactivatedAccount"]
+    </div>
+}
+<div class="row">
+
+    <!-- Customer Info -->
+    <div class="col-12 col-md-6 order-2 order-md-1">
+        <div class="card-header d-flex flex-wrap justify-content-between align-content-center p-2">
+            <h5 class="m-0">Customer Info</h5>
+            <a asp-page="/Customer/EditCustomer" asp-route-customerId="@Model.Customer.CustomerId" class="btn btn-outline-secondary">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </a>
         </div>
-    }
-    <div class="row">
-
-        <!-- Customer Info -->
-        <div class="col-12 col-md-6 order-2 order-md-1">
-            <div class="card-header d-flex flex-wrap justify-content-between align-content-center p-2">
-                <h5 class="m-0">Customer Info</h5>
-                <a asp-page="/Customer/EditCustomer" asp-route-customerId="@Model.Customer.CustomerId" class="btn btn-outline-secondary">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </a>
+        <div class="card p-2">
+            <div class="row mb-2">
+                <div class="col-4 col-sm-3"><strong>Name:</strong></div>
+                <div class="col">@Model.Customer.Name</div>
             </div>
-            <div class="card p-2">
-                <div class="row mb-2">
-                    <div class="col-4 col-sm-3"><strong>Name:</strong></div>
-                    <div class="col">@Model.Customer.Name</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-4 col-sm-3"><strong>Address:</strong></div>
-                    <div class="col">@Model.Customer.Streetaddress</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-4 col-sm-3"></div>
-                    <div class="col">@Model.Customer.ZipcodeCity</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-4 col-sm-3"></div>
-                    <div class="col">@Model.Customer.Country</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-4 col-sm-3"><strong>Birthday:</strong></div>
-                    <div class="col">@Model.Customer.Birthday?.ToShortDateString()</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-4 col-sm-3"><strong>Age:</strong></div>
-                    <div class="col">@Model.Customer.Age</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-4 col-sm-3"><strong>Nat. ID:</strong></div>
-                    <div class="col">@Model.Customer.NationalId</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-4 col-sm-3"><strong>Phone:</strong></div>
-                    <div class="col">@Model.Customer.Phonenumber</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-4 col-sm-3"><strong>E-mail:</strong></div>
-                    <div class="col">@Model.Customer.Emailaddress</div>
-                </div>
+            <div class="row mb-2">
+                <div class="col-4 col-sm-3"><strong>Address:</strong></div>
+                <div class="col">@Model.Customer.Streetaddress</div>
             </div>
-        </div>
-
-        <!-- Accounts -->
-        <div class="col-12 col-md-6 order-1 order-md-2">
-            <div class="card-header d-flex flex-wrap justify-content-between p-2">
-                <h5 class="ms-2 mb-0">Accounts</h5>
-                <a asp-page="/Account/NewAccount" asp-route-customerId="@Model.Customer.CustomerId" class="btn btn-outline-secondary mb-0">
-                <i class="fa-solid fa-plus"></i><i class="fa-regular fa-credit-card"></i>
-                </a>
+            <div class="row mb-2">
+                <div class="col-4 col-sm-3"></div>
+                <div class="col">@Model.Customer.ZipcodeCity</div>
             </div>
-
-            <div class="card mb-5">
-                <table class="table table-sm table-striped">
-                    <thead>
-                        <tr>
-                            <th>Acc #</th>
-                            <th>Balance</th>
-                            <th>Frequency</th>
-                            <th>Created</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-sm">
-                        @foreach (var account in Model.Customer.Accounts)
-                        {
-                            <tr class="table-row-view">
-                                <td>@account.AccountId</td>
-                                <td>@account.Balance.ToString("C1", new System.Globalization.CultureInfo("de-DE"))</td>
-                                <td>@account.Frequency</td>
-                                <td>@account.Created.ToShortDateString()</td>
-                                <td class="cell-clickable">
-                                    <a asp-page="/Account/AccountDetails"
-                                        asp-route-accountId="@account.AccountId"
-                                        asp-route-customerId="@Model.Customer.CustomerId">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            <div class="p-2">
-                <strong>Total assets:</strong> @Model.Customer.TotalBalance.ToString("C", new System.Globalization.CultureInfo("de-DE"))
+            <div class="row mb-2">
+                <div class="col-4 col-sm-3"></div>
+                <div class="col">@Model.Customer.Country</div>
             </div>
+            <div class="row mb-2">
+                <div class="col-4 col-sm-3"><strong>Birthday:</strong></div>
+                <div class="col">@Model.Customer.Birthday?.ToShortDateString()</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4 col-sm-3"><strong>Age:</strong></div>
+                <div class="col">@Model.Customer.Age</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4 col-sm-3"><strong>Nat. ID:</strong></div>
+                <div class="col">@Model.Customer.NationalId</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4 col-sm-3"><strong>Phone:</strong></div>
+                <div class="col">@Model.Customer.Phonenumber</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4 col-sm-3"><strong>E-mail:</strong></div>
+                <div class="col">@Model.Customer.Emailaddress</div>
             </div>
         </div>
     </div>
+
+    <!-- Accounts -->
+    <div class="col-12 col-md-6 order-1 order-md-2">
+        <div class="card-header d-flex flex-wrap justify-content-between p-2">
+            <h5 class="ms-2 mb-0">Accounts</h5>
+            <a asp-page="/Account/NewAccount" asp-route-customerId="@Model.Customer.CustomerId" class="btn btn-outline-secondary mb-0">
+                <i class="fa-solid fa-plus"></i><i class="fa-regular fa-credit-card"></i>
+            </a>
+        </div>
+
+        <div class="card mb-5">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Acc #</th>
+                        <th>Balance</th>
+                        <th>Frequency</th>
+                        <th>Created</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="table-sm">
+                    @foreach (var account in Model.Customer.Accounts)
+                    {
+                        <tr class="table-row-view">
+                            <td>@account.AccountId</td>
+                            <td>@account.Balance.ToString("C1", new System.Globalization.CultureInfo("de-DE"))</td>
+                            <td>@account.Frequency</td>
+                            <td>@account.Created.ToShortDateString()</td>
+                            <td class="cell-clickable">
+                                <a asp-page="/Account/AccountDetails"
+                                   asp-route-accountId="@account.AccountId"
+                                   asp-route-customerId="@Model.Customer.CustomerId">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="p-2">
+                <strong>Total assets:</strong> @Model.Customer.TotalBalance.ToString("C", new System.Globalization.CultureInfo("de-DE"))
+            </div>
+        </div>
+    </div>
+</div>
 

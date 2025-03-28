@@ -47,16 +47,6 @@ namespace BankAppProject.Pages.Customer
 
             Customer = _mapper.Map<EditCustomerViewModel>(dto);
 
-            //if (!Enum.TryParse(Customer.CustomerGender, out Gender gender))
-            //    gender = Gender.Choose; // fallback default
-
-            //CustomerGender = gender;
-
-            //if (!Enum.TryParse(Customer.Country, out Country country))
-            //    country = Country.Choose;
-
-            //CustomerCountry = country;
-
             return Page();
         }
 
