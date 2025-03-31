@@ -55,9 +55,24 @@ else
     <div class="d-flex justify-content-end">
         <button type="submit" class="btn btn-outline-primary">Transfer <i class="fa-solid fa-arrow-up-from-bracket"></i></button>
     </div>
-    <!-- Enum errors -->
-    @if (!ViewData.ModelState.IsValid)
+
+    <!--ERROR-->
+    @if (TempData["ValidationErrorMessage"] != null)
     {
-        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+        <div class="alert alert-danger mt-2 text-center">
+            @TempData["ValidationErrorMessage"]
+        </div>
+    }
+    @if (TempData["InvalidBalanceMessage"] != null)
+    {
+        <div class="alert alert-danger mt-2 text-center">
+            @TempData["InvalidBalanceMessage"]
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger mt-2 text-center">
+            @TempData["ErrorMessage"]
+        </div>
     }
 </form>

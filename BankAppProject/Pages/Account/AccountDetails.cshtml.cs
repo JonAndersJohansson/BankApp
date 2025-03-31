@@ -31,10 +31,15 @@ namespace BankAppProject.Pages.Account
             AccountId = accountId;
 
             var accountDto = await _accountService.GetAccountDetailsAsync(accountId);
-            if (accountDto == null)
-                return NotFound();
 
-            // Ta endast första 20 transaktioner
+            if (accountDto == null)
+            {
+                TempData["NoAccount"] = $"No account found";
+                return RedirectToPage("/Customer/CustomerDetails", new { customerId = CustomerId });
+            }
+
+
+            // Ta bara första 20 transaktionerna
             accountDto.Transactions = accountDto.Transactions
                 .OrderByDescending(t => t.Date)
                 .Take(20)
@@ -47,7 +52,10 @@ namespace BankAppProject.Pages.Account
         {
             var accountDto = await _accountService.GetAccountDetailsAsync(accountId);
             if (accountDto == null)
-                return NotFound();
+            {
+                TempData["NoAccount"] = $"No account found";
+                return RedirectToPage("/Customer/CustomerDetails", new { customerId = CustomerId });
+            }
 
             var transactions = accountDto.Transactions
                 .OrderByDescending(t => t.Date)
@@ -58,20 +66,22 @@ namespace BankAppProject.Pages.Account
             var viewModels = _mapper.Map<List<TransactionInAccountDetailsViewModel>>(transactions);
             return new JsonResult(viewModels);
         }
-        public async Task<IActionResult> OnPostDeleteAsync(int accountId, int customerId)
+        public async Task<IActionResult> OnPostDeleteAsync()
         {
-            CustomerId = customerId;
+            var success = await _accountService.DeleteAccountAsync(AccountId);
 
-            var success = await _accountService.DeleteAccountAsync(accountId);
-            if (!success)
+            if (success)
             {
-                ModelState.AddModelError(string.Empty, "Account could not be Deleted");
-                return Page();
+                TempData["InactivatedAccount"] 
+                    = $"Account inactivated successfully";
+                return RedirectToPage("/Customer/CustomerDetails", 
+                    new { customerId = CustomerId });
             }
 
-            TempData["InactivatedAccount"] = $"Account inactivated successfully";
-            return RedirectToPage("/Customer/CustomerDetails", new { customerId = CustomerId });
+            TempData["ErrorInactivatingAccount"] = 
+                $"Account could not be inactivated";
+            return RedirectToPage("/Account/AccountDetails", 
+                new { accountId = AccountId, customerId = CustomerId });
         }
-
     }
 }

@@ -48,10 +48,18 @@ else
     <div class="d-flex justify-content-end">
         <button type="submit" class="btn btn-outline-primary">Deposit <i class="fa-solid fa-plus"></i></button>
     </div>
-    <!-- Enum errors -->
-    @if (!ViewData.ModelState.IsValid)
+    <!-- Errors -->
+    @if (TempData["ValidationResult"] != null)
     {
-        <div asp-validation-summary="All" class="alert alert-danger"></div>
+        <div class="alert alert-danger mt-2 text-center">
+            @TempData["ValidationResult"]
+        </div>
+    }
+    @if (TempData["InputInvalid"] != null)
+    {
+        <div class="alert alert-danger mt-2 text-center">
+            @TempData["InputInvalid"]
+        </div>
     }
 </form>
 

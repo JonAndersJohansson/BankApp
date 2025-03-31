@@ -124,12 +124,12 @@ namespace Services.Account
                 return ValidationResult.NoReceivingAccountFound;
 
             // Withdraw
-            var withdrawResult = await WithdrawAsync(fromAccountId, amount, comment, transferDate, $"Transfer to {toAccountId}");
+            var withdrawResult = await WithdrawAsync(fromAccountId, amount, comment, transferDate, $"Transfer to account: {toAccountId}");
             if (withdrawResult != ValidationResult.OK)
                 return withdrawResult;
 
             // Deposit
-            var depositResult = await DepositAsync(toAccountId, amount, comment, transferDate, $"Transfer from {toAccountId}");
+            var depositResult = await DepositAsync(toAccountId, amount, comment, transferDate, $"Transfer from account: {fromAccountId}");
             if (depositResult != ValidationResult.OK)
                 return depositResult;
 

@@ -10,7 +10,6 @@ using ValidationResult = Services.Enums.ValidationResult;
 namespace BankAppProject.Pages.Account
 {
     [Authorize(Roles = "Cashier,Admin")]
-    [BindProperties]
     public class WithdrawModel : PageModel
     {
         private readonly IAccountService _accountService;
@@ -28,64 +27,70 @@ namespace BankAppProject.Pages.Account
         public int CustomerId { get; set; }
         public AccountDetailsViewModel Account { get; set; }
 
+        [BindProperty]
         [Required(ErrorMessage = "Amount required.")]
         [Range(1, 100000)]
         public decimal Amount { get; set; }
 
+        [BindProperty]
         [Required(ErrorMessage = "Date required.")]
         public DateTime WithdrawDate { get; set; }
 
-
+        [BindProperty]
         [MaxLength(250, ErrorMessage = "Max 50 letters in comment.")]
         public string? Comment { get; set; }
 
-        //[BindProperty(SupportsGet = true)]
-        //public int AccountId { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             var accountDto = await _accountService.GetAccountDetailsAsync(AccountId);
 
             if (accountDto == null)
             {
-                RedirectToPage("NotFound");
-                return;
+                TempData["NoAccount"] = $"No account found";
+                return RedirectToPage("/Account/AccountDetails", new { accountId = AccountId, customerId = CustomerId });
             }
 
             Account = _mapper.Map<AccountDetailsViewModel>(accountDto);
             WithdrawDate = DateTime.Today;
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var accountDto = await _accountService.GetAccountDetailsAsync(AccountId);
-            if (accountDto == null)
+            if (ModelState.IsValid)
             {
-                return RedirectToPage("NotFound");
+                var accountDto = await _accountService.GetAccountDetailsAsync(AccountId);
+
+                if (accountDto == null)
+                {
+                    TempData["NoAccount"] = "No account found";
+                    return RedirectToPage("/Account/AccountDetails", new { accountId = AccountId, customerId = CustomerId });
+                }
+
+                var account = _mapper.Map<AccountDetailsViewModel>(accountDto);
+
+                if (Amount > account.Balance)
+                {
+                    TempData["BalanceToLowMessage"] = $"Amount cannot be greater than account balance.";
+                    return RedirectToPage("/Account/Withdraw", new { accountId = AccountId, customerId = CustomerId });
+                }
+
+                string operation = "Withdraw";
+                var status = await _accountService.WithdrawAsync(AccountId, Amount, Comment, WithdrawDate, operation);
+
+                if (status == ValidationResult.OK)
+                {
+                    TempData["WithdrawMessage"] = $"Withdraw successfull";
+                    return RedirectToPage("/Account/AccountDetails", new { accountId = AccountId, customerId = CustomerId });
+                }
+
+                TempData["ValidationErrorMessage"] = $"Withdraw error. {status}";
+                return RedirectToPage("/Account/Withdraw", new { accountId = AccountId, customerId = CustomerId });
             }
 
-            Account = _mapper.Map<AccountDetailsViewModel>(accountDto);
-
-            if (!ModelState.IsValid)
-                return Page();
-
-            if (Amount > Account.Balance)
-            {
-                ModelState.AddModelError(nameof(Amount), "Amount cannot be greater than account balance.");
-                return Page();
-            }
-            string operation = "Withdraw";
-            var status = await _accountService.WithdrawAsync(AccountId, Amount, Comment, WithdrawDate, operation);
-
-            if (status == ValidationResult.OK)
-            {
-                TempData["WithdrawMessage"] = $"Withdraw successfull";
-                return RedirectToPage("/Account/AccountDetails", new { accountId = AccountId, customerId = CustomerId });
-            }
-
-            ModelState.AddModelError(string.Empty, $"Transaction failed: {status}");
-            return Page();
+            TempData["ErrorMessage"] = $"Withdraw error. Invalid input.";
+            return RedirectToPage("/Account/Withdraw", new { accountId = AccountId, customerId = CustomerId });
         }
-
     }
 }

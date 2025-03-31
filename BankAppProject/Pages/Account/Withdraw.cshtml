@@ -47,9 +47,23 @@ else
     <div class="d-flex justify-content-end">
         <button type="submit" class="btn btn-outline-primary">Withdraw <i class="fa-solid fa-minus"></i></button>
     </div>
-    <!-- Enum errors -->
-    @if (!ViewData.ModelState.IsValid)
+    <!--ERROR-->
+    @if (TempData["BalanceToLowMessage"] != null)
     {
-        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+        <div class="alert alert-danger mt-2 text-center">
+            @TempData["BalanceToLowMessage"]
+        </div>
+    }
+    @if (TempData["ValidationErrorMessage"] != null)
+    {
+        <div class="alert alert-danger mt-2 text-center">
+            @TempData["ValidationErrorMessage"]
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger mt-2 text-center">
+            @TempData["ErrorMessage"]
+        </div>
     }
 </form>

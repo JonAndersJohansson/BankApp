@@ -7,7 +7,7 @@
     <i class="fa-solid fa-arrow-left"></i>
 </a>
 <h2 class="card-header mb-2">Id: @Model.Customer.CustomerId, @Model.Customer.Name</h2>
-
+<!--SUCCESS-->
 @if (TempData["NewCustomerMessage"] != null)
 {
     <div class="alert alert-success mt-2 text-center">
@@ -30,6 +30,25 @@
 {
     <div class="alert alert-success mt-2 text-center">
         @TempData["CreatedAccountMessage"]
+    </div>
+}
+<!--ERROR-->
+@if (TempData["NoAccount"] != null)
+{
+    <div class="alert alert-danger mt-2 text-center">
+        @TempData["NoAccount"]
+    </div>
+}
+@if (TempData["NoCustomerFound"] != null)
+{
+    <div class="alert alert-danger mt-2 text-center">
+        @TempData["NoCustomerFound"]
+    </div>
+}
+@if (TempData["ErrorInactivatingCustomer"] != null)
+{
+    <div class="alert alert-danger mt-2 text-center">
+        @TempData["ErrorInactivatingCustomer"]
     </div>
 }
 <div class="row">

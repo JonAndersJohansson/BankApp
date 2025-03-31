@@ -40,6 +40,7 @@
         Transfer <i class="fa-solid fa-arrow-up-from-bracket"></i>
     </a>
 </div>
+<!--SUCCESS-->
 @if (TempData["WithdrawMessage"] != null)
 {
     <div class="alert alert-success mt-2 text-center">
@@ -58,7 +59,19 @@
         @TempData["TransferMessage"]
     </div>
 }
-
+<!--ERROR-->
+@if (TempData["NoAccount"] != null)
+{
+    <div class="alert alert-danger mt-2 text-center">
+        @TempData["NoAccount"]
+    </div>
+}
+@if (TempData["ErrorInactivatingAccount"] != null)
+{
+    <div class="alert alert-danger mt-2 text-center">
+        @TempData["ErrorInactivatingAccount"]
+    </div>
+}
 <!--Transaktioner i tabell -->
 <div class="card mt-3">
     <div class="card-header p-1">

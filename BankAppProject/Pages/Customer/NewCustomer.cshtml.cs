@@ -1,5 +1,6 @@
 using BankAppProject.ViewModels;
 using DataAccessLayer.DTO;
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,7 +9,6 @@ using Services.Enums;
 
 namespace BankAppProject.Pages.Customer
 {
-    [BindProperties]
     public class NewCustomerModel : PageModel
     {
         private readonly ICustomerService _customerService;
@@ -17,6 +17,7 @@ namespace BankAppProject.Pages.Customer
         {
             _customerService = customerService;
         }
+
         [BindProperty]
         public NewCustomerViewModel Customer { get; set; } = new();
 
@@ -55,17 +56,12 @@ namespace BankAppProject.Pages.Customer
                     return RedirectToPage("CustomerDetails", new { customerId = customer });
                 }
 
-
-                ModelState.AddModelError(string.Empty, $"New customer failed: {status}");
-
-                Countries = _customerService.GetCountryList();
-                Genders = _customerService.GetGenderList();
-                return Page();
+                TempData["ValidationFailedMessage"] = $"New customer failed: {status}";
+                return RedirectToPage("/Customer/NewCustomer");
             }
 
-            Countries = _customerService.GetCountryList();
-            Genders = _customerService.GetGenderList();
-            return Page();
+            TempData["InvalidInputMessage"] = $"New customer failed. Invalig input";
+            return RedirectToPage("/Customer/NewCustomer");
         }
     }
 }

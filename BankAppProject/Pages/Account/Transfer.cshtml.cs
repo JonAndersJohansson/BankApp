@@ -10,7 +10,6 @@ using ValidationResult = Services.Enums.ValidationResult;
 namespace BankAppProject.Pages.Account
 {
     [Authorize(Roles = "Cashier,Admin")]
-    [BindProperties]
     public class TransferModel : PageModel
     {
         private readonly IAccountService _accountService;
@@ -26,68 +25,76 @@ namespace BankAppProject.Pages.Account
 
         [BindProperty(SupportsGet = true)]
         public int CustomerId { get; set; }
+
         public AccountDetailsViewModel Account { get; set; }
 
-
+        [BindProperty]
         [Range(1, int.MaxValue, ErrorMessage = "Receiving account must be a positive number.")]
         public int ReceiverAccountId { get; set; }
 
-
+        [BindProperty]
         [Required(ErrorMessage = "Amount required.")]
         [Range(1, 100000)]
         public decimal Amount { get; set; }
 
+        [BindProperty]
         [Required(ErrorMessage = "Date required.")]
         public DateTime TransferDate { get; set; }
 
-
+        [BindProperty]
         [MaxLength(250, ErrorMessage = "Max 50 letters in comment.")]
         public string? Comment { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             var accountDto = await _accountService.GetAccountDetailsAsync(AccountId);
 
             if (accountDto == null)
             {
-                RedirectToPage("NotFound");
-                return;
+                TempData["NoAccount"] = $"No account found";
+                return RedirectToPage("/Account/AccountDetails", new { accountId = AccountId, customerId = CustomerId });
             }
 
             Account = _mapper.Map<AccountDetailsViewModel>(accountDto);
             TransferDate = DateTime.Today;
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var accountDto = await _accountService.GetAccountDetailsAsync(AccountId);
-            if (accountDto == null)
+
+            if (ModelState.IsValid)
             {
-                return RedirectToPage("NotFound");
+                var accountDto = await _accountService.GetAccountDetailsAsync(AccountId);
+
+                if (accountDto == null)
+                {
+                    TempData["NoAccount"] = "No account found";
+                    return RedirectToPage("/Account/AccountDetails", new { accountId = AccountId, customerId = CustomerId });
+                }
+
+                var account = _mapper.Map<AccountDetailsViewModel>(accountDto);
+
+                if (Amount > account.Balance)
+                {
+                    TempData["InvalidBalanceMessage"] = $"Could not complete transaction. Balance to low.";
+                    return RedirectToPage("/Account/Transfer", new { accountId = AccountId, customerId = CustomerId });
+                }
+
+                var status = await _accountService.TransferAsync(AccountId, Amount, Comment, TransferDate, ReceiverAccountId);
+
+                if (status == ValidationResult.OK)
+                {
+                    TempData["TransferMessage"] = $"Transfer successfull";
+                    return RedirectToPage("/Account/AccountDetails", new { accountId = AccountId, customerId = CustomerId });
+                }
+
+                TempData["ValidationErrorMessage"] = $"Transfer error. {status}";
+                return RedirectToPage("/Account/Transfer", new { accountId = AccountId, customerId = CustomerId });
             }
 
-            Account = _mapper.Map<AccountDetailsViewModel>(accountDto);
-
-            if (!ModelState.IsValid)
-                return Page();
-
-            if (Amount > Account.Balance)
-            {
-                ModelState.AddModelError(nameof(Amount), "Amount cannot be greater than account balance.");
-                return Page();
-            }
-
-            var status = await _accountService.TransferAsync(AccountId, Amount, Comment, TransferDate, ReceiverAccountId);
-
-            if (status == ValidationResult.OK)
-            {
-                TempData["TransferMessage"] = $"Transfer successfull";
-                return RedirectToPage("/Account/AccountDetails", new { accountId = AccountId, customerId = CustomerId });
-            }
-
-            ModelState.AddModelError(string.Empty, $"Transaction failed: {status}");
-            return Page();
+            TempData["ErrorMessage"] = $"Transfer error. Invalid input.";
+            return RedirectToPage("/Account/Transfer", new { accountId = AccountId, customerId = CustomerId });
         }
-
     }
 }

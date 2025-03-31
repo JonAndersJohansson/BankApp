@@ -10,7 +10,6 @@ using ValidationResult = Services.Enums.ValidationResult;
 namespace BankAppProject.Pages.Account
 {
     [Authorize(Roles = "Cashier,Admin")]
-    [BindProperties]
     public class DepositModel : PageModel
     {
         private readonly IAccountService _accountService;
@@ -21,56 +20,64 @@ namespace BankAppProject.Pages.Account
             _accountService = accountService;
             _mapper = mapper;
         }
+
         [BindProperty(SupportsGet = true)]
         public int AccountId { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public int CustomerId { get; set; }
+
         public AccountDetailsViewModel Account { get; set; }
 
+        [BindProperty]
         [Required(ErrorMessage = "Amount required.")]
         [Range(1, 100000)]
         public decimal Amount { get; set; }
 
+        [BindProperty]
         [Required(ErrorMessage = "Date required.")]
         public DateTime DepositDate { get; set; }
 
-
+        [BindProperty]
         [MaxLength(250, ErrorMessage = "Max 50 letters in comment.")]
         public string? Comment { get; set; }
 
 
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             var accountDto = await _accountService.GetAccountDetailsAsync(AccountId);
 
             if (accountDto == null)
             {
-                RedirectToPage("NotFound");
-                return;
+                TempData["NoAccount"] = $"No account found";
+                return RedirectToPage("/Account/AccountDetails", new { accountId = AccountId, customerId = CustomerId });
             }
 
             Account = _mapper.Map<AccountDetailsViewModel>(accountDto);
             DepositDate = DateTime.Today;
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-                return Page();
-
-            string operation = "Deposit";
-            var status = await _accountService.DepositAsync(AccountId, Amount, Comment, DepositDate, operation);
-
-            if (status == ValidationResult.OK)
+            if (ModelState.IsValid)
             {
-                TempData["DepositMessage"] = $"Deposit successfull";
-                return RedirectToPage("/Account/AccountDetails", new { accountId = AccountId, customerId = CustomerId });
+                string operation = "Deposit";
+                var status = await _accountService.DepositAsync(AccountId, Amount, Comment, DepositDate, operation);
+
+                if (status == ValidationResult.OK)
+                {
+                    TempData["DepositMessage"] = $"Deposit successfull";
+                    return RedirectToPage("/Account/AccountDetails", new { accountId = AccountId, customerId = CustomerId });
+                }
+
+                TempData["ValidationResult"] = $"Input invalid {status}";
+                return RedirectToPage("/Account/Deposit", new { accountId = AccountId, customerId = CustomerId });
             }
 
-            ModelState.AddModelError(string.Empty, $"Transaction failed: {status}");
-            return Page();
+            TempData["InputInvalid"] = $"Input invalid";
+            return RedirectToPage("/Account/Deposit", new { accountId = AccountId, customerId = CustomerId });
         }
     }
 }

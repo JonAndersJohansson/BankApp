@@ -101,10 +101,18 @@
                 </div>
             </div>
         </form>
-        <!-- Errors -->
-        @if (!ViewData.ModelState.IsValid)
+        <!--ERROR-->
+        @if (TempData["ValidationErrorMessage"] != null)
         {
-            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            <div class="alert alert-danger mt-2 text-center">
+                @TempData["ValidationErrorMessage"]
+            </div>
+        }
+        @if (TempData["InvalidInputMessage"] != null)
+        {
+            <div class="alert alert-danger mt-2 text-center">
+                @TempData["InvalidInputMessage"]
+            </div>
         }
     </div>
 </div>

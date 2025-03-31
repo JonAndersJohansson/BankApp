@@ -1,6 +1,7 @@
 using AutoMapper;
 using BankAppProject.ViewModels;
 using DataAccessLayer.DTO;
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -32,7 +33,11 @@ namespace BankAppProject.Pages.Customer
             Genders = _customerService.GetGenderList();
 
             var dto = await _customerService.GetCustomerAsync(customerId);
-            if (dto == null) return NotFound();
+            if (dto == null)
+            {
+                TempData["NoCustomerFound"] = $"Could not find customer.";
+                return RedirectToPage("/Customer/CustomerDetails", new { Customer.CustomerId });
+            }
 
             Customer = _mapper.Map<EditCustomerViewModel>(dto);
 
@@ -44,6 +49,11 @@ namespace BankAppProject.Pages.Customer
             if (ModelState.IsValid)
             {
                 var dto = _mapper.Map<CustomerDetailsDto>(Customer);
+                if (dto == null)
+                {
+                    TempData["NoCustomerFound"] = $"Could not find customer.";
+                    return RedirectToPage("/Customer/CustomerDetails", new { customerId = Customer.CustomerId });
+                }
 
                 var status = await _customerService.EditCustomerAsync(dto);
 
@@ -53,25 +63,22 @@ namespace BankAppProject.Pages.Customer
                     return RedirectToPage("/Customer/CustomerDetails", new { customerId = Customer.CustomerId });
                 }
 
-                ModelState.AddModelError(string.Empty, $"Update customer failed: {status}");
-
-                Countries = _customerService.GetCountryList();
-                Genders = _customerService.GetGenderList();
-                return Page();
+                TempData["ValidationErrorMessage"] = $"Validation error. {status}";
+                return RedirectToPage("/Customer/EditCustomer", new { customerId = Customer.CustomerId });
             }
 
-            Countries = _customerService.GetCountryList();
-            Genders = _customerService.GetGenderList();
-            return Page();
+            TempData["InvalidInputMessage"] = $"Invalid input.";
+            return RedirectToPage("/Customer/EditCustomer", new { customerId = Customer.CustomerId });
         }
         public async Task<IActionResult> OnPostDeleteAsync(int customerId)
         {
             var success = await _customerService.DeleteCustomerAsync(customerId);
             if (!success)
             {
-                ModelState.AddModelError(string.Empty, "Customer could not be Deleted");
-                return Page();
+                TempData["ErrorInactivatingCustomer"] = $"Customer could not be inactivated";
+                return RedirectToPage("/Customer/CustomerDetails", new { customerId = Customer.CustomerId });
             }
+
             TempData["InactivatedCustomerMessage"] = $"Customer inactivated successfully";
             return RedirectToPage("/Customer/Index");
         }
