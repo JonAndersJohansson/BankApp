@@ -1,9 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@using DataAccessLayer.Models
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> AppUserManager
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> AppSignInManager
 
 <ul class="navbar-nav navbar-login-aurora">
-@if (SignInManager.IsSignedIn(User))
+    @if (AppSignInManager.IsSignedIn(User))
 {
     <li class="nav-item" id="navbar-aurora-logged-in">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">You: @User.Identity?.Name</a>

@@ -1,5 +1,6 @@
-using BankAppProject.Profiles;
+﻿using BankAppProject.Profiles;
 using DataAccessLayer.Data;
+using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.AccountRepositories;
 using DataAccessLayer.Repositories.CustomerRepositories;
 using DataAccessLayer.Repositories.CustomerrRepositories;
@@ -29,7 +30,7 @@ public class Program
                 sqlOptions => sqlOptions.MigrationsAssembly("DataAccessLayer"))); // Viktigt!
 
 
-        builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+        builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<BankAppDataContext>();
         builder.Services.AddRazorPages();
@@ -61,9 +62,13 @@ public class Program
 
         var app = builder.Build();
 
+        //Seed data and migrate
         using (var scope = app.Services.CreateScope())
         {
-            scope.ServiceProvider.GetService<DataInitializer>().SeedData();
+            var dbContext = scope.ServiceProvider.GetRequiredService<BankAppDataContext>();
+            dbContext.Database.Migrate();
+
+            scope.ServiceProvider.GetRequiredService<DataInitializer>().SeedData();
         }
 
 

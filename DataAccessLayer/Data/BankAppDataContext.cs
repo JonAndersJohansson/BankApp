@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data;
 
-public partial class BankAppDataContext : IdentityDbContext
+public partial class BankAppDataContext : IdentityDbContext<ApplicationUser>
 {
     public BankAppDataContext()
     {

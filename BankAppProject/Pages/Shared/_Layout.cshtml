@@ -51,6 +51,14 @@
                                    asp-page="/Customer/Index">Customers</a>
                             </li>
                         }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link aurora-nav"
+                                   asp-area=""
+                                   asp-page="/User/Index">Users</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

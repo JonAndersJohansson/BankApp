@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using DataAccessLayer.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data
@@ -6,9 +7,9 @@ namespace DataAccessLayer.Data
     public class DataInitializer
     {
         private readonly BankAppDataContext _dbContext;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public DataInitializer(BankAppDataContext dbContext, UserManager<IdentityUser> userManager)
+        public DataInitializer(BankAppDataContext dbContext, UserManager<ApplicationUser> userManager)
         {
             _dbContext = dbContext;
             _userManager = userManager;
@@ -48,7 +49,7 @@ namespace DataAccessLayer.Data
         {
             if (_userManager.FindByEmailAsync(userName).Result != null) return;
 
-            var user = new IdentityUser
+            var user = new ApplicationUser
             {
                 UserName = userName,
                 Email = userName,
