@@ -114,10 +114,10 @@
         const prefixSpan = document.getElementById('countryCode');
 
         const countryCodes = {
-            Sweden: "+46",
-            Norway: "+47",
-            Denmark: "+45",
-            Finland: "+358"
+            4: "+46",
+            3: "+47",
+            2: "+45",
+            1: "+358"
         };
 
         countrySelect.addEventListener('change', () => {
@@ -126,4 +126,5 @@
             prefixSpan.textContent = code;
         });
     </script>
+    <partial name="_ValidationScriptsPartial" />
 }

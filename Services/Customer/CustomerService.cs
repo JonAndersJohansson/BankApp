@@ -142,7 +142,8 @@ namespace Services.Customer
             var Genders = Enum.GetValues<Gender>()
                 .Select(g => new SelectListItem
                 {
-                    Value = g.ToString(),
+                    Value = ((int)g).ToString(),
+                    //Value = g.ToString(),
                     Text = g.ToString()
                 })
                 .ToList();
@@ -153,7 +154,8 @@ namespace Services.Customer
             var Countries = Enum.GetValues<Country>()
                 .Select(c => new SelectListItem
                 {
-                    Value = c.ToString(),
+                    Value = ((int)c).ToString(),
+                    //Value = c.ToString(),
                     Text = c.ToString()
                 })
                 .ToList();

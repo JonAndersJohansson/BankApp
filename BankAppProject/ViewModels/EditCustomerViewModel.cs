@@ -9,6 +9,7 @@ namespace BankAppProject.ViewModels
         public int CustomerId { get; set; }
 
         [Range(1, 99, ErrorMessage = "Invalid")]
+
         public Gender? Gender { get; set; }
 
         [MaxLength(30, ErrorMessage = "First name not valid, to long")]

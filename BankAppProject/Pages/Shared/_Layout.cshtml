@@ -71,12 +71,15 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JavaScript -->
+    <!-- jQuery först -->
     <script src="~/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap & SB Admin 2 -->
     <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/sb-admin-2.min.js"></script>
-    
-    @await RenderSectionAsync("Scripts", required: false)
 
+    <!-- Formulär- och sidrelaterade scripts -->
+    @await RenderSectionAsync("Scripts", required: false)
+    
 </body>
 </html>
