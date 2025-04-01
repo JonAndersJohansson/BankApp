@@ -7,12 +7,14 @@ using DataAccessLayer.Repositories.CustomerrRepositories;
 using DataAccessLayer.Repositories.DispositionRepositories;
 using DataAccessLayer.Repositories.StatisticsRepositories;
 using DataAccessLayer.Repositories.TransactionRepositories;
+using DataAccessLayer.Repositories.UserRepositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Services.Account;
 using Services.Customer;
 using Services.Profiles;
 using Services.Statistics;
+using Services.User;
 
 namespace BankAppProject;
 
@@ -43,11 +45,13 @@ public class Program
         builder.Services.AddScoped<IDispositionRepository, DispositionRepository>();
         builder.Services.AddScoped<IStatisticsRepository, StatisticsRepository>();
         builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
 
         // Services
         builder.Services.AddTransient<ICustomerService, CustomerService>();
         builder.Services.AddScoped<IStatisticsService, StatisticsService>();
         builder.Services.AddScoped<IAccountService, AccountService>();
+        builder.Services.AddScoped<IUserService, UserService>();
 
         // AutoMapper
         builder.Services.AddAutoMapper(typeof(CustomerIndexProfile), typeof(CustomerDetailsProfile), typeof(AccountDetailsProfile));
