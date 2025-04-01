@@ -1,4 +1,5 @@
 using AutoMapper;
+using BankAppProject.Infrastructure.Paged;
 using BankAppProject.ViewModels;
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -57,15 +58,46 @@ namespace BankAppProject.Pages.Account
                 return RedirectToPage("/Customer/CustomerDetails", new { customerId = CustomerId });
             }
 
-            var transactions = accountDto.Transactions
-                .OrderByDescending(t => t.Date)
-                .Skip(offset)
-                .Take(pageSize)
-                .ToList();
+            var page = (offset / pageSize) + 1;
 
-            var viewModels = _mapper.Map<List<TransactionInAccountDetailsViewModel>>(transactions);
-            return new JsonResult(viewModels);
+            var transactionsQuery = accountDto.Transactions
+                .AsQueryable()
+                .OrderByDescending(t => t.Date);
+
+            var paged = transactionsQuery.GetPaged(page, pageSize);
+
+            var viewModels = _mapper.Map<List<TransactionInAccountDetailsViewModel>>(paged.Results);
+
+            var result = new
+            {
+                results = viewModels,
+                currentPage = paged.CurrentPage,
+                pageSize = paged.PageSize,
+                rowCount = paged.RowCount,
+                pageCount = paged.PageCount
+            };
+
+            return new JsonResult(result);
         }
+
+        //public async Task<IActionResult> OnGetTransactionsAsync(int accountId, int offset = 0, int pageSize = 20)
+        //{
+        //    var accountDto = await _accountService.GetAccountDetailsAsync(accountId);
+        //    if (accountDto == null)
+        //    {
+        //        TempData["NoAccount"] = $"No account found";
+        //        return RedirectToPage("/Customer/CustomerDetails", new { customerId = CustomerId });
+        //    }
+
+        //    var transactions = accountDto.Transactions
+        //        .OrderByDescending(t => t.Date)
+        //        .Skip(offset)
+        //        .Take(pageSize)
+        //        .ToList();
+
+        //    var viewModels = _mapper.Map<List<TransactionInAccountDetailsViewModel>>(transactions);
+        //    return new JsonResult(viewModels);
+        //}
         public async Task<IActionResult> OnPostDeleteAsync()
         {
             var success = await _accountService.DeleteAccountAsync(AccountId);

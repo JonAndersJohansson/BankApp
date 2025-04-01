@@ -93,7 +93,7 @@
                     </tr>
                 </thead>
                 <tbody id="transactions-body">
-                    @foreach (var tx in Model.Account.Transactions)
+@*                     @foreach (var tx in Model.Account.Transactions)
                     {
                         <tr class="table-row-view">
                             <td>@tx.Date.ToShortDateString()</td>
@@ -104,7 +104,7 @@
                             <td>@tx.Symbol</td>
                             <td>@tx.Bank</td>
                         </tr>
-                    }
+                    } *@
                 </tbody>
             </table>
         }
@@ -133,7 +133,7 @@
         const accountId = @Model.Account.AccountId;
 
         document.addEventListener("DOMContentLoaded", function () {
-            loadTransactions(); // Första laddningen
+            loadTransactions(); // Ladda första 20
         });
 
         document.getElementById("loadMoreBtn").addEventListener("click", function () {
@@ -146,7 +146,7 @@
                 .then(data => {
                     const tbody = document.getElementById("transactions-body");
 
-                    data.forEach(tx => {
+                    data.results.forEach(tx => {
                         const row = document.createElement("tr");
                         row.classList.add("table-row-view");
                         row.innerHTML = `
@@ -164,11 +164,15 @@
                     offset += pageSize;
 
                     const loadMoreBtn = document.getElementById("loadMoreBtn");
-                    if (data.length === pageSize) {
+                    if (offset < data.rowCount) {
                         loadMoreBtn.style.display = "inline-block";
                     } else {
                         loadMoreBtn.style.display = "none";
                     }
+                })
+                .catch(error => {
+                    console.error("Error fetching transactions", error);
+                    alert("Failed to load transactions.");
                 });
         }
 
