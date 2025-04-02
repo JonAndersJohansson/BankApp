@@ -1,3 +1,5 @@
+using AutoMapper;
+using BankAppProject.ViewModels;
 using DataAccessLayer.DTO;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Statistics;
@@ -6,18 +8,20 @@ namespace BankAppProject.Pages;
 
 public class IndexModel : PageModel
 {
+    private readonly IStatisticsService _statisticsService;
+    private readonly IMapper _mapper;
 
-    public IndexModel(IStatisticsService statisticsService)
+    public IndexModel(IStatisticsService statisticsService, IMapper mapper)
     {
         _statisticsService = statisticsService;
+        _mapper = mapper;
     }
 
-    private readonly IStatisticsService _statisticsService;
-
-    public List<CountryStatisticsDto> CountryStatistics { get; set; }
+    public List<CountryStatisticsViewModel> CountryStatistics { get; set; }
 
     public async Task OnGetAsync()
     {
-        CountryStatistics = await _statisticsService.GetCountryStatisticsAsync();
+        var dtos = await _statisticsService.GetCountryStatisticsAsync();
+        CountryStatistics = _mapper.Map<List<CountryStatisticsViewModel>>(dtos);
     }
 }
