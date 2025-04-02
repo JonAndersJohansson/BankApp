@@ -318,6 +318,10 @@ namespace Services.Customer
 
             return ValidationResult.OK;
         }
+        public async Task<List<TopCustomerDto>> GetTop10RichestCustomersAsync(string countryCode)
+        {
+            return await _customerRepository.GetTop10RichestCustomersByCountryAsync(countryCode);
+        }
 
 
     }

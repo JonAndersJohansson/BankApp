@@ -63,6 +63,8 @@ public class Program
             logging.AddDebug();
         });
 
+        // Response caching
+        builder.Services.AddResponseCaching();
 
         var app = builder.Build();
 
@@ -97,6 +99,9 @@ public class Program
         app.MapStaticAssets();
         app.MapRazorPages()
            .WithStaticAssets();
+
+        // Response caching
+        app.UseResponseCaching();
 
         app.Run();
     }

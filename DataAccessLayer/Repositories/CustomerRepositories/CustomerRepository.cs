@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Data;
+using DataAccessLayer.DTO;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.CustomerRepositories;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,25 @@ namespace DataAccessLayer.Repositories.CustomerrRepositories
         public async Task AddAsync(Customer customer)
         {
             await _dbContext.Customers.AddAsync(customer);
+        }
+        public async Task<List<TopCustomerDto>> GetTop10RichestCustomersByCountryAsync(string countryCode)
+        {
+            return await _dbContext.Customers
+                .Where(c => c.CountryCode == countryCode)
+                .Include(c => c.Dispositions)
+                .ThenInclude(d => d.Account)
+                .Select(c => new TopCustomerDto
+                {
+                    CustomerId = c.CustomerId,
+                    Givenname = c.Givenname,
+                    Surname = c.Surname,
+                    City = c.City,
+                    Gender = c.Gender,
+                    TotalBalance = c.Dispositions.Sum(d => d.Account.Balance)
+                })
+                .OrderByDescending(c => c.TotalBalance)
+                .Take(10)
+                .ToListAsync();
         }
     }
 }

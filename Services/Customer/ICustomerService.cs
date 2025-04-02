@@ -14,6 +14,7 @@ namespace Services.Customer
         List<SelectListItem> GetCountryList();
         Task<(ValidationResult Result, int? CustomerId)> CreateNewCustomerAsync(CustomerDetailsDto dto);
         Task<ValidationResult> EditCustomerAsync(CustomerDetailsDto dto);
+        Task<List<TopCustomerDto>> GetTop10RichestCustomersAsync(string countryCode);
     }
 }
 

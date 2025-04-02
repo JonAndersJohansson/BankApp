@@ -1,0 +1,18 @@
+﻿@page
+@model BankAppProject.Pages.Statistics.CountryTop10Model
+@{
+}
+<!--Top 10-->
+
+<div class="card mt-2">
+    <div class="card-header">
+        <img src="~/img/flags/@(Model.CountryCode.ToLower()).png" class="stat-flag pb-2" alt="Flag">
+        <h2 class="mb-0">Top 10 Customers in @Model.CountryCode</h2>
+    </div>
+    <div class="list-group list-group-flush">
+        @foreach (var customer in Model.Top10Customers)
+        {
+            <partial name="_Top10Box" model="@customer" />
+        }
+    </div>
+</div>

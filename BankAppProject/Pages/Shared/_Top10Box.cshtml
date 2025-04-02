@@ -1,0 +1,43 @@
+﻿@model BankAppProject.ViewModels.TopCustomerViewModel
+@{
+    string gender = Model.Gender.ToLower() switch
+    {
+        "female" => "women",
+        "male" => "men",
+        _ => "men" // fallback t.ex. för "other"
+    };
+
+    var rnd = new Random(Model.CustomerId); // stabilt
+    var imgId = rnd.Next(0, 100);
+    var imgUrl = Model.Gender.ToLower() switch
+    {
+        "female" => $"https://randomuser.me/api/portraits/women/{imgId}.jpg",
+        "male" => $"https://randomuser.me/api/portraits/men/{imgId}.jpg",
+        _ => "/img/neutral.png" // lokal bild t.ex.
+    };
+
+}
+
+<div class="card border-left-primary shadow mb-3 p-2">
+    <div class="row g-0 align-items-center">
+        <!-- Bild -->
+        <div class="col-auto">
+            <img src="~/img/customers/@(Model.Gender?.ToLower() == "female" ? "female.png" : "male.png")"
+                 class="img-fluid rounded-circle mx-3"
+                 alt="Customer image"
+                 style="width: 80px; height: 80px;" />
+        </div>
+
+        <!-- Info -->
+        <div class="col">
+            <div class="card-body py-2">
+                <h5 class="card-title mb-1">@Model.FullName</h5>
+                <p class="card-text mb-1"><i class="fas fa-city me-2"></i>@Model.City</p>
+                <p class="card-text">
+                    <i class="fas fa-wallet me-2"></i>
+                    @Model.TotalBalance.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("sv-SE"))
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
