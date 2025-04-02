@@ -73,12 +73,25 @@ html, body {
 .btn-outline-danger {
     border: solid 2px !important;
 }
-/*.btn-icon {
-    color: var(--primary) !important;
-    border: solid 2px var(--primary) !important;
-    padding: 0 5px;
-    border-radius: 25px !important;
-}*/
+/* colours below */
+.bg-bronze {
+    background-color: #cd7f32 !important; /* bronsfärg */
+    color: white;
+}
+
+.text-bronze {
+    color: #cd7f32 !important;
+}
+
+.bg-aurorablue {
+    background-color: #82a9bf !important; /* bronsfärg */
+    color: white;
+}
+
+.text-aurorablue {
+    color: #82a9bf !important;
+}
+
 body, p, a, .btn {
     font-family: "Helvetica", sans-serif !important;
 }

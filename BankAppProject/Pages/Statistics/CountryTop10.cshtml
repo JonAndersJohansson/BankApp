@@ -3,16 +3,20 @@
 @{
 }
 <!--Top 10-->
+<button class="btn btn-primary mb-2" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i></button>
 
-<div class="card mt-2">
-    <div class="card-header">
-        <img src="~/img/flags/@(Model.CountryCode.ToLower()).png" class="stat-flag pb-2" alt="Flag">
-        <h2 class="mb-0">Top 10 Customers in @Model.CountryCode</h2>
+<div class="mt-2">
+    <div class="row card-header mb-3 align-items-center justify-content-center">
+        <img src="~/img/flags/@(Model.CountryCode.ToLower()).png" class="stat-flag pb-2 mr-3" alt="Flag">
+        <h2 class="mb-0">Top 10 Customers</h2>
     </div>
-    <div class="list-group list-group-flush">
-        @foreach (var customer in Model.Top10Customers)
+</div>
+<div class="d-flex justify-content-center">
+    <div class="list-group list-group-flush w-auto">
+        @for (int i = 0; i < Model.Top10Customers.Count; i++)
         {
-            <partial name="_Top10Box" model="@customer" />
+            var customer = Model.Top10Customers[i];
+            <partial name="_Top10Box" model="(customer, i + 1)" />
         }
     </div>
 </div>
