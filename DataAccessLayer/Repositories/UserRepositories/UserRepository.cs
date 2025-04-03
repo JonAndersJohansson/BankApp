@@ -18,19 +18,33 @@ namespace DataAccessLayer.Repositories.UserRepositories
             _userManager = userManager;
         }
 
-        public async Task<List<ApplicationUser>> GetAllAsync()
+        public IQueryable<ApplicationUser> GetAll()
         {
-            return await _userManager.Users.ToListAsync();
+            return _userManager.Users.Where(u => u.IsActive);
         }
+        public async Task<string?> GetSingleRoleAsync(ApplicationUser user)
+        {
+            var roles = await _userManager.GetRolesAsync(user);
+            if (roles.Contains("Admin"))
+                return "Admin";
+
+            return roles.FirstOrDefault();
+
+        }
+
+
+        //public Task <List<ApplicationUser>> GetAllAsync()
+        //{
+        //    return _userManager.Users
+        //        .Where(u => u.IsActive)
+        //        .ToListAsync();
+        //}
 
         public async Task<ApplicationUser?> GetByIdAsync(string id)
         {
-            return await _userManager.FindByIdAsync(id);
+            return await _userManager
+                .FindByIdAsync(id);
         }
 
-        public async Task<IList<string>> GetRolesAsync(ApplicationUser user)
-        {
-            return await _userManager.GetRolesAsync(user);
-        }
     }
 }

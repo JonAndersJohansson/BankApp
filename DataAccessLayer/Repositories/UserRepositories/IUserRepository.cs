@@ -9,8 +9,8 @@ namespace DataAccessLayer.Repositories.UserRepositories
 {
     public interface IUserRepository
     {
-        Task<List<ApplicationUser>> GetAllAsync();
+        IQueryable<ApplicationUser> GetAll();
+        Task<string?> GetSingleRoleAsync(ApplicationUser user);
         Task<ApplicationUser?> GetByIdAsync(string id);
-        Task<IList<string>> GetRolesAsync(ApplicationUser user);
     }
 }

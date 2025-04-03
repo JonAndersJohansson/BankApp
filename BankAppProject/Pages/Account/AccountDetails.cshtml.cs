@@ -1,10 +1,9 @@
 using AutoMapper;
-using BankAppProject.Infrastructure.Paged;
 using BankAppProject.ViewModels;
-using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Account;
+using Services.Infrastructure.Paged;
 
 namespace BankAppProject.Pages.Account
 {

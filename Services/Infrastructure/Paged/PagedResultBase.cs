@@ -1,4 +1,4 @@
-﻿namespace BankAppProject.Infrastructure.Paged
+﻿namespace Services.Infrastructure.Paged
 {
     public abstract class PagedResultBase
     {
