@@ -45,6 +45,10 @@ namespace DataAccessLayer.Repositories.UserRepositories
             return await _userManager
                 .FindByIdAsync(id);
         }
+        public async Task SaveAsync(ApplicationUser user)
+        {
+            await _userManager.UpdateAsync(user);
+        }
 
     }
 }

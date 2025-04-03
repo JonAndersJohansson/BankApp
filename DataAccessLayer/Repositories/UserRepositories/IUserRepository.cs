@@ -12,5 +12,6 @@ namespace DataAccessLayer.Repositories.UserRepositories
         IQueryable<ApplicationUser> GetAll();
         Task<string?> GetSingleRoleAsync(ApplicationUser user);
         Task<ApplicationUser?> GetByIdAsync(string id);
+        Task SaveAsync(ApplicationUser user);
     }
 }

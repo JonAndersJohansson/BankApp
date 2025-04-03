@@ -13,5 +13,6 @@ namespace Services.User
         //Task<List<UserDto>> GetAllUsersAsync();
         Task<UserDto> GetUserByIdAsync(string id);
         Task<PagedResult<UserDto>> GetUsersAsync(string sortColumn, string sortOrder, int pageNumber, int pageSize, string? q);
+        Task<bool> DeleteUserAsync(string userId);
     }
 }
