@@ -23,6 +23,12 @@ namespace BankAppProject.Pages.User
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 50;
         public string? Q { get; set; }
+        public int FirstRowOnPage { get; set; }
+        public int LastRowOnPage { get; set; }
+        public int PageCount { get; set; }
+
+
+
 
         public async Task<IActionResult> OnGetAsync(string sortColumn = "Id", string sortOrder = "asc", int pageNumber = 1, string? q = null)
         {
@@ -38,6 +44,10 @@ namespace BankAppProject.Pages.User
             TotalUsers = pagedResult.RowCount;
             PageNumber = pagedResult.CurrentPage;
             PageSize = pagedResult.PageSize;
+            FirstRowOnPage = pagedResult.FirstRowOnPage;
+            LastRowOnPage = pagedResult.LastRowOnPage;
+            PageCount = pagedResult.PageCount;
+
 
             return Page();
         }

@@ -1,14 +1,7 @@
 ﻿using DataAccessLayer.DTO;
-using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.UserRepositories;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Services.Infrastructure.Paged;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.User
 {
@@ -40,7 +33,7 @@ namespace Services.User
                 "UserName" => sortOrder == "asc" ? query.OrderBy(u => u.UserName) : query.OrderByDescending(u => u.UserName),
                 "PhoneNumber" => sortOrder == "asc" ? query.OrderBy(u => u.PhoneNumber) : query.OrderByDescending(u => u.PhoneNumber),
                 "Email" => sortOrder == "asc" ? query.OrderBy(u => u.Email) : query.OrderByDescending(u => u.Email),
-                "Role" => query.OrderBy(u => u.UserName), // sortera ej på roll då vi inte har det i query
+                "Role" => query.OrderBy(u => u.UserName), // sortera ej
                 _ => query.OrderBy(u => u.UserName)
             };
 
