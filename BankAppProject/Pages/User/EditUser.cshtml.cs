@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BankAppProject.Pages.User
 {
-    public class UserDetailsModel : PageModel
+    public class EditUserModel : PageModel
     {
         public void OnGet()
         {

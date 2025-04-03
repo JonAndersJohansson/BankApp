@@ -1,7 +1,9 @@
 using AutoMapper;
 using BankAppProject.ViewModels;
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Identity.Client;
 using Services.Customer;
 using Services.Infrastructure.Paged;
 using Services.User;
@@ -24,10 +26,6 @@ namespace BankAppProject.Pages.User
         public int PageSize { get; set; } = 50;
         public string? Q { get; set; }
 
-
-
-
-
         public async Task<IActionResult> OnGetAsync(string sortColumn = "Id", string sortOrder = "asc", int pageNumber = 1, string? q = null)
         {
             Q = q;
@@ -49,7 +47,19 @@ namespace BankAppProject.Pages.User
                 PageCount = pagedResult.PageCount
             };
 
+            return Page();
+        }
+        public async Task<IActionResult> OnPostDeleteAsync(string userId)
+        {
+            var success = await _userService.DeleteUserAsync(userId);
 
+            if (success)
+            {
+                TempData["InactivatedUser"] = $"User inactivated successfully";
+                return Page();
+            }
+
+            TempData["ErrorInactivatingUser"] = $"User could not be inactivated";
             return Page();
         }
     }

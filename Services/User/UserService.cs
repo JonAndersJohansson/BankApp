@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.DTO;
 using DataAccessLayer.Repositories.UserRepositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Services.Infrastructure.Paged;
 
 namespace Services.User
@@ -153,6 +154,17 @@ namespace Services.User
                 IsActive = user.IsActive,
                 //Role = user.Role,
             };
+        }
+        public async Task<bool> DeleteUserAsync(string userId)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user == null) return false;
+
+            user.IsActive = false;
+
+            await _userRepository.SaveAsync(user);
+
+            return true;
         }
     }
 }

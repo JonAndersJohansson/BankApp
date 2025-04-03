@@ -3,12 +3,20 @@
 @{
 }
 <h2>Users</h2>
-@* @if (TempData["InactivatedCustomerMessage"] != null)
+<!--Success messages-->
+@if (TempData["InactivatedUser"] != null)
 {
     <div class="alert alert-success mt-2 text-center">
-        @TempData["InactivatedCustomerMessage"]
+        @TempData["InactivatedUser"]
     </div>
-} *@
+}
+<!--Error messages-->
+@if (TempData["ErrorInactivatingUser"] != null)
+{
+    <div class="alert alert-success mt-2 text-center">
+        @TempData["ErrorInactivatingUser"]
+    </div>
+}
 
 @*Search*@
 <div class="d-flex flex-wrap justify-content-between align-items-center">
@@ -122,6 +130,7 @@
                 </div>
             </th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody class="table-sm">
@@ -134,11 +143,16 @@
                 <td>@user.Email</td>
                 <td>@user.Role</td>
                 <td class="cell-clickable">
-                    <a asp-page="/User/UserDetails" asp-route-userId="@user.Id">
-                        <i class="fa-solid fa-eye"></i>
+                    <a asp-page="/User/EditUser" asp-route-userId="@user.Id">
+                        <i class="fa-solid fa-pen-to-square"></i>
                     </a>
                 </td>
-
+                <td class="cell-clickable">
+                    <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Are you sure you want to Inactivate this user?')">
+                        <input type="hidden" name="customerId" value="@user.Id" />
+                        <button type="submit" class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i></button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
