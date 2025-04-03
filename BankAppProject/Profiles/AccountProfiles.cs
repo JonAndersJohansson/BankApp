@@ -4,9 +4,9 @@ using DataAccessLayer.DTO;
 
 namespace BankAppProject.Profiles
 {
-    public class AccountDetailsProfile : Profile
+    public class AccountProfiles : Profile
     {
-        public AccountDetailsProfile()
+        public AccountProfiles()
         {
             CreateMap<AccountDetailsDto, AccountDetailsViewModel>();
 

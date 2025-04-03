@@ -1,10 +1,14 @@
-﻿using DataAccessLayer.DTO;
+﻿using AutoMapper;
+using DataAccessLayer.DTO;
+using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.AccountRepositories;
 using DataAccessLayer.Repositories.CustomerRepositories;
 using DataAccessLayer.Repositories.DispositionRepositories;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Services.Account;
 using Services.Enums;
+using Services.Infrastructure.Paged;
 
 namespace Services.Customer
 {
@@ -15,16 +19,17 @@ namespace Services.Customer
         private readonly IAccountRepository _accountRepository;
         private readonly IDispositionRepository _dispositionRepository;
         private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
 
-        public CustomerService(ICustomerRepository customerRepository, IAccountRepository accountRepository, IDispositionRepository dispositionRepository, IAccountService accountService)
+        public CustomerService(ICustomerRepository customerRepository, IAccountRepository accountRepository, IDispositionRepository dispositionRepository, IAccountService accountService, IMapper mapper)
         {
             _customerRepository = customerRepository;
             _accountRepository = accountRepository;
             _dispositionRepository = dispositionRepository;
             _accountService = accountService;
+            _mapper = mapper;
         }
-
-        public List<CustomerIndexDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers)
+        public async Task<PagedResult<CustomerIndexDto>> GetCustomersAsync(string sortColumn, string sortOrder, int pageNumber, int pageSize, string? q)
         {
             var query = _customerRepository.GetAllCustomers();
 
@@ -52,25 +57,73 @@ namespace Services.Customer
                 _ => query.OrderBy(c => c.CustomerId)  // Standard-sortering om inget annat anges
             };
 
-            // Antal kunder totalt för pagination
-            totalCustomers = query.Count();
+            var totalCustomers = await query.CountAsync();
 
             // Paginering
-            var customers = query
+            var customers = await query
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .Select(c => new CustomerIndexDto
-                {
-                    Id = c.CustomerId,
-                    NationalId = c.NationalId,
-                    Givenname = c.Givenname,
-                    Surname = c.Surname,
-                    Address = c.Streetaddress,
-                    City = c.City
-                }).ToList();
+                .ToListAsync();
 
-            return customers;
+            var result = _mapper.Map<List<CustomerIndexDto>>(customers);
+
+            return new PagedResult<CustomerIndexDto>
+            {
+                Results = result,
+                RowCount = totalCustomers,
+                PageSize = pageSize,
+                CurrentPage = pageNumber,
+                PageCount = (int)Math.Ceiling((double)totalCustomers / pageSize)
+            };
         }
+
+        //public List<CustomerIndexDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers)
+        //{
+        //    var query = _customerRepository.GetAllCustomers();
+
+        //    // Search
+        //    if (!string.IsNullOrWhiteSpace(q))
+        //    {
+        //        string searchQuery = q.Trim().ToLower();
+
+        //        query = query.Where(c =>
+        //            c.CustomerId.ToString().Contains(searchQuery) ||
+        //            c.Givenname.ToLower().Contains(searchQuery) ||
+        //            c.Surname.ToLower().Contains(searchQuery) ||
+        //            c.City.ToLower().Contains(searchQuery));
+        //    }
+
+
+        //    // Sortering beroende på valda kolumner
+        //    query = sortColumn switch
+        //    {
+        //        "Id" => sortOrder == "asc" ? query.OrderBy(c => c.CustomerId) : query.OrderByDescending(c => c.CustomerId),
+        //        "National Id" => sortOrder == "asc" ? query.OrderBy(c => c.NationalId) : query.OrderByDescending(c => c.NationalId),
+        //        "Name" => sortOrder == "asc" ? query.OrderBy(c => c.Surname) : query.OrderByDescending(c => c.Surname),
+        //        "Address" => sortOrder == "asc" ? query.OrderBy(c => c.Streetaddress) : query.OrderByDescending(c => c.Streetaddress),
+        //        "City" => sortOrder == "asc" ? query.OrderBy(c => c.City) : query.OrderByDescending(c => c.City),
+        //        _ => query.OrderBy(c => c.CustomerId)  // Standard-sortering om inget annat anges
+        //    };
+
+        //    // Antal kunder totalt för pagination
+        //    totalCustomers = query.Count();
+
+        //    // Paginering
+        //    var customers = query
+        //        .Skip((pageNumber - 1) * pageSize)
+        //        .Take(pageSize)
+        //        .Select(c => new CustomerIndexDto
+        //        {
+        //            Id = c.CustomerId,
+        //            NationalId = c.NationalId,
+        //            Givenname = c.Givenname,
+        //            Surname = c.Surname,
+        //            Address = c.Streetaddress,
+        //            City = c.City
+        //        }).ToList();
+
+        //    return customers;
+        //}
         public async Task<CustomerDetailsDto?> GetCustomerAsync(int customerId)
         {
             var customer = await _customerRepository.GetCustomerByIdAsync(customerId);

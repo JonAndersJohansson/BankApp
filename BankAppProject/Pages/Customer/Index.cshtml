@@ -11,7 +11,7 @@
 }
 
 @*Search*@
-<div class="d-flex flex-wrap justify-content-between">
+<div class="d-flex flex-wrap justify-content-between align-items-center">
     <form method="get" class="d-flex" style="max-width: 400px;">
         <div class="input-group">
             <input type="text"
@@ -28,14 +28,14 @@
         </div>
     </form>
 
+@*     <p class="d-flex m-0">
+        Showing @Model.FirstRowOnPage – @Model.LastRowOnPage of total @Model.TotalCustomers customers
+    </p> *@
+
     <a asp-page="/Customer/NewCustomer" class="btn btn-outline-secondary"><i class="fa-solid fa-plus"></i><i class="fa-solid fa-user"></i></a>
 </div>
 
 
-
-
-
-<p class="mt-2">Page @Model.PageNumber</p>
 <table class="table table-bordered table-striped mt-2">
 
     <thead>
@@ -172,7 +172,7 @@
     </thead>
     <tbody class="table-sm">
 
-        @foreach (var customer in Model.Customers)
+        @foreach (var customer in Model.PagedResult.Results)
         {
             <tr class="table-row-view">
                 <td>@customer.Id</td>
@@ -190,25 +190,15 @@
         }
     </tbody>
 </table>
-<div class="pagination">
-    @if (Model.PageNumber > 1)
-    {
-        <a asp-page="/Customer/Index"
-           asp-route-sortColumn="@Request.Query["sortColumn"]"
-           asp-route-sortOrder="@Request.Query["sortOrder"]"
-           asp-route-q="@Model.Q"
-           asp-route-pageNumber="@(Model.PageNumber - 1)"
-           class="btn btn-outline-primary"><i class="fa-solid fa-arrow-left"></i></a>
-    }
-    <p class="display-pagenumber">Page @Model.PageNumber</p>
-    @if ((Model.PageNumber * Model.PageSize) < Model.TotalCustomers)
-    {
-        <a asp-page="/Customer/Index"
-           asp-route-sortColumn="@Request.Query["sortColumn"]"
-           asp-route-sortOrder="@Request.Query["sortOrder"]"
-           asp-route-q="@Model.Q"
-           asp-route-pageNumber="@(Model.PageNumber + 1)"
-           class="btn btn-outline-primary"><i class="fa-solid fa-arrow-right"></i></a>
-    }
-</div>
+
+@await Html.PartialAsync("_PaginationPartial", Model.PagedResult, new ViewDataDictionary(ViewData)
+{
+    { "PageRoute", "/Customer/Index" },
+    { "Q", Model.Q },
+    { "SortColumn", Request.Query["sortColumn"] },
+    { "SortOrder", Request.Query["sortOrder"] }
+})
+
+
+
 

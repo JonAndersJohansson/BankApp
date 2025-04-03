@@ -1,12 +1,14 @@
 ﻿using DataAccessLayer.DTO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Services.Enums;
+using Services.Infrastructure.Paged;
 
 namespace Services.Customer
 {
     public interface ICustomerService
     {
-        List<CustomerIndexDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers);
+        Task<PagedResult<CustomerIndexDto>> GetCustomersAsync(string sortColumn, string sortOrder, int pageNumber, int pageSize, string? q);
+        //List<CustomerIndexDto> GetCustomers(string sortColumn, string sortOrder, int pageNumber, int pageSize, string q, out int totalCustomers);
 
         Task<CustomerDetailsDto?> GetCustomerAsync(int customerId);
         Task<bool> DeleteCustomerAsync(int customerId);

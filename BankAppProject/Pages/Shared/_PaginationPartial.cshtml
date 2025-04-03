@@ -1,0 +1,72 @@
+﻿@model Services.Infrastructure.Paged.PagedResultBase
+@{
+    var pageRoute = ViewData["PageRoute"]?.ToString() ?? "";
+    var q = ViewData["Q"]?.ToString();
+    var sortColumn = ViewData["SortColumn"]?.ToString();
+    var sortOrder = ViewData["SortOrder"]?.ToString();
+}
+
+<div class="d-flex justify-content-center flex-wrap gap-1 mt-3">
+
+    @if (Model.CurrentPage > 1)
+    {
+        <a asp-page="@pageRoute"
+           asp-route-pageNumber="@(Model.CurrentPage - 1)"
+           asp-route-sortColumn="@sortColumn"
+           asp-route-sortOrder="@sortOrder"
+           asp-route-q="@q"
+           class="btn btn-outline-primary mx-1">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+    }
+
+    @if (Model.CurrentPage > 3)
+    {
+        <a asp-page="@pageRoute"
+           asp-route-pageNumber="1"
+           asp-route-sortColumn="@sortColumn"
+           asp-route-sortOrder="@sortOrder"
+           asp-route-q="@q"
+           class="btn btn-outline-primary mx-1">1</a>
+        <span class="mx-1">...</span>
+    }
+
+    @for (int i = Model.CurrentPage - 2; i <= Model.CurrentPage + 2; i++)
+    {
+        if (i >= 1 && i <= Model.PageCount)
+        {
+            <a asp-page="@pageRoute"
+               asp-route-pageNumber="@i"
+               asp-route-sortColumn="@sortColumn"
+               asp-route-sortOrder="@sortOrder"
+               asp-route-q="@q"
+               class="btn @(i == Model.CurrentPage ? "btn-primary" : "btn-outline-primary") mx-1">
+                @i
+            </a>
+        }
+    }
+
+    @if (Model.CurrentPage < Model.PageCount - 2)
+    {
+        <span class="mx-1">...</span>
+        <a asp-page="@pageRoute"
+           asp-route-pageNumber="@Model.PageCount"
+           asp-route-sortColumn="@sortColumn"
+           asp-route-sortOrder="@sortOrder"
+           asp-route-q="@q"
+           class="btn btn-outline-primary mx-1">@Model.PageCount</a>
+    }
+
+    @if (Model.CurrentPage < Model.PageCount)
+    {
+        <a asp-page="@pageRoute"
+           asp-route-pageNumber="@(Model.CurrentPage + 1)"
+           asp-route-sortColumn="@sortColumn"
+           asp-route-sortOrder="@sortOrder"
+           asp-route-q="@q"
+           class="btn btn-outline-primary mx-1">
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    }
+
+</div>

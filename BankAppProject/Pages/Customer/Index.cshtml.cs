@@ -4,6 +4,7 @@ using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Customer;
+using Services.Infrastructure.Paged;
 
 namespace BankAppProject.Pages.Customer
 {
@@ -18,23 +19,45 @@ namespace BankAppProject.Pages.Customer
             _mapper = mapper;
         }
 
-        public List<CustomerIndexViewModel> Customers { get; set; }
-        public int TotalCustomers { get; set; }
+        //public List<CustomerIndexViewModel> Customers { get; set; }
+        public PagedResult<CustomerIndexViewModel> PagedResult { get; set; }
+
+        //public int TotalCustomers { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 50;
         public string? Q { get; set; }
+        //public int FirstRowOnPage { get; set; }
+        //public int LastRowOnPage { get; set; }
+        //public int PageCount { get; set; }
 
-        public IActionResult OnGet(string sortColumn = "Id", string sortOrder = "asc", int pageNumber = 1, string? q = null)
+        public async Task<IActionResult> OnGetAsync(string sortColumn = "Id", string sortOrder = "asc", int pageNumber = 1, string? q = null)
         {
             Q = q;
             PageNumber = pageNumber;
-            var customersDto = _customerService.GetCustomers(sortColumn, sortOrder, PageNumber, PageSize, q, out int totalCustomers);
-            if(customersDto == null)
+
+            var pagedResult = await _customerService.GetCustomersAsync(sortColumn, sortOrder, PageNumber, PageSize, q);
+
+            if (pagedResult == null)
                 return RedirectToPage("/Identity/Error");
 
-            TotalCustomers = totalCustomers;
+            //Customers = _mapper.Map<List<CustomerIndexViewModel>>(pagedResult.Results);
+            //TotalCustomers = pagedResult.RowCount;
+            //PageNumber = pagedResult.CurrentPage;
+            //PageSize = pagedResult.PageSize;
+            //FirstRowOnPage = pagedResult.FirstRowOnPage;
+            //LastRowOnPage = pagedResult.LastRowOnPage;
+            //PageCount = pagedResult.PageCount;
+            var mappedResults = _mapper.Map<List<CustomerIndexViewModel>>(pagedResult.Results);
 
-            Customers = _mapper.Map<List<CustomerIndexViewModel>>(customersDto);
+            PagedResult = new PagedResult<CustomerIndexViewModel>
+            {
+                Results = mappedResults,
+                RowCount = pagedResult.RowCount,
+                PageSize = pagedResult.PageSize,
+                CurrentPage = pagedResult.CurrentPage,
+                PageCount = pagedResult.PageCount
+            };
+
 
             return Page();
         }

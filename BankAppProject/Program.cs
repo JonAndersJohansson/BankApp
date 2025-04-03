@@ -54,7 +54,12 @@ public class Program
         builder.Services.AddScoped<IUserService, UserService>();
 
         // AutoMapper
-        builder.Services.AddAutoMapper(typeof(CustomerIndexProfile), typeof(CustomerDetailsProfile), typeof(AccountDetailsProfile), typeof(StatisticsProfile), typeof(UserProfile));
+        builder.Services.AddAutoMapper( 
+            typeof(CustomerProfiles), 
+            typeof(AccountProfiles), 
+            typeof(StatisticsProfiles), 
+            typeof(UserProfiles), 
+            typeof(CustomerServiceProfiles));
 
         //SQL LOGGING
         builder.Services.AddLogging(logging =>

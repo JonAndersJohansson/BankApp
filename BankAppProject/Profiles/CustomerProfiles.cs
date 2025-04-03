@@ -6,9 +6,9 @@ using Services.Enums;
 
 namespace BankAppProject.Profiles
 {
-    public class CustomerDetailsProfile : Profile
+    public class CustomerProfiles : Profile
     {
-        public CustomerDetailsProfile()
+        public CustomerProfiles()
         {
             CreateMap<CustomerDetailsDto, CustomerDetailsViewModel>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.Givenname} {src.Surname}"))
@@ -23,10 +23,8 @@ namespace BankAppProject.Profiles
                         ? $"{src.Telephonecountrycode} {src.Telephonenumber}"
                         : src.Telephonenumber));
 
-            // Mappa AccountInCustomerDetailsDto till AccountInCustomerDetailsViewModel
+
             CreateMap<AccountInCustomerDetailsDto, AccountInCustomerDetailsViewModel>();
-
-
 
             CreateMap<CustomerDetailsDto, EditCustomerViewModel>()
                 .ForMember(dest => dest.Country, opt => opt.MapFrom(src => ParseEnumOrDefault(src.Country, Country.Choose)))
@@ -36,7 +34,10 @@ namespace BankAppProject.Profiles
                 .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country.ToString()))
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender.ToString()));
 
+            CreateMap<CustomerIndexDto, CustomerIndexViewModel>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Givenname + " " + src.Surname));
 
+            CreateMap<TopCustomerDto, TopCustomerViewModel>();
         }
 
 

@@ -4,12 +4,11 @@ using DataAccessLayer.DTO;
 
 namespace BankAppProject.Profiles
 {
-    public class StatisticsProfile : Profile
+    public class StatisticsProfiles : Profile
     {
-        public StatisticsProfile()
+        public StatisticsProfiles()
         {
             CreateMap<CountryStatisticsDto, CountryStatisticsViewModel>();
         }
     }
-
 }
