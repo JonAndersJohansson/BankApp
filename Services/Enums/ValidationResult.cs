@@ -28,7 +28,12 @@ namespace Services.Enums
         MissingEmail,
         InvalidCountry,
         InvalidTelephoneCountryCode,
-        CustomerNotFound
+        CustomerNotFound,
+        UserNotFound,
+        NoRoleFound,
+        NoSelectedRole,
+        InvalidRole,
+        CannotDeleteSelf
     }
     //public enum Frequency
     //{

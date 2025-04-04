@@ -1,7 +1,12 @@
 ﻿using DataAccessLayer.DTO;
+using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.UserRepositories;
+using Humanizer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
+using Services.Enums;
 using Services.Infrastructure.Paged;
 
 namespace Services.User
@@ -9,10 +14,14 @@ namespace Services.User
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userRepository = userRepository;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public async Task<PagedResult<UserDto>> GetUsersAsync(string sortColumn, string sortOrder, int pageNumber, int pageSize, string? q)
@@ -67,7 +76,6 @@ namespace Services.User
                 CurrentPage = pageNumber,
                 PageCount = (int)Math.Ceiling((double)totalUsers / pageSize)
             };
-
         }
 
 
@@ -139,32 +147,123 @@ namespace Services.User
         //    return result;
         //}
 
-        public async Task<UserDto> GetUserByIdAsync(string id)
-        {
-            var user = await _userRepository.GetByIdAsync(id);
-            if (user == null) return null;
+        //public async Task<UserDto> GetUserByIdAsync(string id)
+        //{
+        //    var user = await _userRepository.GetByIdAsync(id);
+        //    if (user == null) return null;
 
 
-            return new UserDto
-            {
-                Id = user.Id,
-                UserName = user.UserName,
-                PhoneNumber = user.PhoneNumber,
-                Email = user.Email,
-                IsActive = user.IsActive,
-                //Role = user.Role,
-            };
-        }
-        public async Task<bool> DeleteUserAsync(string userId)
+        //    return new UserDto
+        //    {
+        //        Id = user.Id,
+        //        UserName = user.UserName,
+        //        PhoneNumber = user.PhoneNumber,
+        //        Email = user.Email,
+        //        IsActive = user.IsActive,
+        //        //Role = user.Role,
+        //    };
+        //}
+        public async Task<ValidationResult> DeleteUserAsync(string targetUserId, string currentUserId)
         {
-            var user = await _userRepository.GetByIdAsync(userId);
-            if (user == null) return false;
+            if (targetUserId == currentUserId)
+                return ValidationResult.CannotDeleteSelf;
+
+            var user = await _userRepository.GetByIdAsync(targetUserId);
+            if (user == null)
+                return ValidationResult.UserNotFound;
 
             user.IsActive = false;
-
             await _userRepository.SaveAsync(user);
 
-            return true;
+            return ValidationResult.OK;
+        }
+
+        //public async Task<ValidationResult> EditUserAsync(UserDto editedUser)
+        //{
+        //    return ValidationResult.OK;
+        //    var validation = ValidateUserDto(editedUser);
+        //    if (validation != ValidationResult.OK)
+        //        return validation;
+
+        //    var existingUser = await _userRepository.GetByIdAsync(editedUser.Id);
+        //    if (existingUser == null)
+        //        return ValidationResult.UserNotFound;
+
+        //    existingUser.UserName = editedUser.UserName;
+        //    existingUser.PhoneNumber = editedUser.PhoneNumber;
+        //    existingUser.Email = editedUser.Email;
+
+        //    existingUser.Role = editedUser.Role;
+
+
+        //    // Spara ändringarna
+        //    await _userRepository.SaveAsync(existingUser);
+
+        //    return ValidationResult.OK;
+        //}
+
+        //private ValidationResult ValidateUserDto(UserDto editedUser)
+        //{
+        //    if (string.IsNullOrWhiteSpace(editedUser.UserName))
+        //        return ValidationResult.MissingGivenName;
+
+        //    if (string.IsNullOrWhiteSpace(editedUser.PhoneNumber))
+        //        return ValidationResult.MissingSurname;
+
+        //    if (string.IsNullOrWhiteSpace(dto.Streetaddress))
+        //        return ValidationResult.MissingStreetAddress;
+
+        //    if (string.IsNullOrWhiteSpace(dto.City))
+        //        return ValidationResult.MissingCity;
+        //    return ValidationResult.OK;
+        //}
+        public List<SelectListItem> GetRoleList()
+        {
+            return Enum.GetValues<Role>()
+                .Select(r => new SelectListItem
+                {
+                    Value = r.ToString(), // ⚠️ viktig! Inte int
+                    Text = r.ToString()
+                })
+                .ToList();
+        }
+        //public List<SelectListItem> GetRoleList()
+        //{
+        //    var Roles = Enum.GetValues<Role>()
+        //        .Select(g => new SelectListItem
+        //        {
+        //            Value = ((int)g).ToString(),
+        //            //Value = g.ToString(),
+        //            Text = g.ToString()
+        //        })
+        //        .ToList();
+        //    return Roles;
+        //}
+        public async Task<ValidationResult> UpdateUserRoleAsync(string userId, string selectedRole)
+        {
+            if (string.IsNullOrWhiteSpace(userId))
+                return ValidationResult.UserNotFound;
+
+            if (string.IsNullOrWhiteSpace(selectedRole))
+                return ValidationResult.NoSelectedRole;
+
+            if (!await _roleManager.RoleExistsAsync(selectedRole))
+                return ValidationResult.InvalidRole;
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+                return ValidationResult.UserNotFound;
+
+            var currentRoles = await _userManager.GetRolesAsync(user);
+
+            if (!currentRoles.Any())
+                return ValidationResult.NoRoleFound;
+
+            await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            await _userManager.AddToRoleAsync(user, selectedRole);
+
+            return ValidationResult.OK;
         }
     }
 }

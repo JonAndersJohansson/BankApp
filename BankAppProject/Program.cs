@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Services.Account;
 using Services.Customer;
-using Services.Profiles;
+using Services.Infrastructure.Profiles;
 using Services.Statistics;
 using Services.User;
 

@@ -29,13 +29,13 @@ else
     <div class="row mb-3">
         <div class="col-md-6">
             <label asp-for="Amount" class="form-label">Amount</label>
-            <input type="number" class="form-control" asp-for="Amount" min="1" max="100000" required />
+            <input type="number" class="form-control" asp-for="Amount" min="1" max="100000"/>
             <span class="text-danger" asp-validation-for="Amount"></span>
         </div>
 
         <div class="col-md-6">
             <label asp-for="DepositDate" class="form-label">Date</label>
-            <input type="date" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" asp-for="DepositDate" required />
+            <input type="date" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" asp-for="DepositDate"/>
             <span class="text-danger" asp-validation-for="DepositDate"></span>
         </div>
     </div>

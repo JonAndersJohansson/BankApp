@@ -1,10 +1,13 @@
 using AutoMapper;
 using BankAppProject.ViewModels;
 using DataAccessLayer.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Identity.Client;
 using Services.Customer;
+using Services.Enums;
 using Services.Infrastructure.Paged;
 using Services.User;
 
@@ -14,20 +17,24 @@ namespace BankAppProject.Pages.User
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public IndexModel(IUserService userService, IMapper mapper)
+        public IndexModel(IUserService userService, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _userService = userService;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public PagedResult<UserViewModel> PagedResult { get; set; }
+        public List<SelectListItem> Roles { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 50;
         public string? Q { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string sortColumn = "Id", string sortOrder = "asc", int pageNumber = 1, string? q = null)
         {
+            Roles = _userService.GetRoleList();
             Q = q;
             PageNumber = pageNumber;
 
@@ -49,18 +56,45 @@ namespace BankAppProject.Pages.User
 
             return Page();
         }
-        public async Task<IActionResult> OnPostDeleteAsync(string userId)
+        public async Task<IActionResult> OnPostUpdateRoleAsync(string userId, string selectedRole)
         {
-            var success = await _userService.DeleteUserAsync(userId);
-
-            if (success)
+            if (ModelState.IsValid == false)
             {
-                TempData["InactivatedUser"] = $"User inactivated successfully";
-                return Page();
+                TempData["ErrorUpdatingUserRole"] = $"User role could not be updated. {ModelState.Values.First().Errors.First().ErrorMessage}";
+                return RedirectToPage();
+            }
+            var validation = await _userService.UpdateUserRoleAsync(userId, selectedRole);
+            if (validation != ValidationResult.OK)
+            {
+                TempData["ErrorUpdatingUserRole"] = $"User role could not be updated. {validation}";
+                return RedirectToPage();
             }
 
-            TempData["ErrorInactivatingUser"] = $"User could not be inactivated";
-            return Page();
+            TempData["UserRoleUpdated"] = $"User role updated successfully";
+            return RedirectToPage();
         }
+
+        public async Task<IActionResult> OnPostDeleteAsync(string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                TempData["ErrorInactivatingUser"] = $"User could not be inactivated";
+                return RedirectToPage();
+            }
+
+            var currentUserId = _userManager.GetUserId(User); //ClaimsPrincipal!
+
+            var validation = await _userService.DeleteUserAsync(userId, currentUserId);
+
+            if (validation != ValidationResult.OK)
+            {
+                TempData["ErrorInactivatingUser"] = $"User could not be inactivated. {validation}";
+                return RedirectToPage();
+            }
+
+            TempData["InactivatedUser"] = $"User inactivated successfully";
+            return RedirectToPage();
+        }
+
     }
 }

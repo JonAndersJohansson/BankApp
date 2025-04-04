@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Profiles
+namespace Services.Infrastructure.Profiles
 {
     public class CustomerServiceProfiles : Profile
     {             
