@@ -17,7 +17,7 @@ public partial class Disposition
 
     public virtual Account Account { get; set; } = null!;
 
-    public virtual ICollection<Card> Cards { get; set; } = new List<Card>();
+    public virtual ICollection<Card> Cards { get; set; }
 
     public virtual Customer Customer { get; set; } = null!;
 }

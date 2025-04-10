@@ -35,5 +35,5 @@ public partial class Customer
 
     public bool IsActive { get; set; } = true;
 
-    public virtual ICollection<Disposition> Dispositions { get; set; } = new List<Disposition>();
+    public virtual ICollection<Disposition> Dispositions { get; set; }
 }
