@@ -1,4 +1,4 @@
-﻿namespace DataAccessLayer.DTO
+﻿namespace Services.DTOs
 {
     public class CountryStatisticsDto
     {

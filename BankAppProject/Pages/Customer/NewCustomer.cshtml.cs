@@ -1,11 +1,10 @@
 using BankAppProject.ViewModels;
-using DataAccessLayer.DTO;
-using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Services;
+using Services.DTOs;
 using Services.Enums;
 
 namespace BankAppProject.Pages.Customer

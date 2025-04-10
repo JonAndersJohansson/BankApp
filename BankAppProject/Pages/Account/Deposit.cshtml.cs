@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services;
 using System.ComponentModel.DataAnnotations;
+using Services.Enums;
 using ValidationResult = Services.Enums.ValidationResult;
 
 namespace BankAppProject.Pages.Account

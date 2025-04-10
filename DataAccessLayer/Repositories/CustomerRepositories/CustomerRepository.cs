@@ -1,5 +1,4 @@
 ﻿using DataAccessLayer.Data;
-using DataAccessLayer.DTO;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.CustomerRepositories;
 using Microsoft.EntityFrameworkCore;

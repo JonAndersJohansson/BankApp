@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.DTO;
+﻿using Services.DTOs;
 
 namespace Services
 {

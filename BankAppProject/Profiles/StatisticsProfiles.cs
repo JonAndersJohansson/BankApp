@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BankAppProject.ViewModels;
-using DataAccessLayer.DTO;
+using Services.DTOs;
 
 namespace BankAppProject.Profiles
 {

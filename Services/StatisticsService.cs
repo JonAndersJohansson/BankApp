@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.DTO;
+﻿using Services.DTOs;
 using DataAccessLayer.Repositories.StatisticsRepositories;
 using Microsoft.EntityFrameworkCore;
 

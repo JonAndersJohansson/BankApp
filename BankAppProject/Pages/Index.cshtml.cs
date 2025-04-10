@@ -1,6 +1,6 @@
 using AutoMapper;
 using BankAppProject.ViewModels;
-using DataAccessLayer.DTO;
+using Services.DTOs;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services;
 
