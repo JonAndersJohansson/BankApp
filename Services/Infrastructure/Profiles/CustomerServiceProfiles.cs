@@ -17,6 +17,18 @@ namespace Services.Infrastructure.Profiles
             CreateMap<Customer, TopCustomerDto>()
                 .ForMember(dest => dest.TotalBalance,
                            opt => opt.MapFrom(src => src.Dispositions.Sum(d => d.Account.Balance)));
+
+            CreateMap<Customer, CustomerDetailsDto>()
+                .ForMember(dest => dest.Accounts,
+                    opt => opt.MapFrom(src => src.Dispositions
+                        .Where(d => d.Account != null && d.Account.IsActive)
+                        .Select(d => d.Account)));
+
+            CreateMap<CustomerDetailsDto, Customer>()
+                .ForMember(dest => dest.CountryCode, opt => opt.Ignore())
+                .ForMember(dest => dest.Telephonecountrycode, opt => opt.Ignore())
+                .ForMember(dest => dest.IsActive, opt => opt.Ignore());
+
         }
     }
 }

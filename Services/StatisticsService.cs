@@ -28,11 +28,11 @@ namespace Services
                                 TotalCapital = countryGroup.Sum(g => g.a.Balance)
                             };
 
-                return await query.ToListAsync();  // Gör frågan asynkron med `await`
+                return await query.ToListAsync();
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Fel i GetCountryStatisticsAsync: {ex.Message}");
+                Console.WriteLine($"Fel i GetCountryStatisticsAsync: {ex.Message}");
                 Console.WriteLine($"StackTrace: {ex.StackTrace}");
                 return new List<CountryStatisticsDto>();
             }

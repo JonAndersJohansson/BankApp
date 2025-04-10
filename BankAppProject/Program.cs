@@ -56,7 +56,8 @@ public class Program
             typeof(AccountProfiles), 
             typeof(StatisticsProfiles), 
             typeof(UserProfiles), 
-            typeof(CustomerServiceProfiles));
+            typeof(CustomerServiceProfiles),
+            typeof(AccountServiceProfiles));
 
         //SQL LOGGING
         builder.Services.AddLogging(logging =>

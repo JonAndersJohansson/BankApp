@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Services.Enums;
 using Services.Infrastructure.Paged;
+using AutoMapper;
 
 namespace Services
 {
@@ -16,19 +17,73 @@ namespace Services
         private readonly IUserRepository _userRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UserService(IUserRepository userRepository, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
         {
             _userRepository = userRepository;
             _userManager = userManager;
             _roleManager = roleManager;
+            _mapper = mapper;
         }
 
+        //public async Task<PagedResult<UserDto>> GetUsersAsync(string sortColumn, string sortOrder, int pageNumber, int pageSize, string? q)
+        //{
+        //    var query = _userRepository.GetAll();
+
+        //    // Sök
+        //    if (!string.IsNullOrWhiteSpace(q))
+        //    {
+        //        var searchQuery = q.Trim().ToLower();
+        //        query = query.Where(u =>
+        //            u.Email.ToLower().Contains(searchQuery) ||
+        //            u.UserName.ToLower().Contains(searchQuery));
+        //    }
+
+        //    // Sort
+        //    query = sortColumn switch
+        //    {
+        //        "UserName" => sortOrder == "asc" ? query.OrderBy(u => u.UserName) : query.OrderByDescending(u => u.UserName),
+        //        "PhoneNumber" => sortOrder == "asc" ? query.OrderBy(u => u.PhoneNumber) : query.OrderByDescending(u => u.PhoneNumber),
+        //        "Email" => sortOrder == "asc" ? query.OrderBy(u => u.Email) : query.OrderByDescending(u => u.Email),
+        //        "Role" => query.OrderBy(u => u.UserName), // sortera inte
+        //        _ => query.OrderBy(u => u.UserName)
+        //    };
+
+        //    var totalUsers = await query.CountAsync();
+
+        //    var users = await query
+        //        .Skip((pageNumber - 1) * pageSize)
+        //        .Take(pageSize)
+        //        .ToListAsync();
+
+        //    var result = new List<UserDto>();
+        //    foreach (var user in users)
+        //    {
+        //        var role = await _userRepository.GetSingleRoleAsync(user);
+        //        result.Add(new UserDto
+        //        {
+        //            Id = user.Id,
+        //            UserName = user.UserName,
+        //            PhoneNumber = user.PhoneNumber,
+        //            Email = user.Email,
+        //            Role = role
+        //        });
+        //    }
+
+        //    return new PagedResult<UserDto>
+        //    {
+        //        Results = result,
+        //        RowCount = totalUsers,
+        //        PageSize = pageSize,
+        //        CurrentPage = pageNumber,
+        //        PageCount = (int)Math.Ceiling((double)totalUsers / pageSize)
+        //    };
+        //}
         public async Task<PagedResult<UserDto>> GetUsersAsync(string sortColumn, string sortOrder, int pageNumber, int pageSize, string? q)
         {
             var query = _userRepository.GetAll();
 
-            // Sök
             if (!string.IsNullOrWhiteSpace(q))
             {
                 var searchQuery = q.Trim().ToLower();
@@ -37,13 +92,12 @@ namespace Services
                     u.UserName.ToLower().Contains(searchQuery));
             }
 
-            // Sort
             query = sortColumn switch
             {
                 "UserName" => sortOrder == "asc" ? query.OrderBy(u => u.UserName) : query.OrderByDescending(u => u.UserName),
                 "PhoneNumber" => sortOrder == "asc" ? query.OrderBy(u => u.PhoneNumber) : query.OrderByDescending(u => u.PhoneNumber),
                 "Email" => sortOrder == "asc" ? query.OrderBy(u => u.Email) : query.OrderByDescending(u => u.Email),
-                "Role" => query.OrderBy(u => u.UserName), // sortera ej
+                "Role" => query.OrderBy(u => u.UserName), // sortera inte på roll
                 _ => query.OrderBy(u => u.UserName)
             };
 
@@ -57,15 +111,9 @@ namespace Services
             var result = new List<UserDto>();
             foreach (var user in users)
             {
-                var role = await _userRepository.GetSingleRoleAsync(user);
-                result.Add(new UserDto
-                {
-                    Id = user.Id,
-                    UserName = user.UserName,
-                    PhoneNumber = user.PhoneNumber,
-                    Email = user.Email,
-                    Role = role
-                });
+                var dto = _mapper.Map<UserDto>(user);
+                dto.Role = await _userRepository.GetSingleRoleAsync(user); // sätts manuellt
+                result.Add(dto);
             }
 
             return new PagedResult<UserDto>
@@ -222,7 +270,7 @@ namespace Services
             return Enum.GetValues<Role>()
                 .Select(r => new SelectListItem
                 {
-                    Value = r.ToString(), // ⚠️ viktig! Inte int
+                    Value = r.ToString(), // viktig! Inte int
                     Text = r.ToString()
                 })
                 .ToList();

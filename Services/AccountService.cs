@@ -3,6 +3,7 @@ using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.AccountRepositories;
 using DataAccessLayer.Repositories.TransactionRepositories;
 using Services.Enums;
+using AutoMapper;
 
 namespace Services
 {
@@ -10,11 +11,13 @@ namespace Services
     {
         private readonly IAccountRepository _accountRepository;
         private readonly ITransactionRepository _transactionRepository;
+        private readonly IMapper _mapper;
 
-        public AccountService(IAccountRepository accountRepository, ITransactionRepository transactionRepository)
+        public AccountService(IAccountRepository accountRepository, ITransactionRepository transactionRepository, IMapper mapper)
         {
             _accountRepository = accountRepository;
             _transactionRepository = transactionRepository;
+            _mapper = mapper;
         }
 
         public async Task<AccountDetailsDto?> GetAccountDetailsAsync(int accountId)
@@ -24,26 +27,40 @@ namespace Services
             if (account == null)
                 return null;
 
-            return new AccountDetailsDto
-            {
-                AccountId = account.AccountId,
-                Balance = account.Balance,
-                Created = account.Created,
-                Transactions = account.Transactions
-                    .OrderByDescending(t => t.Date)
-                    .Select(t => new TransactionInAccountDetailsDto
-                    {
-                        TransactionId = t.TransactionId,
-                        Date = t.Date,
-                        Type = t.Type,
-                        Operation = t.Operation,
-                        Amount = t.Amount,
-                        Balance = t.Balance,
-                        Symbol = t.Symbol,
-                        Bank = t.Bank
-                    }).ToList()
-            };
+            var dto = _mapper.Map<AccountDetailsDto>(account);
+            dto.Transactions = dto.Transactions.OrderByDescending(t => t.Date).ToList();
+
+            return dto;
         }
+
+
+        //public async Task<AccountDetailsDto?> GetAccountDetailsAsync(int accountId)
+        //{
+        //    var account = await _accountRepository.GetAccountWithTransactionsAsync(accountId);
+
+        //    if (account == null)
+        //        return null;
+
+        //    return new AccountDetailsDto
+        //    {
+        //        AccountId = account.AccountId,
+        //        Balance = account.Balance,
+        //        Created = account.Created,
+        //        Transactions = account.Transactions
+        //            .OrderByDescending(t => t.Date)
+        //            .Select(t => new TransactionInAccountDetailsDto
+        //            {
+        //                TransactionId = t.TransactionId,
+        //                Date = t.Date,
+        //                Type = t.Type,
+        //                Operation = t.Operation,
+        //                Amount = t.Amount,
+        //                Balance = t.Balance,
+        //                Symbol = t.Symbol,
+        //                Bank = t.Bank
+        //            }).ToList()
+        //    };
+        //}
         public async Task<bool> DeleteAccountAsync(int accountId)
         {
             var account = await _accountRepository.GetAccountByIdAsync(accountId);
