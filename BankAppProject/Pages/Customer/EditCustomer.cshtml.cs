@@ -1,6 +1,7 @@
 using AutoMapper;
 using BankAppProject.ViewModels;
 using DataAccessLayer.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,6 +10,7 @@ using Services.Enums;
 
 namespace BankAppProject.Pages.Customer
 {
+    [Authorize(Roles = "Cashier,Admin")]
     public class EditCustomerModel : PageModel
     {
         private readonly ICustomerService _customerService;

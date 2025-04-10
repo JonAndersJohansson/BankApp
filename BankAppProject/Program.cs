@@ -32,7 +32,7 @@ public class Program
                 sqlOptions => sqlOptions.MigrationsAssembly("DataAccessLayer"))); // Viktigt!
 
 
-        builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+        builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false) //Ändrat ifrån True
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<BankAppDataContext>();
         builder.Services.AddRazorPages();

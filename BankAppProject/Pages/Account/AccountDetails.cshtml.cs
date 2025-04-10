@@ -1,5 +1,6 @@
 using AutoMapper;
 using BankAppProject.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Account;
@@ -7,6 +8,7 @@ using Services.Infrastructure.Paged;
 
 namespace BankAppProject.Pages.Account
 {
+    [Authorize(Roles = "Cashier,Admin")]
     public class AccountDetailsModel : PageModel
     {
         private readonly IAccountService _accountService;

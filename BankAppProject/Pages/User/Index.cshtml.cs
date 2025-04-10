@@ -1,6 +1,7 @@
 using AutoMapper;
 using BankAppProject.ViewModels;
 using DataAccessLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,6 +14,7 @@ using Services.User;
 
 namespace BankAppProject.Pages.User
 {
+    [Authorize(Roles = "Admin")]
     public class IndexModel : PageModel
     {
         private readonly IUserService _userService;

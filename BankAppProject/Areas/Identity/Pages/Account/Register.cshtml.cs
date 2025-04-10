@@ -4,6 +4,7 @@
 
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ using System.Text.Encodings.Web;
 
 namespace BankAppProject.Areas.Identity.Pages.Account
 {
+    [Authorize(Roles = "Admin")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
