@@ -4,7 +4,7 @@ using DataAccessLayer.Repositories.AccountRepositories;
 using DataAccessLayer.Repositories.TransactionRepositories;
 using Services.Enums;
 
-namespace Services.Account
+namespace Services
 {
     public class AccountService : IAccountService
     {
@@ -137,7 +137,7 @@ namespace Services.Account
         }
         public async Task CreateAccountAsync(int customerId)
         {
-            var account = new DataAccessLayer.Models.Account
+            var account = new Account
             {
                 Created = DateOnly.FromDateTime(DateTime.Today),
                 Frequency = "Monthly",

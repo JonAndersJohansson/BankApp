@@ -9,7 +9,7 @@ using Microsoft.Identity.Client;
 using Services.Enums;
 using Services.Infrastructure.Paged;
 
-namespace Services.User
+namespace Services
 {
     public class UserService : IUserService
     {

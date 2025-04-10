@@ -1,6 +1,6 @@
 ﻿using DataAccessLayer.DTO;
 
-namespace Services.Statistics
+namespace Services
 {
     public interface IStatisticsService
     {

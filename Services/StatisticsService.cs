@@ -2,7 +2,7 @@
 using DataAccessLayer.Repositories.StatisticsRepositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace Services.Statistics
+namespace Services
 {
     public class StatisticsService : IStatisticsService
     {

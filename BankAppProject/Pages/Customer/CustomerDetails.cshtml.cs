@@ -4,8 +4,7 @@ using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Services.Account;
-using Services.Customer;
+using Services;
 
 namespace BankAppProject.Pages.Customer
 {

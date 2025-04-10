@@ -7,10 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Identity.Client;
-using Services.Customer;
+using Services;
 using Services.Enums;
 using Services.Infrastructure.Paged;
-using Services.User;
 
 namespace BankAppProject.Pages.User
 {

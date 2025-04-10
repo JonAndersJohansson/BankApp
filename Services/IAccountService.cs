@@ -1,7 +1,7 @@
 ﻿using DataAccessLayer.DTO;
 using Services.Enums;
 
-namespace Services.Account
+namespace Services
 {
     public interface IAccountService
     {

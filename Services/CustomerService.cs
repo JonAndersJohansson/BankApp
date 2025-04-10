@@ -6,11 +6,10 @@ using DataAccessLayer.Repositories.CustomerRepositories;
 using DataAccessLayer.Repositories.DispositionRepositories;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Services.Account;
 using Services.Enums;
 using Services.Infrastructure.Paged;
 
-namespace Services.Customer
+namespace Services
 {
     public class CustomerService : ICustomerService
     {
@@ -238,7 +237,7 @@ namespace Services.Customer
                 _ => ""
             };
 
-            var customer = new DataAccessLayer.Models.Customer
+            var customer = new Customer
             {
                 Givenname = newCustomer.Givenname,
                 Surname = newCustomer.Surname,

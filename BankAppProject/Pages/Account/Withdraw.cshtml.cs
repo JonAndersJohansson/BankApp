@@ -3,7 +3,7 @@ using BankAppProject.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Services.Account;
+using Services;
 using System.ComponentModel.DataAnnotations;
 using ValidationResult = Services.Enums.ValidationResult;
 

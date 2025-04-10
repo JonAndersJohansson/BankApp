@@ -2,7 +2,7 @@ using AutoMapper;
 using BankAppProject.ViewModels;
 using DataAccessLayer.DTO;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Services.Statistics;
+using Services;
 
 namespace BankAppProject.Pages;
 
