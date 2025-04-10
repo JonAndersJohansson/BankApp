@@ -15,7 +15,7 @@ namespace Services
         //Task<List<UserDto>> GetAllUsersAsync();
         //Task<UserDto> GetUserByIdAsync(string id);
         Task<PagedResult<UserDto>> GetUsersAsync(string sortColumn, string sortOrder, int pageNumber, int pageSize, string? q);
-        Task<ValidationResult> DeleteUserAsync(string targetUserId, string currentUserId);
+        Task<ValidationResult> DeleteUserAsync(string targetUserId, string? currentUserId);
         List<SelectListItem> GetRoleList();
         Task<ValidationResult> UpdateUserRoleAsync(string userId, string selectedRole);
         //Task<ValidationResult> EditUserAsync(UserDto userDto);

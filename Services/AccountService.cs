@@ -72,7 +72,7 @@ namespace Services
 
             return true;
         }
-        public async Task<ValidationResult> DepositAsync(int accountId, decimal amount, string comment, DateTime depositDate, string operation)
+        public async Task<ValidationResult> DepositAsync(int accountId, decimal amount, string? comment, DateTime depositDate, string operation)
         {
             var account = _accountRepository.GetAccountById(accountId);
 
@@ -102,7 +102,7 @@ namespace Services
 
             return ValidationResult.OK;
         }
-        public async Task<ValidationResult> WithdrawAsync(int accountId, decimal amount, string comment, DateTime withdrawDate, string operation)
+        public async Task<ValidationResult> WithdrawAsync(int accountId, decimal amount, string? comment, DateTime withdrawDate, string operation)
         {
             var account = _accountRepository.GetAccountById(accountId);
 
@@ -134,7 +134,7 @@ namespace Services
 
             return ValidationResult.OK;
         }
-        public async Task<ValidationResult> TransferAsync(int fromAccountId, decimal amount, string comment, DateTime transferDate, int toAccountId)
+        public async Task<ValidationResult> TransferAsync(int fromAccountId, decimal amount, string? comment, DateTime transferDate, int toAccountId)
         {
             var receivingAccount = _accountRepository.GetAccountById(toAccountId);
             if (receivingAccount == null || !receivingAccount.IsActive)
@@ -159,7 +159,8 @@ namespace Services
                 Created = DateOnly.FromDateTime(DateTime.Today),
                 Frequency = "Monthly",
                 Balance = 0,
-                IsActive = true
+                IsActive = true,
+                Dispositions = new List<Disposition>()
             };
 
             account.Dispositions.Add(new Disposition
@@ -171,6 +172,7 @@ namespace Services
             await _accountRepository.AddAsync(account);
             await _accountRepository.SaveAsync();
         }
+
 
 
 

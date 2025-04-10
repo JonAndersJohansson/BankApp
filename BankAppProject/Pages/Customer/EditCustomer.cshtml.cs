@@ -25,8 +25,8 @@ namespace BankAppProject.Pages.Customer
         [BindProperty]
         public EditCustomerViewModel Customer { get; set; } = new();
 
-        public List<SelectListItem> Genders { get; set; }
-        public List<SelectListItem> Countries { get; set; }
+        public List<SelectListItem>? Genders { get; set; }
+        public List<SelectListItem>? Countries { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int customerId)
         {

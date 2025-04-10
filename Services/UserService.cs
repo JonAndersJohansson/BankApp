@@ -211,7 +211,7 @@ namespace Services
         //        //Role = user.Role,
         //    };
         //}
-        public async Task<ValidationResult> DeleteUserAsync(string targetUserId, string currentUserId)
+        public async Task<ValidationResult> DeleteUserAsync(string targetUserId, string? currentUserId)
         {
             if (targetUserId == currentUserId)
                 return ValidationResult.CannotDeleteSelf;

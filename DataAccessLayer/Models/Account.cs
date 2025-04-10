@@ -17,7 +17,7 @@ public partial class Account
 
     public virtual ICollection<Disposition> Dispositions { get; set; }
 
-    public virtual ICollection<Loan> Loans { get; set; } = new List<Loan>();
+    public virtual ICollection<Loan> Loans { get; set; }
 
     public virtual ICollection<PermenentOrder> PermenentOrders { get; set; }
 

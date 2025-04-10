@@ -17,7 +17,7 @@ public class IndexModel : PageModel
         _mapper = mapper;
     }
 
-    public List<CountryStatisticsViewModel> CountryStatistics { get; set; }
+    public List<CountryStatisticsViewModel>? CountryStatistics { get; set; }
 
     public async Task OnGetAsync()
     {

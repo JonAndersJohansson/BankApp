@@ -27,8 +27,8 @@ namespace BankAppProject.Pages.User
             _userManager = userManager;
         }
 
-        public PagedResult<UserViewModel> PagedResult { get; set; }
-        public List<SelectListItem> Roles { get; set; }
+        public PagedResult<UserViewModel>? PagedResult { get; set; }
+        public List<SelectListItem>? Roles { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 50;
         public string? Q { get; set; }

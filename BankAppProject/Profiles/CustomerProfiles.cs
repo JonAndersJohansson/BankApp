@@ -37,6 +37,13 @@ namespace BankAppProject.Profiles
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Givenname + " " + src.Surname));
 
             CreateMap<TopCustomerDto, TopCustomerViewModel>();
+
+            CreateMap<NewCustomerViewModel, CustomerDetailsDto>()
+                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.CustomerGender.ToString()))
+                .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.CustomerCountry.ToString()))
+                .ForMember(dest => dest.Streetaddress, opt => opt.MapFrom(src => src.StreetAddress))
+                .ForMember(dest => dest.Zipcode, opt => opt.MapFrom(src => src.ZipCode))
+                .ForMember(dest => dest.Birthday, opt => opt.MapFrom(src => DateOnly.FromDateTime(src.Birthday!.Value)));
         }
 
 

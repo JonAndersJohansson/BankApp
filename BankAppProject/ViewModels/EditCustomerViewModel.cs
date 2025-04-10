@@ -9,7 +9,7 @@ namespace BankAppProject.ViewModels
 
         [Range(1, 99, ErrorMessage = "Invalid")]
 
-        public Gender? Gender { get; set; }
+        public Gender Gender { get; set; }
 
         [MaxLength(30, ErrorMessage = "First name not valid, to long")]
         [Required(ErrorMessage = "First name required.")]
@@ -43,19 +43,19 @@ namespace BankAppProject.ViewModels
         [Required(ErrorMessage = "Social security number required.")]
         [StringLength(12, MinimumLength = 10, ErrorMessage = "Social security number must be between 10 and 12 characters.")]
         [RegularExpression(@"^\d{6}[-+A]?\d{4}$|^\d{8}\d{4}$", ErrorMessage = "Invalid format for social security number.")]
-        public string? NationalId { get; set; }
+        public string NationalId { get; set; } = string.Empty;
 
 
         public string? Telephonecountrycode { get; set; }
 
         [MaxLength(20, ErrorMessage = "Phone number not valid, to long.")]
         [Required(ErrorMessage = "Phone number required.")]
-        public string? Telephonenumber { get; set; }
+        public string Telephonenumber { get; set; } = string.Empty;
 
         [MaxLength(50, ErrorMessage = "Email address not valid, to long.")]
         [Required(ErrorMessage = "Email address required.")]
         [EmailAddress(ErrorMessage = "Email address is not valid.")]
-        public string? Emailaddress { get; set; }
+        public string Emailaddress { get; set; } = string.Empty;
 
         public bool IsActive { get; set; } = true;
 

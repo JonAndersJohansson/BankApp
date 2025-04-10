@@ -18,8 +18,8 @@ namespace BankAppProject.Pages.Statistics
             _mapper = mapper;
         }
 
-        public List<TopCustomerViewModel> Top10Customers { get; set; }
-        public string CountryCode { get; set; }
+        public List<TopCustomerViewModel>? Top10Customers { get; set; }
+        public string? CountryCode { get; set; }
 
         public async Task OnGetAsync(string countryCode)
         {
