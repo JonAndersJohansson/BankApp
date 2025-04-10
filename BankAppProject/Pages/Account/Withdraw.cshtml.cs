@@ -25,7 +25,8 @@ namespace BankAppProject.Pages.Account
 
         [BindProperty(SupportsGet = true)]
         public int CustomerId { get; set; }
-        public AccountDetailsViewModel Account { get; set; }
+        public AccountDetailsViewModel Account { get; set; } = new();
+
 
         [BindProperty]
         [Required(ErrorMessage = "Amount required.")]

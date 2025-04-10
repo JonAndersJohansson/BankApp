@@ -20,16 +20,11 @@ namespace BankAppProject.Pages.Customer
             _mapper = mapper;
         }
 
-        //public List<CustomerIndexViewModel> Customers { get; set; }
         public PagedResult<CustomerIndexViewModel> PagedResult { get; set; }
 
-        //public int TotalCustomers { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 50;
         public string? Q { get; set; }
-        //public int FirstRowOnPage { get; set; }
-        //public int LastRowOnPage { get; set; }
-        //public int PageCount { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string sortColumn = "Id", string sortOrder = "asc", int pageNumber = 1, string? q = null)
         {
@@ -41,16 +36,9 @@ namespace BankAppProject.Pages.Customer
             if (pagedResult == null)
                 return RedirectToPage("/Identity/Error");
 
-            //Customers = _mapper.Map<List<CustomerIndexViewModel>>(pagedResult.Results);
-            //TotalCustomers = pagedResult.RowCount;
-            //PageNumber = pagedResult.CurrentPage;
-            //PageSize = pagedResult.PageSize;
-            //FirstRowOnPage = pagedResult.FirstRowOnPage;
-            //LastRowOnPage = pagedResult.LastRowOnPage;
-            //PageCount = pagedResult.PageCount;
             var mappedResults = _mapper.Map<List<CustomerIndexViewModel>>(pagedResult.Results);
 
-            PagedResult = new PagedResult<CustomerIndexViewModel>
+            PagedResult = new PagedResult<CustomerIndexViewModel> 
             {
                 Results = mappedResults,
                 RowCount = pagedResult.RowCount,
@@ -59,8 +47,7 @@ namespace BankAppProject.Pages.Customer
                 PageCount = pagedResult.PageCount
             };
 
-
-            return Page();
+            return Page(); //PagedResuld har Address här
         }
     }
 }

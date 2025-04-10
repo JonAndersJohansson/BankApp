@@ -64,7 +64,7 @@ namespace Services
                 .Take(pageSize)
                 .ToListAsync();
 
-            var result = _mapper.Map<List<CustomerIndexDto>>(customers);
+            var result = _mapper.Map<List<CustomerIndexDto>>(customers); //Fel adress försvinner
 
             return new PagedResult<CustomerIndexDto>
             {

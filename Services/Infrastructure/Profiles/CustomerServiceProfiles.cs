@@ -9,10 +9,12 @@ namespace Services.Infrastructure.Profiles
         public CustomerServiceProfiles()
         {
             CreateMap<Customer, CustomerIndexDto>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CustomerId));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CustomerId))
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Streetaddress));
 
             CreateMap<CustomerIndexDto, Customer>()
-                .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Id));
+                .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Streetaddress, opt => opt.MapFrom(src => src.Address));
 
             CreateMap<Customer, TopCustomerDto>()
                 .ForMember(dest => dest.TotalBalance,
