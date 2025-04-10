@@ -14,11 +14,4 @@
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Account\" />
-    <Folder Include="Customer\" />
-    <Folder Include="Statistics\" />
-    <Folder Include="User\" />
-  </ItemGroup>
-
 </Project>
