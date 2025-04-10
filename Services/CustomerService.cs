@@ -370,11 +370,18 @@ namespace Services
 
             return ValidationResult.OK;
         }
+        //public async Task<List<TopCustomerDto>> GetTop10RichestCustomersAsync(string countryCode)
+        //{
+        //    return await _customerRepository.GetTop10RichestCustomersByCountryAsync(countryCode);
+        //}
         public async Task<List<TopCustomerDto>> GetTop10RichestCustomersAsync(string countryCode)
         {
-            return await _customerRepository.GetTop10RichestCustomersByCountryAsync(countryCode);
+            var customers = await _customerRepository.GetTop10RichestCustomersByCountryAsync(countryCode);
+            return _mapper.Map<List<TopCustomerDto>>(customers)
+                .OrderByDescending(c => c.TotalBalance)
+                .Take(10)
+                .ToList();
         }
-
 
     }
 }
