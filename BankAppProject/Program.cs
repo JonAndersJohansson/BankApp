@@ -52,13 +52,29 @@ public class Program
         builder.Services.AddScoped<IUserService, UserService>();
 
         // AutoMapper
-        builder.Services.AddAutoMapper( 
-            typeof(CustomerProfiles), 
-            typeof(AccountProfiles), 
-            typeof(StatisticsProfiles), 
-            typeof(UserProfiles), 
-            typeof(CustomerServiceProfiles),
-            typeof(AccountServiceProfiles));
+        //builder.Services.AddAutoMapper(
+        //    typeof(CustomerProfiles).Assembly);
+        //typeof(AccountProfiles), 
+        //    typeof(StatisticsProfiles), 
+        //    typeof(UserProfiles), 
+        //    typeof(CustomerServiceProfiles),
+        //    typeof(AccountServiceProfiles));
+
+
+        builder.Services.AddAutoMapper(
+            typeof(CustomerProfiles).Assembly,
+            typeof(AccountProfiles).Assembly,
+            typeof(StatisticsProfiles).Assembly,
+            typeof(UserProfiles).Assembly,
+            typeof(CustomerServiceProfiles).Assembly,
+            typeof(AccountServiceProfiles).Assembly
+        );
+        builder.Services.AddAutoMapper(
+            typeof(CustomerProfiles).Assembly,                // BankAppProject
+            typeof(CustomerServiceProfiles).Assembly,         // Services
+            typeof(AccountServiceProfiles).Assembly           // Services eller annan DLL
+        );
+
 
         //SQL LOGGING
         builder.Services.AddLogging(logging =>
