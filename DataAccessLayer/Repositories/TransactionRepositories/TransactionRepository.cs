@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Data;
 using DataAccessLayer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repositories.TransactionRepositories
 {
@@ -16,5 +17,13 @@ namespace DataAccessLayer.Repositories.TransactionRepositories
             _bankAppDataContext.Transactions.Add(transaction);
             await _bankAppDataContext.SaveChangesAsync();
         }
+        public IQueryable<Transaction> GetAllTransactions()
+        {
+            return _bankAppDataContext.Transactions
+                .Include(t => t.AccountNavigation)
+                    .ThenInclude(a => a.Dispositions)
+                        .ThenInclude(d => d.Customer);
+        }
+
     }
 }

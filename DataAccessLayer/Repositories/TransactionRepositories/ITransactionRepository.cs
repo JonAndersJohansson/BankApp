@@ -10,5 +10,7 @@ namespace DataAccessLayer.Repositories.TransactionRepositories
     public interface ITransactionRepository
     {
         Task AddAsync(Transaction transaction);
+        //Task<List<Transaction>> GetTransactionsByCountrySinceAsync(string countryCode, int lastCheckedId);
+        IQueryable<Transaction> GetAllTransactions();
     }
 }

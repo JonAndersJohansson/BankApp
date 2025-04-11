@@ -1,5 +1,10 @@
 ﻿using BankAppTransactionMonitor;
 using DataAccessLayer.Data;
+using DataAccessLayer.Repositories.AccountRepositories;
+using DataAccessLayer.Repositories.CustomerRepositories;
+using DataAccessLayer.Repositories.CustomerrRepositories;
+using DataAccessLayer.Repositories.DispositionRepositories;
+using DataAccessLayer.Repositories.TransactionRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +18,7 @@ var host = Host.CreateDefaultBuilder(args)
     })
     .ConfigureServices((context, services) =>
     {
-        // Lägg till din connection string här
+        // Connectionstring
         var connectionString = context.Configuration.GetConnectionString("DefaultConnection");
 
         services.AddDbContext<BankAppDataContext>(options =>
@@ -22,10 +27,22 @@ var host = Host.CreateDefaultBuilder(args)
             options.UseLazyLoadingProxies();
         });
 
-        //services.AddScoped<ITransactionService, TransactionService>();
+        // Automapper
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+        // Services
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<ICustomerService, CustomerService>();
+        services.AddScoped<ITransactionService, TransactionService>();
+
+
         services.AddScoped<TransactionMonitor>();
+
+        //repo
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<IDispositionRepository, DispositionRepository>();
+        services.AddScoped<ITransactionRepository, TransactionRepository>();
 
         //ProgressTracker
         services.AddSingleton<ProgressTracker>();

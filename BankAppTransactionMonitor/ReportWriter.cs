@@ -8,11 +8,12 @@ namespace BankAppTransactionMonitor
 
         public void WriteReport(string countryCode, List<SuspiciousTransaction> transactions)
         {
-            if (!transactions.Any())
-                return;
+            //if (!transactions.Any())
+            //    return;
 
             var timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-            var reportDirPath = Path.Combine(Directory.GetCurrentDirectory(), ReportFolder);
+            var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
+            var reportDirPath = Path.Combine(rootPath, ReportFolder);
 
             Directory.CreateDirectory(reportDirPath);
 

@@ -7,12 +7,14 @@ namespace BankAppTransactionMonitor
         private readonly ProgressTracker _progressTracker;
         private readonly ICustomerService _customerService;
         private readonly ReportWriter _reportWriter;
+        private readonly ITransactionService _transactionService;
 
-        public TransactionMonitor(ProgressTracker progressTracker, ICustomerService customerService, ReportWriter reportWriter)
+        public TransactionMonitor(ProgressTracker progressTracker, ICustomerService customerService, ReportWriter reportWriter, ITransactionService transactionService)
         {
             _progressTracker = progressTracker;
             _customerService = customerService;
             _reportWriter = reportWriter;
+            _transactionService = transactionService;
         }
         public async Task StartAsync()
         {
@@ -30,68 +32,77 @@ namespace BankAppTransactionMonitor
 
                 var suspiciousTransactions = new List<SuspiciousTransaction>();
                 var lastCheckedId = progress.ContainsKey(countryCode) ? progress[countryCode] : 0;
-                var customers = await _customerService.GetCustomersByCountryAsync(countryCode);
 
-                foreach (var customer in customers)
+                // NY: Hämtar bara transaktioner för det landets konton som är nya
+                var transactions = await _transactionService.GetRecentTransactionsByCountryAsync(countryCode, lastCheckedId);
+
+                foreach (var transaction in transactions)
                 {
-                    foreach (var account in customer.Dispositions.Select(d => d.Account))
+                    var account = transaction.AccountNavigation;
+                    var customer = account?.Dispositions?.FirstOrDefault()?.Customer;
+
+                    if (account == null || customer == null)
+                        continue;
+
+                    // Rule 1
+                    if (transaction.Amount > 15000)
                     {
-                        var transactions = account.Transactions
-                            .Where(t => t.TransactionId > lastCheckedId)
-                            .ToList();
-
-                        // Rule 1
-                        foreach (var transaction in transactions)
+                        suspiciousTransactions.Add(new SuspiciousTransaction
                         {
-                            if (transaction.Amount > 15000)
-                            {
-                                suspiciousTransactions.Add(new SuspiciousTransaction
-                                {
-                                    Rule = "Single transaction > 15000!",
-                                    CustomerId = customer.CustomerId,
-                                    AccountId = account.AccountId,
-                                    TransactionId = transaction.TransactionId,
-                                    Amount = transaction.Amount,
-                                    CountryCode = countryCode
-                                });
-                            }
-                        }
+                            Rule = "Single transaction > 15000!",
+                            CustomerId = customer.CustomerId,
+                            AccountId = account.AccountId,
+                            TransactionId = transaction.TransactionId,
+                            Amount = transaction.Amount,
+                            CountryCode = countryCode
+                        });
+                    }
+                }
 
-                        // Rule 2
-                        var recentTransactions = transactions
-                            .Where(t => t.Date.ToDateTime(TimeOnly.MinValue) > DateTime.Now.AddHours(-72))
-                            .ToList();
+                // Rule 2: Grupp per AccountId och kolla totalsumma senaste 72 timmarna
+                var grouped = transactions
+                    .Where(t => t.Date.ToDateTime(TimeOnly.MinValue) > DateTime.Now.AddHours(-72))
+                    .GroupBy(t => t.AccountId);
 
-                        var recentTotal = recentTransactions.Sum(t => t.Amount);
-
-                        if (recentTotal > 23000)
+                foreach (var group in grouped)
+                {
+                    var recentTotal = group.Sum(t => t.Amount);
+                    if (recentTotal > 23000)
+                    {
+                        foreach (var t in group)
                         {
-                            foreach (var t in recentTransactions)
+                            var account = t.AccountNavigation;
+                            var customer = account?.Dispositions?.FirstOrDefault()?.Customer;
+
+                            if (account == null || customer == null)
+                                continue;
+
+                            suspiciousTransactions.Add(new SuspiciousTransaction
                             {
-                                suspiciousTransactions.Add(new SuspiciousTransaction
-                                {
-                                    Rule = "72h-sum > 23000!",
-                                    CustomerId = customer.CustomerId,
-                                    AccountId = account.AccountId,
-                                    TransactionId = t.TransactionId,
-                                    Amount = t.Amount,
-                                    CountryCode = countryCode
-                                });
-                            }
+                                Rule = "72h-sum > 23000!",
+                                CustomerId = customer.CustomerId,
+                                AccountId = account.AccountId,
+                                TransactionId = t.TransactionId,
+                                Amount = t.Amount,
+                                CountryCode = countryCode
+                            });
                         }
                     }
                 }
-                
+
                 _reportWriter.WriteReport(countryCode, suspiciousTransactions);
 
-                var highestTransactionId = customers
-                    .SelectMany(c => c.Dispositions.Select(d => d.Account))
-                    .SelectMany(a => a.Transactions)
+                var highestTransactionId = transactions
                     .Where(t => t.TransactionId > lastCheckedId)
                     .Max(t => (int?)t.TransactionId) ?? lastCheckedId;
 
-                progress[countryCode] = highestTransactionId;
+                //if (highestTransactionId == lastCheckedId)
+                //{
+                //    Console.WriteLine($"No new transactions found for {countryCode}. Skipping update.");
+                //    continue;
+                //}
 
+                progress[countryCode] = highestTransactionId;
                 _progressTracker.Save(progress);
 
                 Console.WriteLine($"{countryCode} done.");

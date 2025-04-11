@@ -2,8 +2,6 @@
 
 namespace BankAppTransactionMonitor
 {
-    using System.Text.Json;
-
     public class ProgressTracker
     {
         private const string ProgressFolder = "Data";
@@ -12,7 +10,12 @@ namespace BankAppTransactionMonitor
 
         public ProgressTracker()
         {
-            ProgressFilePath = Path.Combine(Directory.GetCurrentDirectory(), ProgressFolder, ProgressFileName);
+            var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
+            var dataDirPath = Path.Combine(rootPath, ProgressFolder);
+
+            Directory.CreateDirectory(dataDirPath);
+
+            ProgressFilePath = Path.Combine(dataDirPath, ProgressFileName);
         }
 
         public Dictionary<string, int> Load()
@@ -27,28 +30,20 @@ namespace BankAppTransactionMonitor
 
         public void Save(Dictionary<string, int> progress)
         {
-            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), ProgressFolder));
-
             var json = JsonSerializer.Serialize(progress, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(ProgressFilePath, json);
-
             Console.WriteLine("Saving progress file...");
         }
 
         public void InitIfMissing(IEnumerable<string> countryCodes, int startingTransactionId)
         {
-            var progressPath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "progress.json");
-
-            if (File.Exists(progressPath))
+            if (File.Exists(ProgressFilePath))
                 return;
 
             Console.WriteLine("No progress file found – initializing from baseline...");
 
             var initialProgress = countryCodes.ToDictionary(code => code, code => startingTransactionId);
-
             Save(initialProgress);
         }
-
     }
-
 }
