@@ -8,8 +8,11 @@ namespace BankAppTransactionMonitor
 
         public void WriteReport(string countryCode, List<SuspiciousTransaction> transactions)
         {
-            //if (!transactions.Any())
-            //    return;
+            if (!transactions.Any())
+            {
+                Console.WriteLine($"No suspicious transactions found for {countryCode}.");
+                return;
+            }
 
             var timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
@@ -22,28 +25,29 @@ namespace BankAppTransactionMonitor
             var sb = new StringBuilder();
 
             sb.AppendLine($"Suspicious transactions – {countryCode} – {timestamp}");
-            sb.AppendLine("==========================================");
 
             var grouped = transactions.GroupBy(t => t.Rule);
 
             foreach (var group in grouped)
             {
-                sb.AppendLine();
-                sb.AppendLine($"~ {group.Key} ~");
+                sb.AppendLine("-------------------------------------------------------------------------");
+                sb.AppendLine($"* {group.Key}:");
+                sb.AppendLine("");
 
                 foreach (var t in group)
                 {
-                    sb.AppendLine($"CustomerId: {t.CustomerId}, AccountId: {t.AccountId}, TransactionId: {t.TransactionId}, Amount: {t.Amount}");
+                    sb.AppendLine($"  CustomerId: {t.CustomerId}, AccountId: {t.AccountId}, TransactionId: {t.TransactionId}, Amount: {t.Amount}");
                 }
             }
 
-            sb.AppendLine("------------------------------------------");
+            sb.AppendLine("-------------------------------------------------------------------------");
             sb.AppendLine($"Total suspicious transactions: {transactions.Count}");
-            sb.AppendLine("------------------------------------------");
+            sb.AppendLine("-------------------------------------------------------------------------");
 
             File.WriteAllText(filename, sb.ToString());
 
-            Console.WriteLine($"Report created: {filename}");
+            Console.WriteLine($"{transactions.Count} suspicious transactions detected!");
+            Console.WriteLine($"Report created. Find it at:\n{filename}");
         }
     }
 }

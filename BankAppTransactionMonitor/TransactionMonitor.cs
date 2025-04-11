@@ -19,6 +19,7 @@ namespace BankAppTransactionMonitor
         public async Task StartAsync()
         {
             Console.WriteLine("Start scanning...");
+            Console.WriteLine();
 
             var countries = await _customerService.GetAllCountryCodesAsync();
 
@@ -28,12 +29,12 @@ namespace BankAppTransactionMonitor
 
             foreach (var countryCode in countries)
             {
+                Console.WriteLine();
                 Console.WriteLine($"Scanning country: {countryCode}");
 
                 var suspiciousTransactions = new List<SuspiciousTransaction>();
                 var lastCheckedId = progress.ContainsKey(countryCode) ? progress[countryCode] : 0;
 
-                // NY: Hämtar bara transaktioner för det landets konton som är nya
                 var transactions = await _transactionService.GetRecentTransactionsByCountryAsync(countryCode, lastCheckedId);
 
                 foreach (var transaction in transactions)
@@ -49,7 +50,7 @@ namespace BankAppTransactionMonitor
                     {
                         suspiciousTransactions.Add(new SuspiciousTransaction
                         {
-                            Rule = "Single transaction > 15000!",
+                            Rule = "Single transaction > 15000",
                             CustomerId = customer.CustomerId,
                             AccountId = account.AccountId,
                             TransactionId = transaction.TransactionId,
@@ -59,7 +60,7 @@ namespace BankAppTransactionMonitor
                     }
                 }
 
-                // Rule 2: Grupp per AccountId och kolla totalsumma senaste 72 timmarna
+                // Rule 2:
                 var grouped = transactions
                     .Where(t => t.Date.ToDateTime(TimeOnly.MinValue) > DateTime.Now.AddHours(-72))
                     .GroupBy(t => t.AccountId);
@@ -79,7 +80,7 @@ namespace BankAppTransactionMonitor
 
                             suspiciousTransactions.Add(new SuspiciousTransaction
                             {
-                                Rule = "72h-sum > 23000!",
+                                Rule = "72h-sum > 23000",
                                 CustomerId = customer.CustomerId,
                                 AccountId = account.AccountId,
                                 TransactionId = t.TransactionId,
@@ -96,11 +97,11 @@ namespace BankAppTransactionMonitor
                     .Where(t => t.TransactionId > lastCheckedId)
                     .Max(t => (int?)t.TransactionId) ?? lastCheckedId;
 
-                //if (highestTransactionId == lastCheckedId)
-                //{
-                //    Console.WriteLine($"No new transactions found for {countryCode}. Skipping update.");
-                //    continue;
-                //}
+                if (highestTransactionId == lastCheckedId)
+                {
+                    Console.WriteLine($"No new transactions found for {countryCode}. Skipping progress update.");
+                    continue;
+                }
 
                 progress[countryCode] = highestTransactionId;
                 _progressTracker.Save(progress);
@@ -108,7 +109,8 @@ namespace BankAppTransactionMonitor
                 Console.WriteLine($"{countryCode} done.");
             }
 
-            Console.WriteLine("Scanning done!");
+            Console.WriteLine();
+            Console.WriteLine("Scanning done successfully!");
         }
     }
 }

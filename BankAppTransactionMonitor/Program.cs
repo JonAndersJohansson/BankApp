@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Services;
 
 var host = Host.CreateDefaultBuilder(args)
@@ -21,9 +22,22 @@ var host = Host.CreateDefaultBuilder(args)
         // Connectionstring
         var connectionString = context.Configuration.GetConnectionString("DefaultConnection");
 
+        //services.AddDbContext<BankAppDataContext>(options =>
+        //{
+        //    options.UseSqlServer(connectionString);
+        //    options.UseLazyLoadingProxies();
+        //});
+
         services.AddDbContext<BankAppDataContext>(options =>
         {
-            options.UseSqlServer(connectionString);
+            options.UseSqlServer(connectionString)
+                .LogTo(Console.WriteLine,
+                    (eventId, logLevel) =>
+                        logLevel == LogLevel.Warning ||
+                        logLevel == LogLevel.Error ||
+                        logLevel == LogLevel.Critical)
+                .EnableSensitiveDataLogging(false);
+
             options.UseLazyLoadingProxies();
         });
 
@@ -49,6 +63,11 @@ var host = Host.CreateDefaultBuilder(args)
 
         //ReportWriter
         services.AddSingleton<ReportWriter>();
+    })
+    .ConfigureLogging(logging =>
+    {
+        logging.ClearProviders();
+        logging.SetMinimumLevel(LogLevel.Warning);
     })
     .Build();
 
