@@ -81,9 +81,7 @@ namespace BankAppTransactionMonitor
                         }
                     }
                 }
-
                 
-
                 _reportWriter.WriteReport(countryCode, suspiciousTransactions);
 
                 var highestTransactionId = customers
@@ -98,6 +96,8 @@ namespace BankAppTransactionMonitor
 
                 Console.WriteLine($"{countryCode} done.");
             }
+
+            Console.WriteLine("Scanning done!");
         }
     }
 }

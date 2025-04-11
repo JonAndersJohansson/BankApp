@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BankAppTransactionMonitor
+﻿namespace BankAppTransactionMonitor
 {
     public class SuspiciousTransaction
     {
@@ -16,5 +10,4 @@ namespace BankAppTransactionMonitor
         public string Rule { get; set; } = string.Empty;
 
     }
-
 }
