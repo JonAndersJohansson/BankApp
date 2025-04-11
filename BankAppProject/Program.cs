@@ -23,6 +23,7 @@ public class Program
 
         // Add services to the container.
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
         builder.Services.AddDbContext<BankAppDataContext>(options =>
             options.UseSqlServer(
                 builder.Configuration.GetConnectionString("DefaultConnection"),

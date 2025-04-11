@@ -9,8 +9,6 @@ namespace DataAccessLayer.Repositories.CustomerRepositories
         Task SaveAsync();
         Task AddAsync(Customer customer);
         Task<List<Customer>> GetTop10RichestCustomersByCountryAsync(string countryCode);
-
-
+        Task<List<string>> GetAllCountryCodesAsync();
     }
-
 }

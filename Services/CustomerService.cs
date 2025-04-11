@@ -403,10 +403,6 @@ namespace Services
 
             return ValidationResult.OK;
         }
-        //public async Task<List<TopCustomerDto>> GetTop10RichestCustomersAsync(string countryCode)
-        //{
-        //    return await _customerRepository.GetTop10RichestCustomersByCountryAsync(countryCode);
-        //}
         public async Task<List<TopCustomerDto>> GetTop10RichestCustomersAsync(string countryCode)
         {
             var customers = await _customerRepository.GetTop10RichestCustomersByCountryAsync(countryCode);
@@ -416,5 +412,16 @@ namespace Services
                 .ToList();
         }
 
+        public async Task<List<string>> GetAllCountryCodesAsync()
+        {
+            var countryCodes = await _customerRepository.GetAllCountryCodesAsync();
+            return countryCodes;
+        }
+        public async Task<List<Customer>> GetCustomersByCountryAsync(string countryCode)
+        {
+            return await _customerRepository.GetAllCustomers()
+                .Where(c => c.CountryCode == countryCode)
+                .ToListAsync();
+        }
     }
 }

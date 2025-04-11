@@ -70,5 +70,12 @@ namespace DataAccessLayer.Repositories.CustomerrRepositories
                 .ToListAsync();
         }
 
+        public async Task<List<string>> GetAllCountryCodesAsync()
+        {
+            return await _dbContext.Customers
+                .Select(c => c.CountryCode)
+                .Distinct()
+                .ToListAsync();
+        }
     }
 }

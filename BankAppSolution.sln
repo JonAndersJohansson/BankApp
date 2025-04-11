@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAcce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{CF1848F9-8CCA-4BBF-B5D2-C95F2BC5D515}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAppTransactionMonitor", "BankAppTransactionMonitor\BankAppTransactionMonitor.csproj", "{826B5C7F-C55C-4663-B39D-B92C1D9C124B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{CF1848F9-8CCA-4BBF-B5D2-C95F2BC5D515}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF1848F9-8CCA-4BBF-B5D2-C95F2BC5D515}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF1848F9-8CCA-4BBF-B5D2-C95F2BC5D515}.Release|Any CPU.Build.0 = Release|Any CPU
+		{826B5C7F-C55C-4663-B39D-B92C1D9C124B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{826B5C7F-C55C-4663-B39D-B92C1D9C124B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{826B5C7F-C55C-4663-B39D-B92C1D9C124B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{826B5C7F-C55C-4663-B39D-B92C1D9C124B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
