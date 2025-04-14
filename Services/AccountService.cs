@@ -4,6 +4,8 @@ using DataAccessLayer.Repositories.AccountRepositories;
 using DataAccessLayer.Repositories.TransactionRepositories;
 using Services.Enums;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity;
 
 namespace Services
 {
@@ -173,8 +175,39 @@ namespace Services
             await _accountRepository.SaveAsync();
         }
 
+        public List<SelectListItem> GetFrequencyList()
+        {
+            var Frequencies = Enum.GetValues<Frequence>()
+                .Select(f => new SelectListItem
+                {
+                    Value = ((int)f).ToString(),
+                    //Value = f.ToString(),
+                    Text = f.ToString()
+                })
+                .ToList();
+            return Frequencies;
+        }
 
+        public async Task<ValidationResult> UpdateFrequencyAsync(int accountId, string selectedFrequency)
+        {
+            if (accountId <= 0)
+                return ValidationResult.NoAccountFound;
 
+            if (!Enum.TryParse<Frequence>(selectedFrequency, out var frequencyEnum) || !Enum.IsDefined(typeof(Frequence), frequencyEnum))
+            {
+                return ValidationResult.NoSelectedFrequency;
+            }
 
+            var account = await _accountRepository.GetAccountByIdAsync(accountId);
+
+            if (account == null)
+                return ValidationResult.NoAccountFound;
+
+            account.Frequency = frequencyEnum.ToString();
+
+            await _accountRepository.UpdateAsync(account);
+
+            return ValidationResult.OK;
+        }
     }
 }

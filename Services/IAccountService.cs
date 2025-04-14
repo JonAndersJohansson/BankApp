@@ -1,4 +1,5 @@
-﻿using Services.DTOs;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Services.DTOs;
 using Services.Enums;
 
 namespace Services
@@ -11,5 +12,7 @@ namespace Services
         Task<ValidationResult> WithdrawAsync(int accountId, decimal amount, string? comment, DateTime withdrawDate, string operation);
         Task<ValidationResult> TransferAsync(int accountId, decimal amount, string? comment, DateTime transferDate, int ReceiverAccountId);
         Task CreateAccountAsync(int customerId);
+        List<SelectListItem> GetFrequencyList();
+        Task<ValidationResult> UpdateFrequencyAsync(int accountId, string selecteFrequency);
     }
 }

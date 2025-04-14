@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BankAppProject.ViewModels;
 using Services.DTOs;
+using Services.Enums;
 
 namespace BankAppProject.Profiles
 {
@@ -8,9 +9,17 @@ namespace BankAppProject.Profiles
     {
         public AccountProfiles()
         {
-            CreateMap<AccountDetailsDto, AccountDetailsViewModel>();
+            //CreateMap<AccountDetailsDto, AccountDetailsViewModel>();
 
-            CreateMap<TransactionInAccountDetailsDto, TransactionInAccountDetailsViewModel>();
+            CreateMap<AccountDetailsDto, AccountDetailsViewModel>()
+                .ForMember(dest => dest.Frequency,
+                    opt => opt.MapFrom(src => Enum.Parse<Frequence>(src.Frequency, true)))
+                    .ReverseMap()
+                    .ForMember(dest => dest.Frequency,
+                        opt => opt.MapFrom(src => src.Frequency.ToString()));
+
+            CreateMap<TransactionInAccountDetailsDto, TransactionInAccountDetailsViewModel>()
+                .ReverseMap();
         }
     }
 }

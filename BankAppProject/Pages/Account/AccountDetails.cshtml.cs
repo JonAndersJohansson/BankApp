@@ -3,7 +3,9 @@ using BankAppProject.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Services;
+using Services.Enums;
 using Services.Infrastructure.Paged;
 
 namespace BankAppProject.Pages.Account
@@ -26,11 +28,13 @@ namespace BankAppProject.Pages.Account
         public int CustomerId { get; set; }
 
         public AccountDetailsViewModel Account { get; set; } = new();
+        public List<SelectListItem>? Frequencies { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int accountId, int customerId)
         {
             CustomerId = customerId;
             AccountId = accountId;
+            Frequencies = _accountService.GetFrequencyList();
 
             var accountDto = await _accountService.GetAccountDetailsAsync(accountId);
 
@@ -47,7 +51,7 @@ namespace BankAppProject.Pages.Account
                 .Take(20)
                 .ToList();
 
-            Account = _mapper.Map<AccountDetailsViewModel>(accountDto);
+            Account = _mapper.Map<AccountDetailsViewModel>(accountDto); //här finns frequency
             return Page();
         }
         public async Task<IActionResult> OnGetTransactionsAsync(int accountId, int offset = 0, int pageSize = 20)
@@ -81,24 +85,23 @@ namespace BankAppProject.Pages.Account
             return new JsonResult(result);
         }
 
-        //public async Task<IActionResult> OnGetTransactionsAsync(int accountId, int offset = 0, int pageSize = 20)
-        //{
-        //    var accountDto = await _accountService.GetAccountDetailsAsync(accountId);
-        //    if (accountDto == null)
-        //    {
-        //        TempData["NoAccount"] = $"No account found";
-        //        return RedirectToPage("/Customer/CustomerDetails", new { customerId = CustomerId });
-        //    }
+        public async Task<IActionResult> OnPostUpdateFrequencyAsync(int accountId, string selectedFrequency)
+        {
+            if (ModelState.IsValid == false)
+            {
+                TempData["ErrorUpdatingAccountFrequency"] = $"Account frequency could not be updated. {ModelState.Values.First().Errors.First().ErrorMessage}";
+                return RedirectToPage();
+            }
+            var validation = await _accountService.UpdateFrequencyAsync(accountId, selectedFrequency);
+            if (validation != ValidationResult.OK)
+            {
+                TempData["ErrorUpdatingAccountFrequency"] = $"Account frequency could not be updated. {validation}";
+                return RedirectToPage();
+            }
 
-        //    var transactions = accountDto.Transactions
-        //        .OrderByDescending(t => t.Date)
-        //        .Skip(offset)
-        //        .Take(pageSize)
-        //        .ToList();
-
-        //    var viewModels = _mapper.Map<List<TransactionInAccountDetailsViewModel>>(transactions);
-        //    return new JsonResult(viewModels);
-        //}
+            TempData["AccountFrequencyUpdated"] = $"Account frequency updated successfully";
+            return RedirectToPage();
+        }
         public async Task<IActionResult> OnPostDeleteAsync()
         {
             var success = await _accountService.DeleteAccountAsync(AccountId);

@@ -10,6 +10,25 @@
 <!-- Kontoinfo -->
 <div class="card-header d-flex flex-wrap justify-content-between align-items-center p-2">
     <h2 class="mb-0">Account nr: @Model.Account.AccountId</h2>
+
+    <div>
+        <form method="post" asp-page-handler="UpdateFrequency" class="d-flex flex-column gap-2">
+            <input type="hidden" name="accountId" value="@Model.Account.AccountId" />
+            <label class="form-label">Frequency</label>
+            <select class="form-control"
+                    name="selectedFrequency"
+                    onchange="this.form.querySelector('button').classList.remove('d-none')">
+                @foreach (var frequence in Model.Frequencies)
+                {
+                    <option value="@frequence.Value" selected="@(frequence.Value == ((int)Model.Account.Frequency).ToString())">
+                        @frequence.Text
+                    </option>
+                }
+            </select>
+            <button type="submit" class="small-save-btn btn-outline-success mt-1 d-none">Save</button>
+        </form>
+    </div>
+
     <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Are you sure you want to Inactivate this account?')">
         <input type="hidden" name="customerId" value="@Model.CustomerId" />
         <input type="hidden" name="accountId" value="@Model.Account.AccountId" />
@@ -59,6 +78,12 @@
         @TempData["TransferMessage"]
     </div>
 }
+@if (TempData["AccountFrequencyUpdated"] != null)
+{
+    <div class="alert alert-success mt-2 text-center">
+        @TempData["AccountFrequencyUpdated"]
+    </div>
+}
 <!--ERROR-->
 @if (TempData["NoAccount"] != null)
 {
@@ -70,6 +95,12 @@
 {
     <div class="alert alert-danger mt-2 text-center">
         @TempData["ErrorInactivatingAccount"]
+    </div>
+}
+@if (TempData["ErrorUpdatingAccountFrequency"] != null)
+{
+    <div class="alert alert-danger mt-2 text-center">
+        @TempData["ErrorUpdatingAccountFrequency"]
     </div>
 }
 <!--Transaktioner i tabell -->
