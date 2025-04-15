@@ -26,7 +26,7 @@ namespace BankAppTransactionMonitor
             var countries = await _customerService.GetAllCountryCodesAsync();
 
             Console.WriteLine("Loading progress file...");
-            _progressTracker.InitIfMissing(countries, 1056321); // skip
+            _progressTracker.InitIfMissing(countries, 1056321); // skip templates
             var progress = _progressTracker.Load();
 
             foreach (var countryCode in countries)

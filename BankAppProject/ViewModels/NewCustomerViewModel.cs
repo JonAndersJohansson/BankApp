@@ -50,14 +50,17 @@ namespace BankAppProject.ViewModels
         public string NationalId { get; set; } = string.Empty;
 
 
-        [MaxLength(20, ErrorMessage = "Phone number not valid, to long.")]
         [Required(ErrorMessage = "Phone number required.")]
+        [MaxLength(20, ErrorMessage = "Phone number not valid, too long.")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Phone number must contain digits only.")]
         public string Telephonenumber { get; set; } = string.Empty;
 
 
-        [MaxLength(50, ErrorMessage = "Email address not valid, to long.")]
+
         [Required(ErrorMessage = "Email address required.")]
+        [MaxLength(50, ErrorMessage = "Email address too long.")]
         [EmailAddress(ErrorMessage = "Email address is not valid.")]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Email must include a domain with a dot.")]
         public string Emailaddress { get; set; } = string.Empty;
     }
 }
