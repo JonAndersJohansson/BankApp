@@ -11,10 +11,10 @@
 <div class="card-header d-flex flex-wrap justify-content-between align-items-center p-2">
     <h2 class="mb-0">Account nr: @Model.Account.AccountId</h2>
 
-    <div>
+    <div class="justify-content-center">
         <form method="post" asp-page-handler="UpdateFrequency" class="d-flex flex-column gap-2">
             <input type="hidden" name="accountId" value="@Model.Account.AccountId" />
-            <label class="form-label">Frequency</label>
+            <label class="form-label">Current Frequency:</label>
             <select class="form-control"
                     name="selectedFrequency"
                     onchange="this.form.querySelector('button').classList.remove('d-none')">

@@ -87,12 +87,8 @@ namespace BankAppProject.Pages.Account
 
         public async Task<IActionResult> OnPostUpdateFrequencyAsync(int accountId, string selectedFrequency)
         {
-            if (ModelState.IsValid == false)
-            {
-                TempData["ErrorUpdatingAccountFrequency"] = $"Account frequency could not be updated. {ModelState.Values.First().Errors.First().ErrorMessage}";
-                return RedirectToPage();
-            }
             var validation = await _accountService.UpdateFrequencyAsync(accountId, selectedFrequency);
+            
             if (validation != ValidationResult.OK)
             {
                 TempData["ErrorUpdatingAccountFrequency"] = $"Account frequency could not be updated. {validation}";
