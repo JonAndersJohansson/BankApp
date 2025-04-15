@@ -12,6 +12,7 @@ namespace BankAppTransactionMonitor.Helpers
             if (!transactions.Any())
             {
                 Console.WriteLine($"No suspicious transactions found for {countryCode}.");
+                Console.WriteLine("No report created.");
                 return;
             }
 

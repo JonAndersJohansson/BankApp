@@ -101,7 +101,8 @@ namespace BankAppTransactionMonitor
 
                 if (highestTransactionId == lastCheckedId)
                 {
-                    Console.WriteLine($"No new transactions found for {countryCode}. Skipping progress update.");
+                    Console.WriteLine("Skipping progress update.");
+                    Console.WriteLine($"{countryCode} done.");
                     continue;
                 }
 
