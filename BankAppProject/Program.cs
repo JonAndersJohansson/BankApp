@@ -52,6 +52,7 @@ public class Program
         builder.Services.AddScoped<IStatisticsService, StatisticsService>();
         builder.Services.AddScoped<IAccountService, AccountService>();
         builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<ITransactionService, TransactionService>();
 
         //AutoMapper
         //builder.Services.AddAutoMapper(

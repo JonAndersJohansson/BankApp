@@ -13,11 +13,13 @@ namespace BankAppProject.Pages.Account
     public class WithdrawModel : PageModel
     {
         private readonly IAccountService _accountService;
+        private readonly ITransactionService _transactionService;
         private readonly IMapper _mapper;
 
-        public WithdrawModel(IAccountService accountService, IMapper mapper)
+        public WithdrawModel(IAccountService accountService, ITransactionService transactionService, IMapper mapper)
         {
             _accountService = accountService;
+            _transactionService = transactionService;
             _mapper = mapper;
         }
         [BindProperty(SupportsGet = true)]
@@ -78,7 +80,7 @@ namespace BankAppProject.Pages.Account
                 }
 
                 string operation = "Withdraw";
-                var status = await _accountService.WithdrawAsync(AccountId, Amount, Comment, WithdrawDate, operation);
+                var status = await _transactionService.WithdrawAsync(AccountId, Amount, Comment, WithdrawDate, operation);
 
                 if (status == ValidationResult.OK)
                 {

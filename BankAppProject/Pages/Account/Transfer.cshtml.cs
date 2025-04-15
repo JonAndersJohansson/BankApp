@@ -13,11 +13,13 @@ namespace BankAppProject.Pages.Account
     public class TransferModel : PageModel
     {
         private readonly IAccountService _accountService;
+        private readonly ITransactionService _transactionService;
         private readonly IMapper _mapper;
 
-        public TransferModel(IAccountService accountService, IMapper mapper)
+        public TransferModel(IAccountService accountService, ITransactionService transactionService, IMapper mapper)
         {
             _accountService = accountService;
+            _transactionService = transactionService;
             _mapper = mapper;
         }
         [BindProperty(SupportsGet = true)]
@@ -82,7 +84,7 @@ namespace BankAppProject.Pages.Account
                     return RedirectToPage("/Account/Transfer", new { accountId = AccountId, customerId = CustomerId });
                 }
 
-                var status = await _accountService.TransferAsync(AccountId, Amount, Comment, TransferDate, ReceiverAccountId);
+                var status = await _transactionService.TransferAsync(AccountId, Amount, Comment, TransferDate, ReceiverAccountId);
 
                 if (status == ValidationResult.OK)
                 {

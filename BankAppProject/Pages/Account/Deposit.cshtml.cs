@@ -14,11 +14,13 @@ namespace BankAppProject.Pages.Account
     public class DepositModel : PageModel
     {
         private readonly IAccountService _accountService;
+        private readonly ITransactionService _transactionService;
         private readonly IMapper _mapper;
 
-        public DepositModel(IAccountService accountService, IMapper mapper)
+        public DepositModel(IAccountService accountService, ITransactionService transactionService, IMapper mapper)
         {
             _accountService = accountService;
+            _transactionService = transactionService;
             _mapper = mapper;
         }
 
@@ -65,7 +67,7 @@ namespace BankAppProject.Pages.Account
             if (ModelState.IsValid)
             {
                 string operation = "Deposit";
-                var status = await _accountService.DepositAsync(AccountId, Amount, Comment, DepositDate, operation);
+                var status = await _transactionService.DepositAsync(AccountId, Amount, Comment, DepositDate, operation);
 
                 if (status == ValidationResult.OK)
                 {
