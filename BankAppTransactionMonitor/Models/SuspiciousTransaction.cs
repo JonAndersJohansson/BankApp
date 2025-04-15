@@ -1,4 +1,4 @@
-﻿namespace BankAppTransactionMonitor
+﻿namespace BankAppTransactionMonitor.Models
 {
     public class SuspiciousTransaction
     {

@@ -21,6 +21,7 @@ namespace DataAccessLayer.Repositories.CustomerrRepositories
                 .AsQueryable();
 
         }
+
         public async Task<Customer?> GetCustomerByIdAsync(int customerId)
         {
             return await _dbContext.Customers
@@ -28,10 +29,12 @@ namespace DataAccessLayer.Repositories.CustomerrRepositories
                 .ThenInclude(d => d.Account)
                 .FirstOrDefaultAsync(c => c.CustomerId == customerId);
         }
+
         public async Task SaveAsync()
         {
             await _dbContext.SaveChangesAsync();
         }
+
         public async Task AddAsync(Customer customer)
         {
             await _dbContext.Customers.AddAsync(customer);

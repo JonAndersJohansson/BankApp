@@ -8,6 +8,4 @@ namespace DataAccessLayer.Repositories.StatisticsRepositories
         IQueryable<Account> GetAccounts();
         IQueryable<Disposition> GetDispositions();
     }
-
-
 }

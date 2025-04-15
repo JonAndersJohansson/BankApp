@@ -12,5 +12,4 @@ namespace DataAccessLayer.Repositories.AccountRepositories
         Account GetAccountById(int accountId);
         Task UpdateAsync(Account account);
     }
-
 }

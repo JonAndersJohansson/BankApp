@@ -7,6 +7,7 @@
     <i class="fa-solid fa-arrow-left"></i>
 </a>
 <h2 class="card-header mb-2">Id: @Model.Customer.CustomerId, @Model.Customer.Name</h2>
+
 <!--SUCCESS-->
 @if (TempData["NewCustomerMessage"] != null)
 {
@@ -32,7 +33,8 @@
         @TempData["CreatedAccountMessage"]
     </div>
 }
-<!--ERROR-->
+
+<!--ERRORS-->
 @if (TempData["NoAccount"] != null)
 {
     <div class="alert alert-danger mt-2 text-center">

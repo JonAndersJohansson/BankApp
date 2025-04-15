@@ -1,5 +1,4 @@
-﻿
-namespace Services.Infrastructure.Paged
+﻿namespace Services.Infrastructure.Paged
 {
     public static class ExtensionMethods
     {

@@ -27,6 +27,4 @@ namespace DataAccessLayer.Repositories.StatisticsRepositories
             return _dbContext.Dispositions;
         }
     }
-
-
 }

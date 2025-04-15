@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Identity.Client;
 using Services;
 using Services.Enums;
 using Services.Infrastructure.Paged;
@@ -96,6 +95,5 @@ namespace BankAppProject.Pages.User
             TempData["InactivatedUser"] = $"User inactivated successfully";
             return RedirectToPage();
         }
-
     }
 }

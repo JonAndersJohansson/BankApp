@@ -6,6 +6,4 @@ namespace Services
     {
         Task<List<CountryStatisticsDto>> GetCountryStatisticsAsync();
     }
-
-
 }

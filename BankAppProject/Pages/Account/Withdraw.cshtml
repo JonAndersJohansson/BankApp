@@ -24,7 +24,6 @@ else
 }
 
 <form method="post" class="mt-3">
-@*     <input type="hidden" asp-for="AccountId" /> *@
     <div class="row mb-3">
         <div class="col-md-6">
             <label asp-for="Amount" class="form-label">Amount</label>
@@ -47,7 +46,7 @@ else
     <div class="d-flex justify-content-end">
         <button type="submit" class="btn btn-outline-primary">Withdraw <i class="fa-solid fa-minus"></i></button>
     </div>
-    <!--ERROR-->
+    <!--ERRORS-->
     @if (TempData["BalanceToLowMessage"] != null)
     {
         <div class="alert alert-danger mt-2 text-center">

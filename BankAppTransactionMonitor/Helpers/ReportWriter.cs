@@ -1,6 +1,7 @@
-﻿using System.Text;
+﻿using BankAppTransactionMonitor.Models;
+using System.Text;
 
-namespace BankAppTransactionMonitor
+namespace BankAppTransactionMonitor.Helpers
 {
     public class ReportWriter
     {

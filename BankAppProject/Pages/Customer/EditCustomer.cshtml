@@ -20,7 +20,7 @@
     </div>
     <div class="card-body">
         <form method="post">
-            <input type="hidden" asp-for="Customer.CustomerId" /> <!--CustomerId-->
+            <input type="hidden" asp-for="Customer.CustomerId" />
             <div class="row mb-3">
                 <div class="col-md-5">
                     <label asp-for="Customer.Givenname">First name</label>
@@ -101,7 +101,8 @@
                 </div>
             </div>
         </form>
-        <!--ERROR-->
+
+        <!--ERRORS-->
         @if (TempData["ValidationErrorMessage"] != null)
         {
             <div class="alert alert-danger mt-2 text-center">
@@ -131,7 +132,6 @@
 
             // Visa initial kod
             const country = countrySelect.value;
-            console.log("Country on load:", country); //test
             const code = countryCodes[country] || '';
             prefixSpan.textContent = code;
 

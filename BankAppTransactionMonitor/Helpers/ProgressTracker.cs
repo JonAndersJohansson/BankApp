@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace BankAppTransactionMonitor
+namespace BankAppTransactionMonitor.Helpers
 {
     public class ProgressTracker
     {

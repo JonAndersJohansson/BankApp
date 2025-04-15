@@ -21,14 +21,14 @@ namespace DataAccessLayer.Data
             SeedUsers();
         }
 
-        // Här finns möjlighet att uppdatera dina användares loginuppgifter
+        // Login
         private void SeedUsers()
         {
             AddUserIfNotExists("richard.chalk@admin.se", "Abc123#", new string[] { "Admin" });
             AddUserIfNotExists("richard.chalk@cashier.se", "Abc123#", new string[] { "Cashier" });
         }
 
-        // Här finns möjlighet att uppdatera dina användares roller
+        // Roles
         private void SeedRoles()
         {
             AddRoleIfNotExisting("Admin");
@@ -59,5 +59,4 @@ namespace DataAccessLayer.Data
             _userManager.AddToRolesAsync(user, roles).Wait();
         }
     }
-
 }

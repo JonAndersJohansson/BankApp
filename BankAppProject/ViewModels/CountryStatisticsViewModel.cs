@@ -7,5 +7,4 @@
         public int TotalAccounts { get; set; }
         public decimal TotalCapital { get; set; }
     }
-
 }

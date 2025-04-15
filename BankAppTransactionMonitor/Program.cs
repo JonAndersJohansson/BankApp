@@ -1,4 +1,5 @@
 ﻿using BankAppTransactionMonitor;
+using BankAppTransactionMonitor.Helpers;
 using DataAccessLayer.Data;
 using DataAccessLayer.Repositories.AccountRepositories;
 using DataAccessLayer.Repositories.CustomerRepositories;
@@ -21,12 +22,6 @@ var host = Host.CreateDefaultBuilder(args)
     {
         // Connectionstring
         var connectionString = context.Configuration.GetConnectionString("DefaultConnection");
-
-        //services.AddDbContext<BankAppDataContext>(options =>
-        //{
-        //    options.UseSqlServer(connectionString);
-        //    options.UseLazyLoadingProxies();
-        //});
 
         services.AddDbContext<BankAppDataContext>(options =>
         {

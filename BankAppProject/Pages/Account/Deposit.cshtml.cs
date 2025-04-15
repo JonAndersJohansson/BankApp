@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services;
 using System.ComponentModel.DataAnnotations;
-using Services.Enums;
 using ValidationResult = Services.Enums.ValidationResult;
 
 namespace BankAppProject.Pages.Account
@@ -24,27 +23,30 @@ namespace BankAppProject.Pages.Account
             _mapper = mapper;
         }
 
+        public AccountDetailsViewModel Account { get; set; } = new();
+
         [BindProperty(SupportsGet = true)]
         public int AccountId { get; set; }
+
 
         [BindProperty(SupportsGet = true)]
         public int CustomerId { get; set; }
 
-        public AccountDetailsViewModel Account { get; set; } = new();
 
         [BindProperty]
         [Required(ErrorMessage = "Amount required.")]
         [Range(1, 100000)]
         public decimal Amount { get; set; }
 
+
         [BindProperty]
         [Required(ErrorMessage = "Date required.")]
         public DateTime DepositDate { get; set; }
 
+
         [BindProperty]
         [MaxLength(250, ErrorMessage = "Max 50 letters in comment.")]
         public string? Comment { get; set; }
-
 
 
         public async Task<IActionResult> OnGetAsync()

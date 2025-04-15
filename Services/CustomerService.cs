@@ -45,7 +45,7 @@ namespace Services
             }
 
 
-            // Sortering beroende på valda kolumner
+            // Sort
             query = sortColumn switch
             {
                 "Id" => sortOrder == "asc" ? query.OrderBy(c => c.CustomerId) : query.OrderByDescending(c => c.CustomerId),
@@ -53,7 +53,7 @@ namespace Services
                 "Name" => sortOrder == "asc" ? query.OrderBy(c => c.Surname) : query.OrderByDescending(c => c.Surname),
                 "Address" => sortOrder == "asc" ? query.OrderBy(c => c.Streetaddress) : query.OrderByDescending(c => c.Streetaddress),
                 "City" => sortOrder == "asc" ? query.OrderBy(c => c.City) : query.OrderByDescending(c => c.City),
-                _ => query.OrderBy(c => c.CustomerId)  // Standard-sortering om inget annat anges
+                _ => query.OrderBy(c => c.CustomerId)  // Standard-sort
             };
 
             var totalCustomers = await query.CountAsync();
@@ -64,7 +64,7 @@ namespace Services
                 .Take(pageSize)
                 .ToListAsync();
 
-            var result = _mapper.Map<List<CustomerIndexDto>>(customers); //Fel adress försvinner
+            var result = _mapper.Map<List<CustomerIndexDto>>(customers);
 
             return new PagedResult<CustomerIndexDto>
             {
@@ -84,66 +84,26 @@ namespace Services
             return _mapper.Map<CustomerDetailsDto>(customer);
         }
 
-        //public async Task<CustomerDetailsDto?> GetCustomerAsync(int customerId)
-        //{
-        //    var customer = await _customerRepository.GetCustomerByIdAsync(customerId);
-        //    if (customer == null)
-        //        return null;
-
-        //    Console.WriteLine("Inside GetCustomerAsync in CustomerService");
-
-
-        //    return new CustomerDetailsDto
-        //    {
-        //        CustomerId = customer.CustomerId,
-        //        Givenname = customer.Givenname,
-        //        Surname = customer.Surname,
-        //        Gender = customer.Gender,
-        //        Streetaddress = customer.Streetaddress,
-        //        City = customer.City,
-        //        Zipcode = customer.Zipcode,
-        //        Country = customer.Country,
-        //        Birthday = customer.Birthday,
-        //        NationalId = customer.NationalId,
-        //        Telephonecountrycode = customer.Telephonecountrycode,
-        //        Telephonenumber = customer.Telephonenumber,
-        //        Emailaddress = customer.Emailaddress,
-
-        //        // Skapa listan med konton
-        //        Accounts = customer.Dispositions
-        //            .Where(d => d.Account != null && d.Account.IsActive) // Kontroll IsActive
-        //            .Select(d => new AccountInCustomerDetailsDto
-        //            {
-        //                AccountId = d.Account.AccountId,
-        //                Balance = d.Account.Balance,
-        //                Frequency = d.Account.Frequency,
-        //                Created = d.Account.Created
-        //            }).ToList()
-        //    };
-        //}
         public async Task<bool> DeleteCustomerAsync(int customerId)
         {
             var customer = await _customerRepository.GetCustomerByIdAsync(customerId);
             if (customer == null) return false;
 
-            // Soft delete på kunden
             customer.IsActive = false;
 
-            // Hämta och inaktivera alla dispositioner kopplade till kunden
             var dispositions = await _dispositionRepository.GetByCustomerIdAsync(customerId);
             foreach (var disposition in dispositions)
             {
                 disposition.IsActive = false;
             }
 
-            // Hämta och inaktivera alla konton kopplade till kunden
             var accounts = await _accountRepository.GetAccountsByCustomerIdAsync(customerId);
+
             foreach (var account in accounts)
             {
                 account.IsActive = false;
             }
 
-            // Spara ändringar i databasen
             await _customerRepository.SaveAsync();
             await _dispositionRepository.SaveAsync();
             await _accountRepository.SaveAsync();
@@ -156,7 +116,6 @@ namespace Services
                 .Select(g => new SelectListItem
                 {
                     Value = ((int)g).ToString(),
-                    //Value = g.ToString(),
                     Text = g.ToString()
                 })
                 .ToList();
@@ -168,7 +127,6 @@ namespace Services
                 .Select(c => new SelectListItem
                 {
                     Value = ((int)c).ToString(),
-                    //Value = c.ToString(),
                     Text = c.ToString()
                 })
                 .ToList();
@@ -210,56 +168,6 @@ namespace Services
             return (ValidationResult.OK, customer.CustomerId);
         }
 
-        //public async Task<(ValidationResult Result, int? CustomerId)> CreateNewCustomerAsync(CustomerDetailsDto newCustomer)
-        //{
-        //    var validation = ValidateCustomerDto(newCustomer);
-        //    if (validation != ValidationResult.OK)
-        //        return (validation, null);
-
-        //    var countryCode = newCustomer.Country switch
-        //    {
-        //        "Sweden" => "SE",
-        //        "Denmark" => "DK",
-        //        "Norway" => "NO",
-        //        "Finland" => "FI",
-        //        _ => ""
-        //    };
-
-        //    var telephoneCountryCode = newCustomer.Country switch
-        //    {
-        //        "Sweden" => "46",
-        //        "Denmark" => "45",
-        //        "Norway" => "47",
-        //        "Finland" => "358",
-        //        _ => ""
-        //    };
-
-        //    var customer = new Customer
-        //    {
-        //        Givenname = newCustomer.Givenname,
-        //        Surname = newCustomer.Surname,
-        //        Gender = newCustomer.Gender,
-        //        Streetaddress = newCustomer.Streetaddress,
-        //        City = newCustomer.City,
-        //        Zipcode = newCustomer.Zipcode,
-        //        Country = newCustomer.Country,
-        //        CountryCode = countryCode,
-        //        Birthday = newCustomer.Birthday,
-        //        NationalId = newCustomer.NationalId,
-        //        Telephonecountrycode = telephoneCountryCode,
-        //        Telephonenumber = newCustomer.Telephonenumber,
-        //        Emailaddress = newCustomer.Emailaddress,
-        //        IsActive = true
-        //    };
-
-        //    await _customerRepository.AddAsync(customer);
-        //    await _customerRepository.SaveAsync();
-        //    await _accountService.CreateAccountAsync(customer.CustomerId);
-
-        //    return (ValidationResult.OK, customer.CustomerId);
-
-        //}
-
         public async Task<ValidationResult> EditCustomerAsync(CustomerDetailsDto editedCustomer)
         {
             var validation = ValidateCustomerDto(editedCustomer);
@@ -270,10 +178,8 @@ namespace Services
             if (existingCustomer == null)
                 return ValidationResult.CustomerNotFound;
 
-            // Automapper till befintlig entitet
             _mapper.Map(editedCustomer, existingCustomer);
 
-            // Anpassad logik utanför mappning
             existingCustomer.CountryCode = editedCustomer.Country switch
             {
                 "Sweden" => "SE",
@@ -296,48 +202,6 @@ namespace Services
 
             return ValidationResult.OK;
         }
-        //public async Task<ValidationResult> EditCustomerAsync(CustomerDetailsDto editedCustomer)
-        //{
-        //    var validation = ValidateCustomerDto(editedCustomer);
-        //    if (validation != ValidationResult.OK)
-        //        return validation;
-
-        //    var existingCustomer = await _customerRepository.GetCustomerByIdAsync(editedCustomer.CustomerId);
-        //    if (existingCustomer == null)
-        //        return ValidationResult.CustomerNotFound;
-
-        //    existingCustomer.Givenname = editedCustomer.Givenname;
-        //    existingCustomer.Surname = editedCustomer.Surname;
-        //    existingCustomer.Gender = editedCustomer.Gender;
-        //    existingCustomer.Streetaddress = editedCustomer.Streetaddress;
-        //    existingCustomer.City = editedCustomer.City;
-        //    existingCustomer.Zipcode = editedCustomer.Zipcode;
-        //    existingCustomer.Country = editedCustomer.Country;
-        //    existingCustomer.CountryCode = editedCustomer.Country switch
-        //    {
-        //        "Sweden" => "SE",
-        //        "Denmark" => "DK",
-        //        "Norway" => "NO",
-        //        "Finland" => "FI",
-        //        _ => ""
-        //    };
-        //    existingCustomer.Birthday = editedCustomer.Birthday;
-        //    existingCustomer.NationalId = editedCustomer.NationalId;
-        //    existingCustomer.Telephonecountrycode = editedCustomer.Country switch
-        //    {
-        //        "Sweden" => "46",
-        //        "Denmark" => "45",
-        //        "Norway" => "47",
-        //        "Finland" => "358",
-        //        _ => ""
-        //    };
-        //    existingCustomer.Telephonenumber = editedCustomer.Telephonenumber;
-        //    existingCustomer.Emailaddress = editedCustomer.Emailaddress;
-
-        //    await _customerRepository.SaveAsync();
-
-        //    return ValidationResult.OK;
-        //}
 
         private ValidationResult ValidateCustomerDto(CustomerDetailsDto dto)
         {

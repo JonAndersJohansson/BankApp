@@ -9,8 +9,6 @@ namespace BankAppProject.Profiles
     {
         public AccountProfiles()
         {
-            //CreateMap<AccountDetailsDto, AccountDetailsViewModel>();
-
             CreateMap<AccountDetailsDto, AccountDetailsViewModel>()
                 .ForMember(dest => dest.Frequency,
                     opt => opt.MapFrom(src => Enum.Parse<Frequence>(src.Frequency, true)))

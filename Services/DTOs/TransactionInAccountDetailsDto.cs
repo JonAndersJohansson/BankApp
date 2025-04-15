@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Services.DTOs
+﻿namespace Services.DTOs
 {
     public class TransactionInAccountDetailsDto
     {
@@ -17,5 +11,4 @@ namespace Services.DTOs
         public string? Symbol { get; set; }
         public string? Bank { get; set; }
     }
-
 }

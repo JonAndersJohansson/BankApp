@@ -47,7 +47,7 @@ namespace BankAppProject.Pages.Customer
                 PageCount = pagedResult.PageCount
             };
 
-            return Page(); //PagedResuld har Address här
+            return Page();
         }
     }
 }

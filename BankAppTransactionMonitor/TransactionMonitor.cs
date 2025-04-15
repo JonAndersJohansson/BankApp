@@ -1,4 +1,6 @@
-﻿using Services;
+﻿using BankAppTransactionMonitor.Helpers;
+using BankAppTransactionMonitor.Models;
+using Services;
 
 namespace BankAppTransactionMonitor
 {
@@ -24,8 +26,8 @@ namespace BankAppTransactionMonitor
             var countries = await _customerService.GetAllCountryCodesAsync();
 
             Console.WriteLine("Loading progress file...");
-            _progressTracker.InitIfMissing(countries, 1056321); // Create and skip
-            var progress = _progressTracker.Load(); // Load progress
+            _progressTracker.InitIfMissing(countries, 1056321); // skip
+            var progress = _progressTracker.Load();
 
             foreach (var countryCode in countries)
             {

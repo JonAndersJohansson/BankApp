@@ -24,6 +24,5 @@ namespace DataAccessLayer.Repositories.TransactionRepositories
                     .ThenInclude(a => a.Dispositions)
                         .ThenInclude(d => d.Customer);
         }
-
     }
 }

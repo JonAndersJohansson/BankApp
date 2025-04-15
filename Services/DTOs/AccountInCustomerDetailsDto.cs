@@ -1,6 +1,5 @@
 ﻿namespace Services.DTOs
 {
-
     public class AccountInCustomerDetailsDto
     {
         public int AccountId { get; set; }

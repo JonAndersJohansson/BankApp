@@ -21,8 +21,10 @@ namespace BankAppProject.Pages.Account
             _accountService = accountService;
             _mapper = mapper;
         }
+
         [BindProperty(SupportsGet = true)]
         public int AccountId { get; set; }
+
 
         [BindProperty(SupportsGet = true)]
         public int CustomerId { get; set; }
@@ -44,14 +46,12 @@ namespace BankAppProject.Pages.Account
                 return RedirectToPage("/Customer/CustomerDetails", new { customerId = CustomerId });
             }
 
-
-            // Ta bara första 20 transaktionerna
             accountDto.Transactions = accountDto.Transactions
                 .OrderByDescending(t => t.Date)
                 .Take(20)
                 .ToList();
 
-            Account = _mapper.Map<AccountDetailsViewModel>(accountDto); //här finns frequency
+            Account = _mapper.Map<AccountDetailsViewModel>(accountDto);
             return Page();
         }
         public async Task<IActionResult> OnGetTransactionsAsync(int accountId, int offset = 0, int pageSize = 20)

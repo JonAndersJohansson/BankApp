@@ -12,8 +12,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Services;
 using Services.Infrastructure.Profiles;
-//using AutoMapper;
-//using AutoMapper.Extensions.Microsoft.DependencyInjection;
 
 namespace BankAppProject;
 
@@ -55,14 +53,6 @@ public class Program
         builder.Services.AddScoped<ITransactionService, TransactionService>();
 
         //AutoMapper
-        //builder.Services.AddAutoMapper(
-        //    typeof(CustomerProfiles),
-        //    typeof(AccountProfiles),
-        //    typeof(StatisticsProfiles),
-        //    typeof(UserProfiles),
-        //    typeof(CustomerServiceProfiles),
-        //    typeof(AccountServiceProfiles));
-
         builder.Services.AddAutoMapper(
             typeof(CustomerProfiles).Assembly,
             typeof(AccountProfiles).Assembly,
@@ -71,8 +61,6 @@ public class Program
             typeof(CustomerServiceProfiles).Assembly,
             typeof(AccountServiceProfiles).Assembly
         );
-
-
 
         //SQL LOGGING
         builder.Services.AddLogging(logging =>
@@ -94,7 +82,6 @@ public class Program
 
             scope.ServiceProvider.GetRequiredService<DataInitializer>().SeedData();
         }
-
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())

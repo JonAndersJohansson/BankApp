@@ -46,12 +46,9 @@ namespace BankAppProject.Profiles
                 .ForMember(dest => dest.Birthday, opt => opt.MapFrom(src => DateOnly.FromDateTime(src.Birthday!.Value)));
         }
 
-
         private static TEnum ParseEnumOrDefault<TEnum>(string? value, TEnum defaultValue) where TEnum : struct
         {
             return Enum.TryParse<TEnum>(value, true, out var result) ? result : defaultValue;
         }
-
     }
-
 }
