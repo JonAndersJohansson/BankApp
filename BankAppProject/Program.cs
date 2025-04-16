@@ -74,14 +74,40 @@ public class Program
 
         var app = builder.Build();
 
+
+        //Behövs för Azure!
+        //using (var scope = app.Services.CreateScope())
+        //{
+        //    var dbContext = scope.ServiceProvider.
+        //         GetRequiredService<BankAppDataContext>();
+        //    if (dbContext.Database.IsRelational())
+        //    {
+        //        dbContext.Database.Migrate();
+        //    }
+        //}
+
         //Seed data and migrate
+        //using (var scope = app.Services.CreateScope())
+        //{
+        //    var dbContext = scope.ServiceProvider.GetRequiredService<BankAppDataContext>();
+        //    dbContext.Database.Migrate();
+
+        //    scope.ServiceProvider.GetRequiredService<DataInitializer>().SeedData();
+        //}
+
+        // Endast Migrate om det är relational (för Azure)
         using (var scope = app.Services.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<BankAppDataContext>();
-            dbContext.Database.Migrate();
+            if (dbContext.Database.IsRelational())
+            {
+                dbContext.Database.Migrate();
+            }
 
+            // Seeddata körs direkt efter Migrate
             scope.ServiceProvider.GetRequiredService<DataInitializer>().SeedData();
         }
+
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
