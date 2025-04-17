@@ -21,17 +21,18 @@
     </div>
 </section>
 
+
 <section id="more-info" class="container mt-5">
     <div class="card shadow-lg border-0 p-4 bg-white">
-        <div class="card-body">
-            <h2 class="mb-4">Tack för att du besöker mitt projekt!</h2>
+        <div class="card-body" id="info-body">
+            <h2 class="mb-5">Tack för att du besöker mitt projekt!</h2>
             <p>
                 Den här webbapplikationen är ett skolprojekt av mig i form av ett banksystem byggt med ASP.NET Core.
                 Systemet är uppdelat i tydliga lager och innehåller funktionalitet för att hantera kunder, konton och transaktioner samt användare och dess behörigheter.
             </p>
 
-            <h4 class="mt-4">🔧 Tekniker och ramverk</h4>
-            <ul>
+            <h4 class="mt-5">🔧 Tekniker och ramverk</h4>
+            <ul class="info-ul">
                 <li>ASP.NET Core Razor Pages</li>
                 <li>Entity Framework Core (Database First)</li>
                 <li>ASP.NET Core Identity</li>
@@ -42,36 +43,41 @@
                 <li>Azure App Service (driftsättning)</li>
             </ul>
 
-            <h4 class="mt-4">📁 Projektstruktur</h4>
-            <ul>
+            <h4 class="mt-5">📁 Projektstruktur</h4>
+            <ul class="info-ul">
                 <li><strong>BankAppProject</strong> – Razor Pages, ViewModels och UI</li>
                 <li><strong>Service</strong> – Affärslogik, interfaces, DTOs, och tjänsteklasser</li>
                 <li><strong>DataAccessLayer</strong> – Datamodeller, DbContext och repositories</li>
                 <li><strong>BankAppTransactionMonitor</strong> – Console App som kan köras och som analyserar nya misstänkta transaktioner per land</li>
             </ul>
 
-            <h4 class="mt-4">🔐 Roller och behörighet</h4>
-            <ul>
+            <h4 class="mt-5">🔐 Roller och behörighet</h4>
+            <ul class="info-ul">
                 <li><strong>Admin:</strong> Kan administrera systemanvändare</li>
                 <li><strong>Cashier:</strong> Kan administrera kunder och konton</li>
                 <li><em>Kunder är inte inloggningsbara användare</em></li>
             </ul>
 
-            <p><strong>Seedade användare:</strong></p>
-            <ul>
-                <li>👤: <code>admin@aurorabank.com</code> | 🔑: <code>Abc123#</code> | 🛡️: Admin</li>
-                <li>👤: <code>cashier@aurorabank.com</code> | 🔑: <code>Abc123#</code> | 🛡️: Cashier</li>
+            <p><strong>Seedade användare (login):</strong></p>
+            <ul class="info-ul">
+                <li>Admin:<br />
+                    👤 <code>admin@aurorabank.com</code> <br />
+                    🔑 <code>Abc123#</code></li>
+                    <br />
+                <li>Cashier:<br />
+                    👤 <code>cashier@aurorabank.com</code> <br />
+                    🔑 <code>Abc123#</code></li>
             </ul>
 
-            <h4 class="mt-4">🚀 Funktionalitet</h4>
-            <ul>
+            <h4 class="mt-5">🚀 Funktionalitet</h4>
+            <ul class="info-ul">
                 <li>Skapa, ändra och söka efter kunder</li>
                 <li>Visa kundbild med fullständig info och kontosaldo</li>
                 <li>Visa kontobild med transaktioner (AJAX: 20 åt gången)</li>
                 <li>Insättning, uttag och överföring via transaktioner</li>
                 <li>Publik startsida med statistik per land</li>
                 <li>Top 10-kunder per land (med responsecaching)</li>
-                <li>Console-app som loggar misstänkta transaktioner enligt definierade regler</li>
+                <li>Console-app som kan köras och loggar misstänkta nya transaktioner enligt definierade regler och land (endast backend)</li>
             </ul>
         </div>
     </div>

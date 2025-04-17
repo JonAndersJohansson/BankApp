@@ -314,6 +314,22 @@ tbody {
 
 /* Media Querys below */
 
+@media (max-width: 767px) {
+    #more-info {
+        padding: 0 !important;
+    }
+    #info-body {
+        padding: 0 !important;
+    }
+    .info-ul {
+        padding-left: 4px !important;  
+    }
+        .info-ul li {
+            margin-bottom: 5px !important;
+        }
+}
+
+
 @media (max-width: 575px) {
     .navbar-nav .nav-item {
         margin-bottom: 0.5rem;
