@@ -4,9 +4,11 @@
     --secondary: #9fc2d6; /* Ljusblå */
     --info: #9fc2d6; /* Ljusblå */
 }
+
 html, body {
-        overflow-x: hidden;
+    overflow-x: hidden;
 }
+
 .bg-offwhite {
     background-color: #f8f8f8 !important; /*Offwhite*/
 }
@@ -14,16 +16,16 @@ html, body {
 /* Buttons below */
 
 .btn {
-    font-weight: bold !important; /* Tvinga fetstil på alla Bootstrap-knappar */
-    border-radius: 20px !important; /* Runda kanter på alla Bootstrap-knappar */
-    /*    margin-bottom: 10px !important;*/
+    font-weight: bold !important;
+    border-radius: 20px !important;
     letter-spacing: 1px !important;
     padding: 1px 8px !important;
     align-content: center !important;
 }
-.btn a {
-    text-decoration: none !important;
-}
+
+    .btn a {
+        text-decoration: none !important;
+    }
 
 .btn-primary {
     background-color: var(--primary) !important;
@@ -33,6 +35,7 @@ html, body {
     .btn-primary:hover {
         background-color: #554f70 !important;
     }
+
 .btn-outline-primary {
     color: var(--primary) !important;
     border-color: var(--primary) !important;
@@ -44,11 +47,13 @@ html, body {
         background-color: var(--primary) !important;
         border-color: var(--primary) !important;
     }
+
 .btn-secondary {
     background-color: var(--secondary) !important;
     color: var(--primary) !important;
     border: none !important;
 }
+
     .btn-secondary:hover {
         background-color: #82a9bf !important;
     }
@@ -56,6 +61,7 @@ html, body {
     .btn-secondary a {
         color: var(--primary) !important;
     }
+
 .btn-outline-secondary {
     color: var(--secondary) !important;
     border: solid 2px var(--secondary) !important;
@@ -67,12 +73,15 @@ html, body {
         background-color: var(--secondary) !important;
         border-color: var(--secondary) !important;
     }
+
 .btn-success a {
-        color: white !important;
+    color: white !important;
 }
+
 .btn-outline-danger {
     border: solid 2px !important;
 }
+
 .small-save-btn {
     align-content: center !important;
     border-radius: 20px !important;
@@ -110,13 +119,13 @@ h1, h2 {
 /*Hero below */
 
 .hero-section {
-    height: 300px; 
+    height: 300px;
     position: relative;
     overflow: hidden;
     width: 100vw;
     max-width: 100vw;
     margin-left: calc(-50vw + 50%);
-    display: block; 
+    display: block;
 }
 
     .hero-section img {
@@ -136,6 +145,7 @@ h1, h2 {
     padding: 20px;
     border-radius: 10px;
 }
+
 #hero-btn {
     border: none;
 }
@@ -143,7 +153,6 @@ h1, h2 {
 /* Identity/Account/Manage    below   */
 
 .nav-pills {
-    /*    background-color: var(--primary) !important;*/
     border-radius: 20px !important;
 }
 
@@ -159,17 +168,19 @@ h1, h2 {
 
 /* Statistics below */
 .stat-flag {
-    /*width: clamp(32px, 2vw, 48px);*/
     width: 48px;
     height: auto;
 }
+
 .stat-icon {
     font-size: 28px;
     color: var(--primary);
 }
+
 body .border-left-primary {
     border-left: 0.25rem solid #443c65 !important;
 }
+
 .text-aurora-primary {
     color: var(--primary) !important;
 }
@@ -186,15 +197,17 @@ body .border-left-primary {
     padding: 0;
     padding-top: 2px;
 }
+
 .navbar-login-aurora {
     height: 41px;
     align-items: center;
 }
-#navbar-aurora-logged-in {
 
+#navbar-aurora-logged-in {
     display: flex;
-    align-items: center; /* Centrera lodrätt */
+    align-items: center;
 }
+
     #navbar-aurora-logged-in a {
         font-size: 0.5rem;
         background-color: #e4edf2;
@@ -202,9 +215,11 @@ body .border-left-primary {
         padding: 5px !important;
         margin-right: 10px;
     }
+
         #navbar-aurora-logged-in a:hover {
             background-color: #9fc2d6;
         }
+
 .nav-link {
     color: var(--primary) !important;
     letter-spacing: 1px !important;
@@ -216,25 +231,21 @@ body .border-left-primary {
 
 #login-logout {
     padding: 2px 10px;
-    align-self: center; /* Centrera lodrätt */
+    align-self: center;
     margin-bottom: 0 !important;
     border: none !important;
 }
+
 .aurora-nav {
     align-content: center;
     color: var(--primary) !important;
 }
+
     .aurora-nav:hover {
         color: #82a9bf !important;
     }
 
-/* CustomerIndex page below */
-
-/*.table-row-view:hover {
-    border: solid 2px var(--primary) !important;
-}*/
 .table-striped tbody tr.table-row-view:hover {
-    /*background-color: #9fc2d6 !important;*/
     outline: solid 2px var(--secondary) !important;
 }
 
@@ -258,25 +269,13 @@ body .border-left-primary {
             color: #82a9bf;
             width: 100%;
             height: 100%;
-            font-size: 1.6rem; /* eller större om du vill ha en tydlig ikon */
+            font-size: 1.6rem;
         }
+
             .cell-clickable a i:hover {
                 color: var(--primary);
             }
 
-/*#customer-view-btn {
-    font-size: 0.8rem;
-    background-color: var(--secondary) !important;
-    color: var(--primary) !important;
-    border: none !important;
-    padding: 0.2rem 0.8rem;
-    display: block;
-    text-align: center;
-    margin: 0 auto !important;
-}
-    #customer-view-btn:hover {
-        background-color: #82a9bf !important;
-    }*/
 .fa-angle-up, .fa-angle-down {
     color: #443c65;
 }
@@ -284,16 +283,20 @@ body .border-left-primary {
 thead {
     font-size: 0.9rem;
 }
+
 tbody {
     font-size: 0.7rem;
 }
+
 .pagination {
     justify-content: space-around;
     align-items: center;
 }
+
 .display-pagenumber {
     margin: 0 10px;
 }
+
 #search-btn {
     background-color: var(--primary) !important;
     border: none !important;
@@ -303,12 +306,41 @@ tbody {
     border-bottom-right-radius: 5px !important;
     border-top-right-radius: 5px !important;
 }
+
     #search-btn:hover {
         background-color: #554f70 !important;
     }
 
 
 /* Media Querys below */
+
+@media (max-width: 575px) {
+    .navbar-nav .nav-item {
+        margin-bottom: 0.5rem;
+    }
+
+    .aurora-nav {
+        margin-left: 10px !important;
+    }
+
+    .navbar-login-aurora {
+        align-items: end;
+        margin-bottom: 15px !important;
+    }
+
+    #login-logout {
+        margin-right: 10px !important;
+    }
+
+    .navbar-toggler {
+        border: none !important;
+        background-color: transparent;
+    }
+
+    .navbar-light .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(68,60,101,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+}
 
 @media (max-width: 500px) {
     td {
@@ -317,21 +349,23 @@ tbody {
         min-width: 0 !important;
         white-space: normal;
     }
+
     th {
         padding: 0.2rem !important;
     }
+
     .th-content {
         font-size: 0.7rem !important;
     }
+
     .small-p {
         font-size: 0.8rem !important;
     }
 }
+
 @media (max-width: 450px) {
     .btn {
         padding-top: 1px !important;
         font-size: 0.9rem !important;
     }
-
 }
-

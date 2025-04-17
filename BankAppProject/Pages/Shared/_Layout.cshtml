@@ -11,7 +11,7 @@
 
     <!-- Custom fonts for this template -->
     <link href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@300;400;700&display=swap" rel="stylesheet">
-    
+
     <!-- Custom icons with Fontawesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -25,12 +25,12 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 shadow-lg">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="~/img/aurorabank-logo.png" alt="Aurorabank-logo" class="logo"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
                         @if (User.IsInRole("Admin") || User.IsInRole("Cashier"))
                         {
                             <li class="nav-item">
@@ -48,7 +48,11 @@
                             </li>
                         }
                     </ul>
-                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <partial name="_LoginPartial" />
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -76,6 +80,6 @@
 
     <!-- Formulär- och sidrelaterade scripts -->
     @await RenderSectionAsync("Scripts", required: false)
-    
+
 </body>
 </html>
