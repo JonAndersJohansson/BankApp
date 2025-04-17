@@ -4,7 +4,7 @@ Detta är en ASP.NET Core Razor Pages-applikation för att hantera kunder, konto
 
 ## Länk till Azure
 
-[BankApp live på Azure (kommer snart)]...
+https://aurorabank-gjdmc9f6eefvdza3.swedencentral-01.azurewebsites.net
 
 ##  Databas
 
@@ -37,10 +37,10 @@ Den här applikationen använder en befintlig databas (Database First).
 - Kunder är inte inloggade användare
 
 ### Seedade användare:
-| E-post                        | Lösenord | Roll    |
+| E-post                       | Lösenord | Roll    |
 |------------------------------|----------|---------|
-| richard.chalk@admin.se       | Abc123#  | Admin   |
-| richard.chalk@cashier.se     | Abc123#  | Cashier |
+| admin@aurorabank.com         | Abc123#  | Admin   |
+| cashier@aurorabank.com       | Abc123#  | Cashier |
 
 ## Funktionalitet
 
