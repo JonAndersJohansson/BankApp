@@ -318,17 +318,19 @@ tbody {
     #more-info {
         padding: 0 !important;
     }
+
     #info-body {
         padding: 0 !important;
     }
+
     .info-ul {
-        padding-left: 4px !important;  
+        padding-left: 4px !important;
     }
+
         .info-ul li {
             margin-bottom: 5px !important;
         }
 }
-
 
 @media (max-width: 575px) {
     .navbar-nav .nav-item {
@@ -377,7 +379,20 @@ tbody {
     .small-p {
         font-size: 0.8rem !important;
     }
+
+    .row-custom {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .top-two {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+    }
 }
+
 
 @media (max-width: 450px) {
     .btn {
@@ -385,3 +400,4 @@ tbody {
         font-size: 0.9rem !important;
     }
 }
+
