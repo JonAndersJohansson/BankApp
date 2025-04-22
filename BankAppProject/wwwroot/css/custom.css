@@ -1,5 +1,4 @@
-﻿/* Ändrar primary och secondary färg */
-:root {
+﻿:root {
     --primary: #443c65; /* Mörklila */
     --secondary: #9fc2d6; /* Ljusblå */
     --info: #9fc2d6; /* Ljusblå */
@@ -345,7 +344,19 @@ tbody {
     .small-p {
         font-size: 0.8rem !important;
     }
+    .row-custom {
+        display: flex;
+        flex-direction: column;
+    }
+    .top-two {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+    }
 }
+
+
 @media (max-width: 450px) {
     .btn {
         padding-top: 1px !important;
