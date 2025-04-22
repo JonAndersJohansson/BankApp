@@ -15,11 +15,10 @@ namespace Services.Infrastructure.Profiles
             CreateMap<CustomerIndexDto, Customer>()
                 .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Streetaddress, opt => opt.MapFrom(src => src.Address));
-            
+
             CreateMap<Customer, TopCustomerDto>()
                 .ForMember(dest => dest.TotalBalance,
-                           opt => opt.MapFrom(src => src.Dispositions.Sum(d => d.Account.Balance)))
-                .ForSourceMember(src => src.Birthday, opt => opt.DoNotValidate());
+                           opt => opt.MapFrom(src => src.Dispositions.Sum(d => d.Account.Balance)));
 
 
             CreateMap<Customer, CustomerDetailsDto>()
