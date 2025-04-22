@@ -26,6 +26,8 @@ namespace DataAccessLayer.Data
         {
             AddUserIfNotExists("richard.chalk@admin.se", "Abc123#", new string[] { "Admin" });
             AddUserIfNotExists("richard.chalk@cashier.se", "Abc123#", new string[] { "Cashier" });
+            AddUserIfNotExists("admin@aurorabank.com", "Abc123#", new string[] { "Admin" });
+            AddUserIfNotExists("cashier@aurorabank.com", "Abc123#", new string[] { "Cashier" });
         }
 
         // Roles
