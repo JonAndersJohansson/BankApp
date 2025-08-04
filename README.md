@@ -4,6 +4,7 @@ Detta är en ASP.NET Core Razor Pages-applikation för att hantera kunder, konto
 
 ## Länk till Azure
 
+(INAKTIVERAD 2025/08/04)
 https://aurorabank-gjdmc9f6eefvdza3.swedencentral-01.azurewebsites.net
 
 ##  Databas
